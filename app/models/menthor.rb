@@ -1,0 +1,2 @@
+class Menthor < User
+end
