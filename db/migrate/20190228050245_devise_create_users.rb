@@ -48,6 +48,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string   :position
       t.string   :user_type, index: true
       t.string   :access_token, index: true
+      t.string   :uuid
                     
       t.timestamps null: false
     end

@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_050245) do
+ActiveRecord::Schema.define(version: 2019_03_01_094840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "jobs", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.text "payment_term"
+    t.integer "amount"
+    t.string "payment_type"
+    t.text "full_address"
+    t.string "city"
+    t.string "postcode"
+    t.string "state"
+    t.string "country"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "status"
+    t.integer "job_category_id"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -37,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_02_28_050245) do
     t.string "position"
     t.string "user_type"
     t.string "access_token"
+    t.string "uuid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["access_token"], name: "index_users_on_access_token"
