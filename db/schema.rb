@@ -10,10 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_094840) do
+ActiveRecord::Schema.define(version: 2019_03_04_094850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "coin_balances", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "amount"
+    t.string "coinable_type"
+    t.bigint "coinable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coinable_type", "coinable_id"], name: "index_coin_balances_on_coinable_type_and_coinable_id"
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.integer "owner_id"
+    t.string "name"
+    t.string "status"
+    t.string "phone_number"
+    t.text "full_address"
+    t.string "city"
+    t.integer "postcode"
+    t.string "state"
+    t.string "country"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "job_categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "job_requests", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "job_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "jobs", force: :cascade do |t|
     t.string "title"
@@ -33,6 +74,56 @@ ActiveRecord::Schema.define(version: 2019_03_01_094840) do
     t.string "status"
     t.integer "job_category_id"
     t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "notifable_type"
+    t.bigint "notifable_id"
+    t.text "message"
+    t.string "status"
+    t.float "amount"
+    t.boolean "reduce_coin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifable_type", "notifable_id"], name: "index_notifications_on_notifable_type_and_notifable_id"
+  end
+
+  create_table "pictures", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "pictureable_type"
+    t.bigint "pictureable_id"
+    t.string "file_url"
+    t.string "file_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pictureable_type", "pictureable_id"], name: "index_pictures_on_pictureable_type_and_pictureable_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "sender_id"
+    t.integer "job_id"
+    t.text "comment"
+    t.integer "rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subscription_packages", force: :cascade do |t|
+    t.integer "user_id"
+    t.date "expired_date"
+    t.float "amount"
+    t.string "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
