@@ -4,7 +4,7 @@ class CreatePictures < ActiveRecord::Migration[5.2]
       t.integer    :user_id, index: true
       t.references :pictureable, polymorphic: true, index: true
       t.string     :file_url
-      t.strin      :file_type
+      t.string     :file_type
 
       t.timestamps
     end

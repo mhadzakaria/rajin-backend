@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["coinable_type", "coinable_id"], name: "index_coin_balances_on_coinable_type_and_coinable_id"
+    t.index ["user_id"], name: "index_coin_balances_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -46,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.boolean "receive_notif"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_configs_on_user_id"
   end
 
   create_table "job_categories", force: :cascade do |t|
@@ -53,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_job_categories_on_parent_id"
   end
 
   create_table "job_requests", force: :cascade do |t|
@@ -61,6 +64,8 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_job_requests_on_job_id"
+    t.index ["user_id"], name: "index_job_requests_on_user_id"
   end
 
   create_table "jobs", force: :cascade do |t|
@@ -83,6 +88,8 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["job_category_id"], name: "index_jobs_on_job_category_id"
+    t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
   create_table "menthors", force: :cascade do |t|
@@ -112,6 +119,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["access_token"], name: "index_menthors_on_access_token"
+    t.index ["company_id"], name: "index_menthors_on_company_id"
     t.index ["email"], name: "index_menthors_on_email", unique: true
     t.index ["latitude"], name: "index_menthors_on_latitude"
     t.index ["longitude"], name: "index_menthors_on_longitude"
@@ -131,6 +139,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notifable_type", "notifable_id"], name: "index_notifications_on_notifable_type_and_notifable_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -141,7 +150,9 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
     t.index ["orderable_type", "orderable_id"], name: "index_orders_on_orderable_type_and_orderable_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -153,6 +164,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pictureable_type", "pictureable_id"], name: "index_pictures_on_pictureable_type_and_pictureable_id"
+    t.index ["user_id"], name: "index_pictures_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -163,6 +175,9 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.integer "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_reviews_on_job_id"
+    t.index ["sender_id"], name: "index_reviews_on_sender_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -180,6 +195,9 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.integer "school_partner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["menthor_id"], name: "index_school_applies_on_menthor_id"
+    t.index ["school_partner_id"], name: "index_school_applies_on_school_partner_id"
+    t.index ["user_id"], name: "index_school_applies_on_user_id"
   end
 
   create_table "school_partners", force: :cascade do |t|
@@ -190,12 +208,16 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.integer "postcode"
     t.string "state"
     t.string "country"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "skills", force: :cascade do |t|
     t.string "name"
+    t.integer "user_id"
+    t.integer "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -207,6 +229,8 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["merchant_id"], name: "index_subscription_packages_on_merchant_id"
+    t.index ["user_id"], name: "index_subscription_packages_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -236,11 +260,13 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["access_token"], name: "index_users_on_access_token"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["latitude"], name: "index_users_on_latitude"
     t.index ["longitude"], name: "index_users_on_longitude"
     t.index ["nickname"], name: "index_users_on_nickname"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["user_type"], name: "index_users_on_user_type"
   end
 

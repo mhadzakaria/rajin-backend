@@ -14,6 +14,13 @@ Rails.application.routes.draw do
       end
 
       resources :jobs
+      resources :skills
+      resources :job_categories
+      resources :school_partners
+
+      resources :job_requests do
+        resources :reviews, on: :member
+      end
     end
   end
   # End API routes
