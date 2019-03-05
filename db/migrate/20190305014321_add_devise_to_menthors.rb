@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class DeviseCreateUsers < ActiveRecord::Migration[5.2]
+class AddDeviseToMenthors < ActiveRecord::Migration[5.2]
   def change
-    create_table :users do |t|
+    create_table :menthors do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -44,19 +44,19 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string   :state
       t.string   :country
       t.integer  :company_id
-      t.integer  :role_id
+      t.string   :position
       t.float    :latitude, index: true
       t.float    :longitude, index: true
       t.string   :user_type, index: true
       t.string   :access_token, index: true
       t.string   :uuid
-                    
+      # Uncomment below if timestamps were not included in your original model.
       t.timestamps null: false
     end
 
-    add_index :users, :email,                unique: true
-    add_index :users, :reset_password_token, unique: true
-    # add_index :users, :confirmation_token,   unique: true
-    # add_index :users, :unlock_token,         unique: true
+    add_index :menthors, :email,                unique: true
+    add_index :menthors, :reset_password_token, unique: true
+    # add_index :menthors, :confirmation_token,   unique: true
+    # add_index :menthors, :unlock_token,         unique: true
   end
 end

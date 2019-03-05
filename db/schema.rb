@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_04_094850) do
+ActiveRecord::Schema.define(version: 2019_03_05_014321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.integer "owner_id"
     t.string "name"
     t.string "status"
     t.string "phone_number"
@@ -37,6 +36,14 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
     t.string "country"
     t.float "latitude"
     t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "configs", force: :cascade do |t|
+    t.integer "user_id"
+    t.boolean "email_notif"
+    t.boolean "receive_notif"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -73,10 +80,44 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
     t.float "longitude"
     t.string "status"
     t.integer "job_category_id"
-    t.integer "company_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+  end
+
+  create_table "menthors", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "nickname"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.datetime "date_of_birth"
+    t.string "gender"
+    t.text "full_address"
+    t.string "city"
+    t.integer "postcode"
+    t.string "state"
+    t.string "country"
+    t.integer "company_id"
+    t.string "position"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "user_type"
+    t.string "access_token"
+    t.string "uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_token"], name: "index_menthors_on_access_token"
+    t.index ["email"], name: "index_menthors_on_email", unique: true
+    t.index ["latitude"], name: "index_menthors_on_latitude"
+    t.index ["longitude"], name: "index_menthors_on_longitude"
+    t.index ["nickname"], name: "index_menthors_on_nickname"
+    t.index ["reset_password_token"], name: "index_menthors_on_reset_password_token", unique: true
+    t.index ["user_type"], name: "index_menthors_on_user_type"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -90,6 +131,17 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["notifable_type", "notifable_id"], name: "index_notifications_on_notifable_type_and_notifable_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "merchant_id"
+    t.string "orderable_type"
+    t.bigint "orderable_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["orderable_type", "orderable_id"], name: "index_orders_on_orderable_type_and_orderable_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -109,6 +161,35 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
     t.integer "job_id"
     t.text "comment"
     t.integer "rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "role_name"
+    t.string "role_code"
+    t.text "authorities"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "school_applies", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "menthor_id"
+    t.integer "school_partner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "school_partners", force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.text "full_address"
+    t.string "city"
+    t.integer "postcode"
+    t.string "state"
+    t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -145,9 +226,10 @@ ActiveRecord::Schema.define(version: 2019_03_04_094850) do
     t.integer "postcode"
     t.string "state"
     t.string "country"
+    t.integer "company_id"
+    t.integer "role_id"
     t.float "latitude"
     t.float "longitude"
-    t.string "position"
     t.string "user_type"
     t.string "access_token"
     t.string "uuid"

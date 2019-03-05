@@ -17,7 +17,7 @@ class CreateJobs < ActiveRecord::Migration[5.2]
 		  t.float :longitude
 		  t.string :status
 		  t.integer :job_category_id
-		  t.integer :company_id
+		  t.integer :user_id
 
       t.timestamps
     end

@@ -4,6 +4,19 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  belongs_to :companies
+  has_many  :reviews
+  has_many  :jobs
+  has_many  :job_requests
+  has_many  :skills
+  has_many  :notifications
+  has_many  :orders
+  has_many  :school_applies
+  has_one   :subscription_package
+  has_one   :coin_balance
+  has_one   :config
+  has_one   :picture, as: :pictureable
+
   geocoded_by :full_address
   reverse_geocoded_by :latitude, :longitude
 
