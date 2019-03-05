@@ -43,7 +43,7 @@ class AddDeviseToMenthors < ActiveRecord::Migration[5.2]
       t.integer  :postcode
       t.string   :state
       t.string   :country
-      t.integer  :company_id
+      t.integer  :company_id, index: true
       t.string   :position
       t.float    :latitude, index: true
       t.float    :longitude, index: true

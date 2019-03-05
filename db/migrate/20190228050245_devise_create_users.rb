@@ -43,8 +43,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.integer  :postcode
       t.string   :state
       t.string   :country
-      t.integer  :company_id
-      t.integer  :role_id
+      t.integer  :company_id, index: true
+      t.integer  :role_id, index: true
       t.float    :latitude, index: true
       t.float    :longitude, index: true
       t.string   :user_type, index: true

@@ -1,4 +1,6 @@
 class Company < ApplicationRecord
-	has_one :picture, as: :pictureable
+  include Geocoderable
+
+  has_one  :picture, as: :pictureable
   has_many :users
 end
