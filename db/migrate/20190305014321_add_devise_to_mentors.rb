@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class AddDeviseToMenthors < ActiveRecord::Migration[5.2]
+class AddDeviseToMentors < ActiveRecord::Migration[5.2]
   def change
-    create_table :menthors do |t|
+    create_table :mentors do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -54,9 +54,9 @@ class AddDeviseToMenthors < ActiveRecord::Migration[5.2]
       t.timestamps null: false
     end
 
-    add_index :menthors, :email,                unique: true
-    add_index :menthors, :reset_password_token, unique: true
-    # add_index :menthors, :confirmation_token,   unique: true
-    # add_index :menthors, :unlock_token,         unique: true
+    add_index :mentors, :email,                unique: true
+    add_index :mentors, :reset_password_token, unique: true
+    # add_index :mentors, :confirmation_token,   unique: true
+    # add_index :mentors, :unlock_token,         unique: true
   end
 end

@@ -1,4 +1,4 @@
-module Api::V1::Users
+module Api::V1::Mentors
   class RegistrationsController < Devise::RegistrationsController
     include Api::ApiAuthentication
     respond_to :json
@@ -13,7 +13,7 @@ module Api::V1::Users
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           sign_up(resource_name, resource)
-          render json: resource, serializer: UserSerializer, status: 200 and return
+          render json: resource, serializer: MentorSerializer, status: 200 and return
         else
           set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
@@ -27,14 +27,15 @@ module Api::V1::Users
     end
 
     def update
-      if current_user.update(account_update_params)
-        render json: current_user, serializer: UserSerializer, status: 200 and return
+      if current_mentor.update(account_update_params)
+        render json: current_mentor, serializer: UserSerializer, status: 200 and return
       else
-        clean_up_passwords current_user
+        clean_up_passwords current_mentor
         set_minimum_password_length
-        respond_with current_user
+        respond_with current_mentor
       end
     end
+
 
     protected
       def resource_name
@@ -43,26 +44,26 @@ module Api::V1::Users
 
     private
       def sign_up_params
-        params.require(:user).permit(*user_params)
+        params.require(:mentor).permit(*mentor_params)
       end
 
       def account_update_params
-        params.require(:user).permit(*user_params)
+        params.require(:mentor).permit(*mentor_params)
       end
 
-      def user_params
+      def mentor_params
         # Location Coordinate
-        params[:user][:latitude]  = params[:user][:coordinates][:latitude] rescue 0.0
-        params[:user][:longitude] = params[:user][:coordinates][:longitude] rescue 0.0
+        params[:mentor][:latitude]  = params[:mentor][:coordinates][:latitude] rescue 0.0
+        params[:mentor][:longitude] = params[:mentor][:coordinates][:longitude] rescue 0.0
 
-        lat  = params[:user][:latitude]
-        long = params[:user][:longitude]
+        lat  = params[:mentor][:latitude]
+        long = params[:mentor][:longitude]
         geo_localization = "#{lat},#{long}"
         query = Geocoder.search(geo_localization).first
-        params[:user][:full_address] = query.display_name if query.present?
+        params[:mentor][:full_address] = query.display_name if query.present?
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
-                :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
+                :longitude, :position, :mentor_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
                 pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type]
                ]
       end

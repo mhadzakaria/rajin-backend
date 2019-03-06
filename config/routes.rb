@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :menthors
+  devise_for :mentors
   # Start API routes
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
@@ -11,6 +11,16 @@ Rails.application.routes.draw do
 
       devise_scope :user do
         get "users/profile", to: "users/sessions#show", as: :user_profile
+      end
+
+      devise_for :mentors, :controllers => {
+        sessions: "api/v1/mentors/sessions",
+        registrations: "api/v1/mentors/registrations",
+        passwords: "api/v1/mentors/passwords"
+      }
+
+      devise_scope :mentor do
+        get "mentors/profile", to: "mentors/sessions#show", as: :mentor_profile
       end
 
       resources :jobs
