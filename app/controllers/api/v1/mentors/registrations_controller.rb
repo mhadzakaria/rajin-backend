@@ -17,7 +17,7 @@ module Api::V1::Mentors
         else
           set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
-          render json: resource, serializer: UserSerializer, status: 200 and return
+          render json: resource, serializer: MentorSerializer, status: 200 and return
         end
       else
         clean_up_passwords resource
@@ -28,7 +28,7 @@ module Api::V1::Mentors
 
     def update
       if current_mentor.update(account_update_params)
-        render json: current_mentor, serializer: UserSerializer, status: 200 and return
+        render json: current_mentor, serializer: MentorSerializer, status: 200 and return
       else
         clean_up_passwords current_mentor
         set_minimum_password_length
@@ -52,6 +52,8 @@ module Api::V1::Mentors
       end
 
       def mentor_params
+        params[:mentor][:skill_ids] = params[:mentor][:skill_ids].split(',').map(&:to_i)
+
         # Location Coordinate
         params[:mentor][:latitude]  = params[:mentor][:coordinates][:latitude] rescue 0.0
         params[:mentor][:longitude] = params[:mentor][:coordinates][:longitude] rescue 0.0
@@ -64,7 +66,7 @@ module Api::V1::Mentors
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
                 :longitude, :position, :mentor_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
-                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type]
+                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type], skill_ids: []
                ]
       end
   end

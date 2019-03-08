@@ -40,7 +40,7 @@ module Api::V1
     end
 
     def skill_params
-      params.require(:skill).permit(:name, :user_id, :job_id)
+      params.require(:skill).permit(:name)
     end
   end
 end

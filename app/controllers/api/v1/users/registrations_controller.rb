@@ -51,6 +51,8 @@ module Api::V1::Users
       end
 
       def user_params
+        params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
+        
         # Location Coordinate
         params[:user][:latitude]  = params[:user][:coordinates][:latitude] rescue 0.0
         params[:user][:longitude] = params[:user][:coordinates][:longitude] rescue 0.0
@@ -63,7 +65,7 @@ module Api::V1::Users
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
                 :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
-                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type]
+                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type], skill_ids: []
                ]
       end
   end

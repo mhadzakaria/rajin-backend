@@ -40,7 +40,8 @@ module Api::V1
     end
 
     def job_params
-      params.require(:job).permit(:user_id, :job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status)
+      params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
+      params.require(:job).permit(:user_id, :job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, skill_ids: [])
     end
   end
 end

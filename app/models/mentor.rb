@@ -1,5 +1,6 @@
 class Mentor < ApplicationRecord
   include Geocoderable
+  serialize :skill_ids, Array
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -16,4 +17,15 @@ class Mentor < ApplicationRecord
     self.access_token = SecureRandom.hex(16)
   end
 
+  def skills
+    skills = []
+    if skill_ids.present?
+      skill_ids.each do |skill|
+        skill = Skill.find(skill)
+        skills << skill if skill.present?
+      end
+    end
+
+    return skills
+  end
 end

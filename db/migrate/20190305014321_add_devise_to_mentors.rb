@@ -50,6 +50,7 @@ class AddDeviseToMentors < ActiveRecord::Migration[5.2]
       t.string   :user_type, index: true
       t.string   :access_token, index: true
       t.string   :uuid
+      t.text  :skill_ids
       # Uncomment below if timestamps were not included in your original model.
       t.timestamps null: false
     end

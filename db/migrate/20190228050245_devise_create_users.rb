@@ -50,6 +50,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string   :user_type, index: true
       t.string   :access_token, index: true
       t.string   :uuid
+      t.text  :skill_ids
                     
       t.timestamps null: false
     end

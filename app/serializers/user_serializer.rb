@@ -1,6 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config
-  # attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills
+  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills
 
   def password
     object.password || "Password not displayed"
@@ -15,16 +14,19 @@ class UserSerializer < ActiveModel::Serializer
     return data
   end
 
-  # def skills(data = [])
-  #   object.skills.each do |skill|
-  #     datum = {}
-  #     datum[:name] = skill.name
-  #     datum[:skill_logo_url]  = skill.picture.file_url
-  #     datum[:skill_logo_type] = skill.picture.file_type
-  #     data << datum
-  #   end
+  def skills(data = [])
+    if object.skills.present?
+      object.skills.each do |skill|
+        datum = {}
+        datum[:id] = skill.id
+        datum[:name] = skill.name
+        # datum[:skill_logo_url]  = skill.picture.file_url
+        # datum[:skill_logo_type] = skill.picture.file_type
+        data << datum
+      end
+    end
 
-  #   return data
-  # end
+    return data
+  end
 
 end

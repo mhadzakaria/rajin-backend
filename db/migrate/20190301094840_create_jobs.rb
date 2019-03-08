@@ -18,6 +18,7 @@ class CreateJobs < ActiveRecord::Migration[5.2]
       t.string   :status
       t.integer  :job_category_id, index: true
       t.integer  :user_id, index: true
+      t.text  :skill_ids
 
       t.timestamps
     end

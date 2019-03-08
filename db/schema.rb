@@ -86,13 +86,14 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "status"
     t.integer "job_category_id"
     t.integer "user_id"
+    t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_category_id"], name: "index_jobs_on_job_category_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
-  create_table "menthors", force: :cascade do |t|
+  create_table "mentors", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -116,16 +117,17 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "user_type"
     t.string "access_token"
     t.string "uuid"
+    t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["access_token"], name: "index_menthors_on_access_token"
-    t.index ["company_id"], name: "index_menthors_on_company_id"
-    t.index ["email"], name: "index_menthors_on_email", unique: true
-    t.index ["latitude"], name: "index_menthors_on_latitude"
-    t.index ["longitude"], name: "index_menthors_on_longitude"
-    t.index ["nickname"], name: "index_menthors_on_nickname"
-    t.index ["reset_password_token"], name: "index_menthors_on_reset_password_token", unique: true
-    t.index ["user_type"], name: "index_menthors_on_user_type"
+    t.index ["access_token"], name: "index_mentors_on_access_token"
+    t.index ["company_id"], name: "index_mentors_on_company_id"
+    t.index ["email"], name: "index_mentors_on_email", unique: true
+    t.index ["latitude"], name: "index_mentors_on_latitude"
+    t.index ["longitude"], name: "index_mentors_on_longitude"
+    t.index ["nickname"], name: "index_mentors_on_nickname"
+    t.index ["reset_password_token"], name: "index_mentors_on_reset_password_token", unique: true
+    t.index ["user_type"], name: "index_mentors_on_user_type"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -216,8 +218,6 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
 
   create_table "skills", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
-    t.integer "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.string "user_type"
     t.string "access_token"
     t.string "uuid"
+    t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["access_token"], name: "index_users_on_access_token"
