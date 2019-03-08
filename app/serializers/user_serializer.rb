@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills
+  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :picture
 
   def password
     object.password || "Password not displayed"
@@ -24,6 +24,17 @@ class UserSerializer < ActiveModel::Serializer
         # datum[:skill_logo_type] = skill.picture.file_type
         data << datum
       end
+    end
+
+    return data
+  end
+
+  def picture(data = [])
+    if object.picture.present?
+      datum = {}
+      datum[:pictureable_id] = object.picture.pictureable_id
+      datum[:file_url] = object.picture.file_url
+      data << datum
     end
 
     return data

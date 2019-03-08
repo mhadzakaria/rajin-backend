@@ -9,6 +9,10 @@ module Api::V1::Mentors
     def create
       build_resource(sign_up_params)
       resource.save
+      if params[:picture].present?
+        picture = resource.build_picture(picture_params)
+        picture.save
+      end
       if resource.persisted?
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
@@ -28,6 +32,12 @@ module Api::V1::Mentors
 
     def update
       if current_mentor.update(account_update_params)
+        if current_mentor.picture.present?
+          picture = current_mentor.picture.update(picture_params)
+        else
+          picture = current_mentor.build_picture(picture_params)
+          picture.save
+        end
         render json: current_mentor, serializer: MentorSerializer, status: 200 and return
       else
         clean_up_passwords current_mentor
@@ -49,6 +59,10 @@ module Api::V1::Mentors
 
       def account_update_params
         params.require(:mentor).permit(*mentor_params)
+      end
+
+      def picture_params
+        params.require(:picture).permit(:id, :pictureable_type, :pictureable_id, :file_url, :file_type)
       end
 
       def mentor_params

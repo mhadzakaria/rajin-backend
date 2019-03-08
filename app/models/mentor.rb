@@ -10,6 +10,7 @@ class Mentor < ApplicationRecord
   # belongs_to :company, optional: true
 
   has_many  :school_applies
+  has_one   :picture, as: :pictureable, dependent: :destroy
 
   before_create :generate_access_token
 

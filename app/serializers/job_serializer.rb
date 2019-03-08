@@ -2,11 +2,9 @@ class JobSerializer < ActiveModel::Serializer
   attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :skills
 
   # def skills
-  # 	debugger
   # 	if object.skill_ids.present?
 	 #  	skills = object.skill_ids.tr('[]', '').split(',').map(&:to_i)
 	 #  	skills.each do |skill|
-	 #  	debugger
 	 #  		Skill.find(skill).name
 	 #  	end
 	 #  end

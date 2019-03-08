@@ -9,6 +9,11 @@ module Api::V1::Users
     def create
       build_resource(sign_up_params)
       resource.save
+      if params[:picture].present?
+        picture = resource.build_picture(picture_params)
+        picture.user = resource
+        picture.save
+      end
       if resource.persisted?
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
@@ -28,6 +33,13 @@ module Api::V1::Users
 
     def update
       if current_user.update(account_update_params)
+        if current_user.picture.present?
+          picture = current_user.picture.update(picture_params)
+        else
+          picture = current_user.build_picture(picture_params)
+          picture.user = current_user
+          picture.save
+        end
         render json: current_user, serializer: UserSerializer, status: 200 and return
       else
         clean_up_passwords current_user
@@ -50,6 +62,10 @@ module Api::V1::Users
         params.require(:user).permit(*user_params)
       end
 
+      def picture_params
+        params.require(:picture).permit(:id, :pictureable_type, :pictureable_id, :file_url, :file_type, :user_id)
+      end
+
       def user_params
         params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
         
@@ -64,8 +80,7 @@ module Api::V1::Users
         params[:user][:full_address] = query.display_name if query.present?
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
-                :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
-                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type], skill_ids: []
+                :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, skill_ids: []
                ]
       end
   end
