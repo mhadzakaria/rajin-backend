@@ -19,13 +19,7 @@ class Mentor < ApplicationRecord
   end
 
   def skills
-    skills = []
-    if skill_ids.present?
-      skill_ids.each do |skill|
-        skill = Skill.find(skill)
-        skills << skill if skill.present?
-      end
-    end
+    skills = Skill.where(id: self.skill_ids)
 
     return skills
   end

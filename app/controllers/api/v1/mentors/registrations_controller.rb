@@ -79,8 +79,7 @@ module Api::V1::Mentors
         params[:mentor][:full_address] = query.display_name if query.present?
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
-                :longitude, :position, :mentor_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid,
-                pictures_attributes: [:id, :pictureable_type, :pictureable_id, :file_url, :file_type], skill_ids: []
+                :longitude, :position, :mentor_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, skill_ids: []
                ]
       end
   end

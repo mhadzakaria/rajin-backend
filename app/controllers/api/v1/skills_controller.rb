@@ -14,6 +14,10 @@ module Api::V1
     def create
       @skill = Skill.new(skill_params)
       if @skill.save
+        if params[:picture].present?
+          picture = @skill.build_picture(picture_params)
+          picture.save
+        end
         render json: @skill, serialize: SkillSerializer, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422
@@ -22,6 +26,12 @@ module Api::V1
 
     def update
       if @skill.update(skill_params)
+        if @skill.picture.present?
+          picture = @skill.picture.update(picture_params)
+        else
+          picture = @skill.build_picture(picture_params)
+          picture.save
+        end
         render json: @skill, serialize: SkillSerializer, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422
@@ -37,6 +47,10 @@ module Api::V1
 
     def set_skill
       @skill = Skill.find(params[:id])
+    end
+
+    def picture_params
+      params.require(:picture).permit(:id, :pictureable_type, :pictureable_id, :file_url, :file_type)
     end
 
     def skill_params

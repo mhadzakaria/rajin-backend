@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jobs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Payment term</th>
+      <th>Amount</th>
+      <th>Payment type</th>
+      <th>Full address</th>
+      <th>City</th>
+      <th>Postcode</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Status</th>
+      <th>Job category</th>
+      <th>User</th>
+      <th>Skill ids</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jobs.each do |job| %>
+      <tr>
+        <td><%= job.title %></td>
+        <td><%= job.description %></td>
+        <td><%= job.payment_term %></td>
+        <td><%= job.amount %></td>
+        <td><%= job.payment_type %></td>
+        <td><%= job.full_address %></td>
+        <td><%= job.city %></td>
+        <td><%= job.postcode %></td>
+        <td><%= job.state %></td>
+        <td><%= job.country %></td>
+        <td><%= job.start_date %></td>
+        <td><%= job.end_date %></td>
+        <td><%= job.latitude %></td>
+        <td><%= job.longitude %></td>
+        <td><%= job.status %></td>
+        <td><%= job.job_category_id %></td>
+        <td><%= job.user_id %></td>
+        <td><%= job.skill_ids %></td>
+        <td><%= link_to 'Show', job %></td>
+        <td><%= link_to 'Edit', edit_job_path(job) %></td>
+        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Job', new_job_path %>

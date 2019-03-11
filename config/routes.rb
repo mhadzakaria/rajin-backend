@@ -24,6 +24,10 @@ Rails.application.routes.draw do
       end
 
       resources :jobs
+      get "jobs/:id/on_progress" => "jobs#on_progress"
+      get "jobs/:id/complete" => "jobs#complete"
+      get "jobs/:id/incomplete" => "jobs#incomplete"
+
       resources :skills
       resources :job_categories
       resources :school_partners
@@ -31,6 +35,8 @@ Rails.application.routes.draw do
       resources :job_requests do
         resources :reviews, on: :member
       end
+      get "job_requests/:id/accept" => "job_requests#accept"
+      get "job_requests/:id/reject" => "job_requests#reject"
     end
   end
   # End API routes

@@ -1,6 +1,6 @@
 module Api::V1
   class JobRequestsController < Api::BaseApiController
-    before_action :set_job_request, only: [:show, :destroy, :update]
+    before_action :set_job_request, only: [:show, :destroy, :update, :accept, :reject]
 
     def index
       @job_requests = current_user.job_requests
@@ -31,6 +31,16 @@ module Api::V1
     def destroy
       @job_request.destroy
       render json: @job_request, serialize: JobRequestSerializer, status: 204
+    end
+
+    def accept
+      @job_request.accept!
+      render json: @job_request, serialize: JobRequestSerializer, status: 200
+    end
+
+    def reject
+      @job_request.reject!
+      render json: @job_request, serialize: JobRequestSerializer, status: 200
     end
 
     private

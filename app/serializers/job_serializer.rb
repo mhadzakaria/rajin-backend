@@ -1,5 +1,5 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :skills
+  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :skills, :pictures
 
   # def skills
   # 	if object.skill_ids.present?
@@ -21,6 +21,21 @@ class JobSerializer < ActiveModel::Serializer
       data << datum
     end
     
+    return data
+  end
+
+  def pictures(data = [])
+    object.pictures.each do |picture|
+      datum = {}
+      datum[:id] = picture.id
+      datum[:user_id] = picture.user_id
+      datum[:pictureable_id] = picture.pictureable_id
+      datum[:pictureable_type] = picture.pictureable_type
+      datum[:file_type] = picture.file_type
+      datum[:file_url] = picture.file_url
+
+      data << datum
+    end
     return data
   end
 end
