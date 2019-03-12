@@ -13,6 +13,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
+
+# Generating the fake data(for testing)
 gem 'faker'
 
 # Responders
@@ -27,13 +29,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Geolocation
 gem 'geocoder'
 
-# for tagging
+# For tagging
 gem 'acts-as-taggable-on', '~> 5.0'
 
 # Upload Image
 gem 'carrierwave'
 gem 'mini_magick'
 
+# For implementing state machines
 gem 'aasm'
 
 group :development, :test do

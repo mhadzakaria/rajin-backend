@@ -1,6 +1,7 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
   before_action :set_object, only: [:new]
+  after_action :save_my_previous_url, only: [:new]
 
   # GET /pictures
   # GET /pictures.json
@@ -37,7 +38,7 @@ class PicturesController < ApplicationController
 
     respond_to do |format|
       if @picture.save
-        format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
+        format.html { redirect_to session[:my_previous_url], notice: 'Picture was successfully created.' }
         format.json { render :show, status: :created, location: @picture }
       else
         format.html { render :new }
@@ -85,5 +86,9 @@ class PicturesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def picture_params
       params.require(:picture).permit(:user_id, :pictureable_type, :pictureable_id, :file_url, :file_type)
+    end
+
+    def save_my_previous_url
+      session[:my_previous_url] = URI(request.referer || '').path
     end
 end
