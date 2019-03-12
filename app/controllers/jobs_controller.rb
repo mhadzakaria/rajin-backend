@@ -69,6 +69,7 @@ class JobsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
-      params.require(:job).permit(:title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :user_id, :skill_ids)
+      params[:job][:skill_ids] = params[:job][:skill_ids].map(&:to_i)
+      params.require(:job).permit(:title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :user_id, skill_ids: [])
     end
 end

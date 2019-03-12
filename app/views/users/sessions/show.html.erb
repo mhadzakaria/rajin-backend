@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Nickname:</strong>
+  <%= @user.nickname %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <strong>Phine number:</strong>
+  <%= @user.phone_number %>
+</p>
+
+<p>
+  <strong>Date of birth:</strong>
+  <%= @user.date_of_birth %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @user.gender %>
+</p>
+
+<p>
+  <strong>Full address:</strong>
+  <%= @user.full_address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @user.city %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @user.postcode %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @user.country %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @user.company_id %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role_id %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @user.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @user.longitude %>
+</p>
+
+<p>
+  <strong>User type:</strong>
+  <%= @user.user_type %>
+</p>
+
+<br>
+<%= link_to 'Add Pictures', new_picture_path(pictureable_type: @user.class.name, pictureable_id: @user.id) %>

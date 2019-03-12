@@ -92,3 +92,5 @@
 
 <%= link_to 'Edit', edit_job_path(@job) %> |
 <%= link_to 'Back', jobs_path %>
+<br>
+<%= link_to 'Add Pictures', new_picture_path(pictureable_type: @job.class.name, pictureable_id: @job.id) %>

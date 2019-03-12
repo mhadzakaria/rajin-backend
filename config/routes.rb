@@ -47,5 +47,15 @@ Rails.application.routes.draw do
     passwords: "users/passwords"
   }
 
+  devise_scope :user do
+    get "users/profile", to: "users/sessions#show", as: :user_profile
+  end
+
   root  'home#home'
+
+  resources :jobs
+  resources :job_categories
+  resources :job_requests
+  resources :skills
+  resources :pictures
 end

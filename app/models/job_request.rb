@@ -5,6 +5,7 @@ class JobRequest < ApplicationRecord
   belongs_to :job
 
   aasm :column => :status do
+    state :pending, initial: true
     state :accepted
     state :rejected
 

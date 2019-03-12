@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pictures</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Pictureable type</th>
+      <th>Pictureable</th>
+      <th>File url</th>
+      <th>File type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pictures.each do |picture| %>
+      <tr>
+        <td><%= picture.user_id %></td>
+        <td><%= picture.pictureable_type %></td>
+        <td><%= picture.pictureable_id %></td>
+        <td><%= picture.file_url %></td>
+        <td><%= picture.file_type %></td>
+        <td><%= link_to 'Show', picture %></td>
+        <td><%= link_to 'Edit', edit_picture_path(picture) %></td>
+        <td><%= link_to 'Destroy', picture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Picture', new_picture_path %>

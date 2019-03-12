@@ -13,5 +13,5 @@
 //--- jQuery
 //= require plugins/jquery/dist/jquery.min
 //--- Bootstrap
-//= require plugins/popper.js/dist/umd/popper.min
+//= require plugins/popper.js/dist/umd/popper.js
 //= require plugins/bootstrap/dist/js/bootstrap.min

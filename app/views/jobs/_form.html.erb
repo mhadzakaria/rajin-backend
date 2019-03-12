@@ -82,13 +82,12 @@
   </div>
 
   <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.hidden_field :status %>
   </div>
 
   <div class="field">
     <%= form.label :job_category_id %>
-    <%= form.number_field :job_category_id %>
+    <%= form.collection_select :job_category_id, JobCategory.order(:name), :id, :name %>
   </div>
 
   <div class="field">
@@ -97,8 +96,9 @@
   </div>
 
   <div class="field">
-    <%= form.label :skill_ids %>
-    <%= form.text_area :skill_ids %>
+    <%= select_tag 'job[skill_ids][]',       
+        options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, {}), 
+        { include_hidden: true, multiple: true,  class: 'form-control'} %>
   </div>
 
   <div class="actions">
