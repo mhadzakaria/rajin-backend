@@ -1,0 +1,17 @@
+/*
+ * This is a manifest file that'll be compiled into base.css, which will include all the files
+ * listed below.
+ *
+ * --- FontAwesome
+ *= require plugins/@fortawesome/fontawesome-free/css/brands.css
+ *= require plugins/@fortawesome/fontawesome-free/css/regular.css
+ *= require plugins/@fortawesome/fontawesome-free/css/solid.css
+ *= require plugins/@fortawesome/fontawesome-free/css/fontawesome.css
+ * --- Simple Line Icons
+ *= require plugins/simple-line-icons/css/simple-line-icons
+ * --- Animate.css
+ *= require plugins/animate.css/animate.min
+ * --- Whirl (spinners)
+ *= require plugins/whirl/dist/whirl.min
+ *
+ */
