@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_014321) do
+ActiveRecord::Schema.define(version: 2019_03_13_042143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,14 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.datetime "updated_at", null: false
     t.index ["merchant_id"], name: "index_subscription_packages_on_merchant_id"
     t.index ["user_id"], name: "index_subscription_packages_on_user_id"
+  end
+
+  create_table "user_messages", force: :cascade do |t|
+    t.integer "job_request_id"
+    t.text "message_for_accepted_user"
+    t.text "message_for_rejected_user"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

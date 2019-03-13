@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resources :skills
       resources :job_categories
       resources :school_partners
+      resources :user_messages
 
       resources :job_requests do
         resources :reviews, on: :member

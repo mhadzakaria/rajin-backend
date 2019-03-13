@@ -3,6 +3,7 @@ module Api::V1
     before_action :set_job_request, only: [:show, :destroy, :update, :accept, :reject]
 
     def index
+      debugger
       @job_requests = current_user.job_requests
       respond_with @job_requests, each_serializer: JobRequestSerializer, status: 200
     end
@@ -34,7 +35,13 @@ module Api::V1
     end
 
     def accept
-      @job_request.accept!
+      JobRequest.all.each do |job_req|
+        if job_req.job_id == @job_request.job_id && job_req.id != @job_request.id
+          job_req.reject!
+        else
+          @job_request.accept!
+        end
+      end
       render json: @job_request, serialize: JobRequestSerializer, status: 200
     end
 

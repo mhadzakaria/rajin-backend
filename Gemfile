@@ -17,6 +17,9 @@ gem 'jbuilder', '~> 2.5'
 # Generating the fake data(for testing)
 gem 'faker'
 
+# For send email(testing)
+gem "letter_opener", :group => :development
+
 # Responders
 gem "responders"
 
