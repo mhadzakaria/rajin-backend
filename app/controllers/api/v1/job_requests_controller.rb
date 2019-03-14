@@ -3,7 +3,6 @@ module Api::V1
     before_action :set_job_request, only: [:show, :destroy, :update, :accept, :reject]
 
     def index
-      debugger
       @job_requests = current_user.job_requests
       respond_with @job_requests, each_serializer: JobRequestSerializer, status: 200
     end

@@ -60,6 +60,21 @@ module Api::V1
       render json: @job, serialize: JobSerializer, status: 200
     end
 
+    def filter
+      if params[:search][:skill_ids].present? || params[:search][:amount].present? || params[:search][:distance].present? || params[:search][:verified].present?
+        user = current_user
+        skill_ids = params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
+        amount = params[:search][:amount]
+        distance = params[:search][:distance]
+        verified = params[:search][:verified]
+
+        @jobs = Job.filter(user, skill_ids, amount, distance, verified)
+        respond_with @jobs, each_serializer: JobSerializer, status: 200
+      else
+        @jobs = Job.all
+        respond_with @jobs, each_serializer: JobSerializer, status: 200
+      end
+    end
 
     private
 

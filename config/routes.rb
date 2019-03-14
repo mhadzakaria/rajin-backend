@@ -23,7 +23,11 @@ Rails.application.routes.draw do
         get "mentors/profile", to: "mentors/sessions#show", as: :mentor_profile
       end
 
-      resources :jobs
+      resources :jobs do
+        collection do
+          get "filter"
+        end
+      end
       get "jobs/:id/on_progress" => "jobs#on_progress"
       get "jobs/:id/complete" => "jobs#complete"
       get "jobs/:id/incomplete" => "jobs#incomplete"

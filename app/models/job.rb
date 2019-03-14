@@ -13,6 +13,30 @@ class Job < ApplicationRecord
   has_many :job_requests
   has_many :reviews
 
+  class << self
+    def filter(user, skill_ids, amount, distance, verified)
+      filter_skill = []
+      filter_amount = []
+      filter_distance = []
+      if skill_ids.present?
+        skill_ids.each do |skill|
+          Job.all.each do |job|
+            if job.skill_ids.include?(skill)
+              filter_skill << job
+            end
+          end
+        end
+      end
+      if amount.present?
+        filter_amount = Job.all.where(amount: amount)
+      end
+      if distance.present?
+        filter_distance = Geocoderable.distance_filter(user, distance)
+      end
+      return (filter_amount + filter_distance + filter_skill).uniq
+    end
+  end
+
   def skills
     skills = Skill.where(id: self.skill_ids)
 
