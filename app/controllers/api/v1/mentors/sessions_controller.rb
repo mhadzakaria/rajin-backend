@@ -3,6 +3,8 @@ module Api::V1::Mentors
     include Api::ApiAuthentication
     respond_to :json
 
+    self.login_user_type = :mentor
+
     before_action :check_login_time, only: %i[show]
 
     def show

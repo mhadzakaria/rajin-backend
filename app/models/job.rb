@@ -2,6 +2,7 @@ class Job < ApplicationRecord
   include Geocoderable
   include AASM
 
+
   serialize :skill_ids, Array
 
   belongs_to :user
@@ -12,6 +13,22 @@ class Job < ApplicationRecord
 
   has_many :job_requests
   has_many :reviews
+
+  aasm :column => :status do
+    state :pending, initial: true
+    state :on_progress
+    state :completed
+
+    event :on_progress do
+      transitions from: [:pending], to: :on_progress
+    end
+    event :complete do
+      transitions from: [:on_progress], to: :completed
+    end
+    event :incomplete do
+      transitions from: [:completed], to: :on_progress
+    end
+  end
 
   class << self
     def filter(user, skill_ids, amount, distance, verified)
@@ -43,19 +60,4 @@ class Job < ApplicationRecord
     return skills
   end
 
-  aasm :column => :status do
-    state :pending, initial: true
-    state :on_progress
-    state :completed
-
-    event :on_progress do
-      transitions from: [:pending], to: :on_progress
-    end
-    event :complete do
-      transitions from: [:on_progress], to: :completed
-    end
-    event :incomplete do
-      transitions from: [:completed], to: :on_progress
-    end
-  end
 end

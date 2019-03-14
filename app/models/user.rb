@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_one   :coin_balance, dependent: :destroy
   has_one   :config, dependent: :destroy
   has_one   :picture, as: :pictureable, dependent: :destroy
+  has_many  :uploaded_pictures, class_name: "Picture", foreign_key: :user_id, dependent: :destroy
 
   before_create :generate_access_token
   after_create  :generate_default_config

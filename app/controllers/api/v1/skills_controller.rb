@@ -18,6 +18,7 @@ module Api::V1
           picture = @skill.build_picture(picture_params)
           picture.save
         end
+
         render json: @skill, serialize: SkillSerializer, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422
@@ -26,12 +27,12 @@ module Api::V1
 
     def update
       if @skill.update(skill_params)
-        if @skill.picture.present?
-          picture = @skill.picture.update(picture_params)
-        else
-          picture = @skill.build_picture(picture_params)
+        if params[:picture].present?
+          picture            = @skill.picture || @skill.build_picture
+          picture.attributes = picture_params
           picture.save
         end
+
         render json: @skill, serialize: SkillSerializer, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422

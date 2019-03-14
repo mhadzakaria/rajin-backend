@@ -12,9 +12,9 @@ class JobSerializer < ActiveModel::Serializer
 
   def skills(data = [])
   	skills = object.skills
-    object.skills.each do |skill|
-      datum = {}
-      datum[:id] = skill.id
+    skills.each do |skill|
+      datum        = {}
+      datum[:id]   = skill.id
       datum[:name] = skill.name
       # datum[:skill_logo_url]  = skill.picture.file_url
       # datum[:skill_logo_type] = skill.picture.file_type
@@ -27,15 +27,16 @@ class JobSerializer < ActiveModel::Serializer
   def pictures(data = [])
     object.pictures.each do |picture|
       datum = {}
-      datum[:id] = picture.id
-      datum[:user_id] = picture.user_id
-      datum[:pictureable_id] = picture.pictureable_id
+      datum[:id]               = picture.id
+      datum[:user_id]          = picture.user_id
+      datum[:pictureable_id]   = picture.pictureable_id
       datum[:pictureable_type] = picture.pictureable_type
-      datum[:file_type] = picture.file_type
-      datum[:file_url] = picture.file_url
+      datum[:file_type]        = picture.file_type
+      datum[:file_url]         = picture.file_url
 
       data << datum
     end
+
     return data
   end
 end

@@ -2,6 +2,17 @@ module Api::ApiAuthentication
   extend ActiveSupport::Concern
 
   included do
+    devise_group :person, contains: [:user, :mentor]
+
+    class_attribute :login_user_type
+
+    # Login_user_type, can be changed to :user or :mentor on each controller (example, check on user and mentor devise controllers)
+    # Condition details:
+    # either => logged in user type is one of mentor or user (current_user or current_mentor) [current_person]
+    # user   => logged in user type is user   (current_user)
+    # mentor => logged in user type is mentor (current_mentor)
+    self.login_user_type = :either
+
     skip_before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
     before_action :check_login_time
@@ -20,7 +31,11 @@ module Api::ApiAuthentication
   end
 
   def check_login_time
-    render json: { errors: "Invalid access token!" }, status: 401 and return if current_user.blank? && current_mentor.blank?
+    invalid   = current_person.blank? && login_user_type.eql?(:either)
+    invalid ||= current_user.blank? && login_user_type.eql?(:user)
+    invalid ||= current_mentor.blank? && login_user_type.eql?(:mentor)
+
+    render json: { errors: "Invalid access token!" }, status: 401 and return if invalid
   end
 
 end

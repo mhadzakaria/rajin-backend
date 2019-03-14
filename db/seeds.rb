@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+if Rails.env.development?
+  20.times do
+    Skill.create({name: Faker::ProgrammingLanguage.name})
+  end
+
+  20.times do
+    JobCategory.create({name: Faker::ProgrammingLanguage.name})
+  end
+end
+

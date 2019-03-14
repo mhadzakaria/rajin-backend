@@ -2,19 +2,24 @@ module Api::V1::Users
   class RegistrationsController < Devise::RegistrationsController
     include Api::ApiAuthentication
     respond_to :json
-    
+
+    self.login_user_type = :user
+
     skip_before_action :check_login_time, only: %i[create]
     skip_before_action :authenticate_scope!, only: %i[update]
 
     def create
       build_resource(sign_up_params)
       resource.save
-      if params[:picture].present?
-        picture = resource.build_picture(picture_params)
-        picture.user = resource
-        picture.save
-      end
+
       if resource.persisted?
+
+        if params[:picture].present?
+          picture      = resource.build_picture(picture_params)
+          picture.user = resource
+          picture.save
+        end
+
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           sign_up(resource_name, resource)
@@ -33,13 +38,13 @@ module Api::V1::Users
 
     def update
       if current_user.update(account_update_params)
-        if current_user.picture.present?
-          picture = current_user.picture.update(picture_params)
-        else
-          picture = current_user.build_picture(picture_params)
-          picture.user = current_user
+        if params[:picture].present?
+          picture            = current_user.picture || current_user.build_picture
+          picture.attributes = picture_params
+          picture.user_id    = current_user.id
           picture.save
         end
+
         render json: current_user, serializer: UserSerializer, status: 200 and return
       else
         clean_up_passwords current_user
@@ -49,11 +54,13 @@ module Api::V1::Users
     end
 
     protected
+
       def resource_name
         devise_mapping.name.to_s.gsub("api_v1_", "").to_sym
       end
 
     private
+
       def sign_up_params
         params.require(:user).permit(*user_params)
       end
@@ -67,7 +74,10 @@ module Api::V1::Users
       end
 
       def user_params
-        params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
+        # User skills
+        if params[:user][:skill_ids].present?
+          params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
+        end
         
         # Location Coordinate
         params[:user][:latitude]  = params[:user][:coordinates][:latitude] rescue 0.0

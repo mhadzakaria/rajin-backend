@@ -61,12 +61,18 @@ module Api::V1
     end
 
     def filter
-      if params[:search][:skill_ids].present? || params[:search][:amount].present? || params[:search][:distance].present? || params[:search][:verified].present?
-        user = current_user
-        skill_ids = params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
-        amount = params[:search][:amount]
-        distance = params[:search][:distance]
-        verified = params[:search][:verified]
+      skill_ids = []
+
+      if params[:search].present?
+        if params[:search][:skill_ids].present?
+          params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
+          skill_ids                   = params[:search][:skill_ids]
+        end
+
+        user     = current_user
+        amount   = params[:search][:amount] if params[:search][:amount].present?
+        distance = params[:search][:distance] if params[:search][:distance].present?
+        verified = params[:search][:verified] if params[:search][:verified].present?
 
         @jobs = Job.filter(user, skill_ids, amount, distance, verified)
         respond_with @jobs, each_serializer: JobSerializer, status: 200
@@ -87,7 +93,10 @@ module Api::V1
     end
 
     def job_params
-      params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
+      if params[:job][:skill_ids].present?
+        params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
+      end
+
       params.require(:job).permit(:user_id, :job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, skill_ids: [])
     end
   end

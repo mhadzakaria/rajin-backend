@@ -3,20 +3,25 @@ module Api::V1::Mentors
     include Api::ApiAuthentication
     respond_to :json
     
+    self.login_user_type = :mentor
+
     skip_before_action :check_login_time, only: %i[create]
     skip_before_action :authenticate_scope!, only: %i[update]
 
     def create
       build_resource(sign_up_params)
       resource.save
-      if params[:picture].present?
-        picture = resource.build_picture(picture_params)
-        picture.save
-      end
+
       if resource.persisted?
+
+        if params[:picture].present?
+          picture = resource.build_picture(picture_params)
+          picture.save
+        end
+
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
-          sign_up(resource_name, resource)
+          # sign_up(resource_name, resource)
           render json: resource, serializer: MentorSerializer, status: 200 and return
         else
           set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
@@ -32,12 +37,12 @@ module Api::V1::Mentors
 
     def update
       if current_mentor.update(account_update_params)
-        if current_mentor.picture.present?
-          picture = current_mentor.picture.update(picture_params)
-        else
-          picture = current_mentor.build_picture(picture_params)
+        if params[:picture].present?
+          picture = current_mentor.picture || current_mentor.build_picture
+          picture.attributes = picture_params
           picture.save
         end
+
         render json: current_mentor, serializer: MentorSerializer, status: 200 and return
       else
         clean_up_passwords current_mentor
@@ -66,7 +71,9 @@ module Api::V1::Mentors
       end
 
       def mentor_params
-        params[:mentor][:skill_ids] = params[:mentor][:skill_ids].split(',').map(&:to_i)
+        if params[:mentor][:skill_ids].present?
+          params[:mentor][:skill_ids] = params[:mentor][:skill_ids].split(',').map(&:to_i)
+        end
 
         # Location Coordinate
         params[:mentor][:latitude]  = params[:mentor][:coordinates][:latitude] rescue 0.0
