@@ -1,6 +1,10 @@
 module Api::V1
   class JobRequestsController < Api::BaseApiController
+    self.login_user_type = :user
+
     before_action :set_job_request, only: [:show, :destroy, :update, :accept, :reject]
+    before_action :set_job, only: [:show, :destroy, :update, :accept, :reject]
+    before_action :check_actor, only: [:accept, :reject]
 
     def index
       @job_requests = current_user.job_requests
@@ -12,7 +16,8 @@ module Api::V1
     end
 
     def create
-      @job_request = JobRequest.new(job_request_params)
+      @job_request      = JobRequest.new(job_request_params)
+      @job_request.user = current_user
       if @job_request.save
         render json: @job_request, serialize: JobRequestSerializer, status: 200
       else
@@ -34,19 +39,32 @@ module Api::V1
     end
 
     def accept
-      JobRequest.all.each do |job_req|
-        if job_req.job_id == @job_request.job_id && job_req.id != @job_request.id
-          job_req.reject!
-        else
-          @job_request.accept!
-        end
+      accepted_message = params[:accepted_message].blank? ? "Job owner accepted your job request on job #{@job.title}" : params[:accepted_message]
+      rejected_message = params[:rejected_message].blank? ? "Sorry, we decide to reject your job request for job #{@job.title}" : params[:rejected_message]
+
+      if @job_request.pending?
+        @job_request.accept!
+        @job_request.reload
+        @job_request.reject_another_job_requests(accepted_message, rejected_message)
+        render json: @job_request, serialize: JobRequestSerializer, status: 200
+      else
+        render json: {message: "You already #{@job_request.status} this job request"}, status: 422
       end
-      render json: @job_request, serialize: JobRequestSerializer, status: 200
+
     end
 
     def reject
-      @job_request.reject!
-      render json: @job_request, serialize: JobRequestSerializer, status: 200
+      rejected_message = params[:rejected_message].blank? ? "Sorry, we decide to reject your job request for job #{@job.title}" : params[:rejected_message]
+
+
+      if @job_request.pending?
+        @job_request.reject!
+        @job_request.reload
+        @job_request.rejected_message(rejected_message)
+        render json: @job_request, serialize: JobRequestSerializer, status: 200
+      else
+        render json: {message: "You already #{@job_request.status} this job request"}, status: 422
+      end
     end
 
     private
@@ -56,7 +74,15 @@ module Api::V1
     end
 
     def job_request_params
-      params.require(:job_request).permit(:user_id, :job_id, :status)
+      params.require(:job_request).permit(:id, :job_id, :status)
+    end
+
+    def check_actor
+      render json: {error: "Only Job owner allowed to access this page. "}, status: 401 and return unless @job.user.eql?(current_user)
+    end
+
+    def set_job
+      @job = @job_request.job
     end
   end
 end

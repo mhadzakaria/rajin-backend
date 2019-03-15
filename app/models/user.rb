@@ -29,6 +29,13 @@ class User < ApplicationRecord
     self.access_token = SecureRandom.hex(16)
   end
 
+  def full_name
+    name = "#{self.first_name} #{self.last_name}"
+    name = "#{self.email}" if name.blank?
+
+    return name
+  end
+
   def generate_default_config
     if self.config.blank?
       config               = self.build_config

@@ -7,5 +7,7 @@ class CreateJobRequests < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :job_requests, [:job_id, :user_id], unique: true
   end
 end

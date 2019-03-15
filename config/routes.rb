@@ -40,8 +40,8 @@ Rails.application.routes.draw do
       resources :job_requests do
         resources :reviews, on: :member
       end
-      get "job_requests/:id/accept" => "job_requests#accept"
-      get "job_requests/:id/reject" => "job_requests#reject"
+      put "job_requests/:id/accept" => "job_requests#accept"
+      put "job_requests/:id/reject" => "job_requests#reject"
     end
   end
   # End API routes
