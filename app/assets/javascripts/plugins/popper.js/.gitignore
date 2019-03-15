@@ -7,7 +7,7 @@ node_modules
 .chrome
 *.log
 .jekyll-metadata
-dist
+# dist
 .idea/
 *.log
 package-lock.json
