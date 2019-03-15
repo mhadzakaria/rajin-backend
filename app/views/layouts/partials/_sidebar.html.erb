@@ -16,8 +16,8 @@
                   </div>
                   <!-- Name and Job-->
                   <div class="user-block-info">
-                     <span class="user-block-name">Hello, Mike</span>
-                     <span class="user-block-role">Designer</span>
+                     <span class="user-block-name">Hello, <%= current_user.full_name %></span>
+                     <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "user-block-role" %>
                   </div>
                </div>
             </div>

@@ -1,0 +1,32 @@
+<div class="block-center mt-4 wd-xl">
+  <!-- START card-->
+  <div class="card card-flat">
+    <div class="card-header text-center bg-dark">
+      <a href="#">
+        <img class="block-center rounded" src="<%= image_path('angle/logo.png') %>" alt="Image" />
+      </a>
+    </div>
+    <div class="card-body">
+      <p class="text-center py-2">PASSWORD RESET</p>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <p class="text-center">Fill with your mail to receive instructions on how to reset your password.</p>
+        <div class="form-group">
+          <%= f.label :email, "Email address", class: "text-muted" %>
+          <div class="input-group with-focus">
+            <%= f.email_field :email, autofocus: true,
+                  class: "form-control border-right-0", placeholder: "Enter email", autocomplete: "off" %>
+            <div class="input-group-append">
+              <span class="input-group-text text-muted bg-transparent border-left-0">
+                <em class="fa fa-envelope"></em>
+              </span>
+            </div>
+          </div>
+        </div>
+        <%= f.submit "Reset", class: "btn btn-danger btn-block" %>
+      <% end %>
+      <%= render "users/shared/links" %>
+    </div>
+  </div>
+  <!-- END card-->
+</div>

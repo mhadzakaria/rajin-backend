@@ -1,0 +1,56 @@
+<div class="block-center mt-4 wd-xl">
+  <!-- START card-->
+  <div class="card card-flat">
+    <div class="card-header text-center bg-dark">
+       <a href="#">
+          <img class="block-center rounded" src="<%= image_path('angle/logo.png') %>" alt="Image" />
+       </a>
+    </div>
+    <div class="card-body">
+      <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
+      <%= form_for resource, as: resource_name, url: session_path(resource_name), id: 'loginForm', class: 'mb-3' do |f| %>
+        <div class="form-group">
+          <div class="input-group with-focus">
+            <%= f.email_field :email, autofocus: true, autocomplete: "off",
+                  class: "form-control border-right-0", placeholder: "Enter email", required: true %>
+            <div class="input-group-append">
+              <span class="input-group-text text-muted bg-transparent border-left-0">
+                <em class="fa fa-envelope"></em>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group with-focus">
+            <%= f.password_field :password, autocomplete: "current-password",
+                  class: "form-control border-right-0", placeholder: "Password", required: "required" %>
+            <div class="input-group-append">
+              <span class="input-group-text text-muted bg-transparent border-left-0">
+                <em class="fa fa-lock"></em>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix">
+          <% if devise_mapping.rememberable? %>
+            <div class="checkbox c-checkbox float-left mt-0">
+              <label>
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me %>
+                <!-- <span class="fa fa-check"></span>Remember Me -->
+              </label>
+            </div>
+          <% end %>
+          <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <div class="float-right">
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'text-muted' %>
+            </div>
+          <% end %>
+        </div>
+        <%= f.submit "Login", class: "btn btn-block btn-primary mt-3" %>
+        <%= render "users/shared/links" %>
+      <% end %>
+    </div>
+  </div>
+  <!-- END card-->
+</div>
