@@ -12,7 +12,8 @@
 
         // Zero configuration
 
-        $('#datatable1').DataTable({
+        $('#datatable_test').DataTable({
+            'destroy': true,
             'paging': true, // Table pagination
             'ordering': true, // Column ordering
             'info': true, // Bottom left status text

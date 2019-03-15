@@ -22,20 +22,19 @@
                </div>
             </div>
          </li>
-         <!-- END user info-->
          <!-- Iterates over all sidebar items-->
          <li class="nav-heading">
             <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
          </li>
-         <li class="<%#= 'active' if controller?('dashboard')%>">
+        <li class="<%#= 'active' if controller?('dashboard')%>">
             <a href="#dashboard" title="Dashboard" data-toggle="collapse">
-               <div class="badge badge-info float-right">3</div>
+               <!-- <div class="badge badge-info float-right">3</div> -->
                <em class="icon-speedometer"></em>
                <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
             </a>
-            <ul id="dashboard" class="sidebar-nav sidebar-subnav collapse <%#= 'show' if controller?('dashboard') %>">
-               <li class="sidebar-subnav-header">Dashboard</li>
-               <li class="<%#= 'active' if controller?('dashboard') && action?('dashboard_v1') %>">
+            <!-- <ul id="dashboard" class="sidebar-nav sidebar-subnav collapse <%#= 'show' if  -->controller?('dashboard') %>">
+               <li class="sidebar-subnav-header">Dashboard</li> -->
+<!--                <li class="<%#= 'active' if controller?('dashboard') && action?('dashboard_v1') %>">
                   <a href="/dashboard/dashboard_v1" title="Dashboard v1">
                      <span>Dashboard v1</span>
                   </a>
@@ -49,18 +48,48 @@
                   <a href="/dashboard/dashboard_v3" title="Dashboard v3">
                      <span>Dashboard v3</span>
                   </a>
-               </li>
-            </ul>
-         </li>
-         <li class="<%#= 'active' if controller?('widgets') && action?('index') %>">
+               </li> -->
+            <!-- </ul> -->
+        </li>
+        <li>
+          <%= link_to jobs_path do %>
+            <em class="icon-note"></em>
+            <span>Jobs</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to job_categories_path do %>
+            <em class="icon-grid"></em>
+            <span>Job Categories</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to job_requests_path do %>
+            <em class="icon-doc"></em>
+            <span>Job Requests</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to skills_path do %>
+            <em class="icon-note"></em>
+            <span>Skills</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to pictures_path do %>
+            <em class="far fa-folder-open"></em>
+            <span>Pictures</span>
+          <% end %>
+        </li>
+         <!-- <li class="<%#= 'active' if controller?('widgets') && action?('index') %>">
             <a href="/widgets" title="Widgets">
                <div class="badge badge-success float-right">30</div>
                <em class="icon-grid"></em>
                <span data-localize="sidebar.nav.WIDGETS">Widgets</span>
             </a>
-         </li>
+         </li> -->
          <!-- Layouts -->
-         <li>
+         <!-- <li>
             <a href="#layout" title="Layouts" data-toggle="collapse">
                <em class="icon-layers"></em>
                <span>Layouts</span>
@@ -73,9 +102,9 @@
                   </a>
                </li>
             </ul>
-         </li>
+         </li> -->
          <!-- /Layouts -->
-         <li class="nav-heading">
+         <!-- <li class="nav-heading">
             <span>Components</span>
          </li>
          <li class="<%#= 'active' if controller?('elements') %>">
@@ -597,7 +626,7 @@
                </li>
             </ul>
          </li>
-      </ul>
+      </ul> -->
       <!-- END sidebar nav-->
    </nav>
 </div>

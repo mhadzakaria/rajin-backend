@@ -1,31 +1,47 @@
-<%= form_with(model: job_request, local: true) do |form| %>
-  <% if job_request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(job_request.errors.count, "error") %> prohibited this job_request from being saved:</h2>
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_with(model: job_request, local: true) do |form| %>
+        <% if job_request.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(job_request.errors.count, "error") %> prohibited this job_request from being saved:</h2>
 
-      <ul>
-      <% job_request.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+            <ul>
+            <% job_request.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form job request</legend>
+          <div class="form-group row">
+            <%= form.label :user_id, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :user_id, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :job_id %>
+            </label>
+           <div class="col-md-10">
+            <%= form.collection_select :job_id, Job.order(:title), :id, :title,{}, class: 'custom-select custom-select-sm' %>
+            </div>
+          </div>
+      </fieldset>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <%= form.text_field :status, class: "form-control", type: "hidden" %>
+          </div>
+        </div>
+
+      <div class="actions">
+        <%= form.submit "Create Job Request", class: "btn btn-primary" %>
+      </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :job_id %>
-    <%= form.collection_select :job_id, Job.order(:title), :id, :title %>
-  </div>
-
-  <div class="field">
-    <%= form.hidden_field :status %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+   </div>
+</div>

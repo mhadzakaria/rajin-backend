@@ -1,107 +1,177 @@
-<%= form_with(model: job, local: true) do |form| %>
-  <% if job.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_with(model: job, local: true) do |form| %>
+        <% if job.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
 
-      <ul>
-      <% job.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+            <ul>
+            <% job.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form job</legend>
+          <div class="form-group row">
+            <%= form.label :title, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :title, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :description, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_area :description, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :payment_term, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_area :payment_term, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :amount, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :amount, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :payment_type, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :payment_type, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :full_address, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_area :full_address, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :city, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :city, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :postcode, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :postcode, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :state, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :state, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :country, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :country, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :start_date, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.datetime_select :start_date, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+         <fieldset>
+          <div class="form-group row">
+            <%= form.label :end_date, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.datetime_select :end_date, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :latitude, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :latitude, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :longitude, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :longitude, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :job_category_id %>
+            </label>
+           <div class="col-md-10">
+            <%= form.collection_select :job_category_id, JobCategory.order(:name), :id, :name,{}, class: 'custom-select custom-select-sm' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :user_id, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :user_id, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :country, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :country, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :skill_ids %>
+            </label>
+            <div class="col-xl-4">
+              <%= form.select :skill_ids, options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, params[:skill_ids]), {}, { include_hidden: true, multiple: true, class: 'form-control form-control-lg' } %>
+            </div>
+          </div>
+       </fieldset>
+          <div class="form-group row">
+            <div class="col-md-10">
+              <%= form.text_field :status, class: "form-control", type: "hidden" %>
+            </div>
+          </div>
+
+        <div class="actions">
+          <%= form.submit "Create Skill", class: "btn btn-primary" %>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :payment_term %>
-    <%= form.text_area :payment_term %>
-  </div>
-
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.number_field :amount %>
-  </div>
-
-  <div class="field">
-    <%= form.label :payment_type %>
-    <%= form.text_field :payment_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :full_address %>
-    <%= form.text_area :full_address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :postcode %>
-    <%= form.text_field :postcode %>
-  </div>
-
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state %>
-  </div>
-
-  <div class="field">
-    <%= form.label :country %>
-    <%= form.text_field :country %>
-  </div>
-
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.datetime_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_date %>
-    <%= form.datetime_select :end_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :latitude %>
-    <%= form.text_field :latitude %>
-  </div>
-
-  <div class="field">
-    <%= form.label :longitude %>
-    <%= form.text_field :longitude %>
-  </div>
-
-  <div class="field">
-    <%= form.hidden_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :job_category_id %>
-    <%= form.collection_select :job_category_id, JobCategory.order(:name), :id, :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= select_tag 'job[skill_ids][]',       
-        options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, {}), 
-        { include_hidden: true, multiple: true,  class: 'form-control'} %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+   </div>
+</div>

@@ -21,3 +21,6 @@
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
 
+//--- Datatables
+//= require_tree ./datatables
+//= require jszip/jszip.js
