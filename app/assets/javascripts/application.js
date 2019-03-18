@@ -24,3 +24,7 @@
 //--- Datatables
 //= require_tree ./datatables
 //= require jszip/jszip.js
+
+//--- Datepicker
+//= require jquery-ui
+//= require jquery-ui/widgets/datepicker

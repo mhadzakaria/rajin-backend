@@ -53,9 +53,9 @@
                       <td><%= job.latitude %></td>
                       <td><%= job.longitude %></td>
                       <td><%= job.status %></td>
-                      <td><%= job.job_category_id %></td>
-                      <td><%= job.user_id %></td>
-                      <td><%= job.skill_ids %></td>
+                      <td><%= job.job_category.name %></td>
+                      <td><%= job.user.full_name %></td>
+                      <td><%= job.skills.map{|skill| skill.name}.join(",") %></td>
                       <td>
                         <%= link_to 'Show', job %>
                         <%= link_to 'Edit', edit_job_path(job) %>

@@ -99,7 +99,7 @@
           <div class="form-group row">
             <%= form.label :start_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.datetime_select :start_date, class: "form-control", type:"text" %>
+              <%= form.text_field :start_date, class: "form-control datepicker", type:"text" %>
             </div>
           </div>
         </fieldset>
@@ -107,7 +107,7 @@
           <div class="form-group row">
             <%= form.label :end_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.datetime_select :end_date, class: "form-control", type:"text" %>
+              <%= form.text_field :end_date, class: "form-control datepicker", type:"text" %>
             </div>
           </div>
         </fieldset>
@@ -175,3 +175,9 @@
       <% end %>
    </div>
 </div>
+
+<script type="text/javascript">
+  $( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+</script>

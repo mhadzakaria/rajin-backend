@@ -77,17 +77,17 @@
 
 <p>
   <strong>Job category:</strong>
-  <%= @job.job_category_id %>
+  <%= @job.job_category.name %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @job.user_id %>
+  <%= @job.user.full_name %>
 </p>
 
 <p>
   <strong>Skill ids:</strong>
-  <%= @job.skill_ids %>
+  <%= @job.skills.map{|skill| skill.name}.join(",") %>
 </p>
 
 <%= link_to 'Edit', edit_job_path(@job) %> |

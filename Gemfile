@@ -42,6 +42,10 @@ gem 'mini_magick'
 # For implementing state machines
 gem 'aasm'
 
+# For jquery-ui-rails
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'letter_opener'
