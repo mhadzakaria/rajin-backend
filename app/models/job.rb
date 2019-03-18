@@ -14,6 +14,8 @@ class Job < ApplicationRecord
   has_many :job_requests
   has_many :reviews
 
+  paginates_per 10
+
   aasm :column => :status do
     state :pending, initial: true
     state :on_progress

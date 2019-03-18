@@ -4,7 +4,8 @@ class JobCategoriesController < ApplicationController
   # GET /job_categories
   # GET /job_categories.json
   def index
-    @job_categories = JobCategory.all
+    @q = JobCategory.ransack(params[:q])
+    @job_categories = @q.result.page(params[:page])
   end
 
   # GET /job_categories/1

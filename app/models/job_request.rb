@@ -4,6 +4,8 @@ class JobRequest < ApplicationRecord
   belongs_to :user
   belongs_to :job
 
+  paginates_per 10
+
   validate :ensure_user_not_same, on: :create
   validates :job_id, uniqueness: { scope: :user_id, message: "Request already applied to this job before." }
 

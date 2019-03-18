@@ -8,6 +8,13 @@
         <div class="card-header">
            <div class="card-title"></div>
            <div class="text-sm"></div>
+           <div id="datatable_test_filter" class="data_filter">
+            <%= search_form_for @q do |f| %>
+              <%= f.label "Search by status" %>
+              <%= f.search_field :status_cont %>
+              <%= f.submit %>
+            <% end %>
+          </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -36,6 +43,7 @@
                 </tbody>
              </table>
           </div>
+            <%= paginate @job_requests %>
         </div>
      </div>
     <%= link_to 'New Job Request', new_job_request_path %>

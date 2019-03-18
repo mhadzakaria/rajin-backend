@@ -12,6 +12,7 @@ table.dataTable {
 // Search button
 .dataTables_filter {
     text-align: center !important;
+    display: none; 
 
     @include media-breakpoint-up(md) {
         float: right;
@@ -29,6 +30,23 @@ table.dataTable {
         color: inherit;
     }
 
+}
+
+.data_filter {
+  text-align: center !important;
+  float: right;
+  text-align: right !important;
+
+  label > em {
+      color: inherit;
+  }
+
+  input {
+      border: 1px solid rgba(160, 160, 160, .25);
+      margin-left: 10px;
+      padding: 0.25rem .5rem;
+      color: inherit;
+  }
 }
 
 .dataTables_length {

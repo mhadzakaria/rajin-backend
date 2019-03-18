@@ -4,7 +4,8 @@ class SkillsController < ApplicationController
   # GET /skills
   # GET /skills.json
   def index
-    @skills = Skill.all
+    @q = Skill.ransack(params[:q])
+    @skills = @q.result.page(params[:page])
   end
 
   # GET /skills/1

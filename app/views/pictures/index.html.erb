@@ -6,8 +6,15 @@
   <div class="container-fluid">
      <div class="card">
         <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
+          <div class="card-title"></div>
+          <div class="text-sm"></div>
+          <div id="datatable_test_filter" class="data_filter">
+            <%= search_form_for @q do |f| %>
+              <%= f.label "Search by pictureable type" %>
+              <%= f.search_field :pictureable_type_cont %>
+              <%= f.submit %>
+            <% end %>
+          </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -25,7 +32,7 @@
                 <tbody>
                   <% @pictures.each do |picture| %>
                     <tr>
-                      <td><%= picture.user_id %></td>
+                      <td><%= picture.user.full_name unless picture.user.nil? %></td>
                       <td><%= picture.pictureable_type %></td>
                       <td><%= picture.pictureable_id %></td>
                       <td><%= picture.file_url %></td>
@@ -40,6 +47,7 @@
                 </tbody>
              </table>
           </div>
+          <%= paginate @pictures %>
         </div>
      </div>
     <!-- <%#= link_to 'New Picture', new_picture_path %> -->

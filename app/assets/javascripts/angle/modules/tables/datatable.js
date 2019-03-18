@@ -14,7 +14,7 @@
 
         $('#datatable_test').DataTable({
             'destroy': true,
-            'paging': true, // Table pagination
+            'paging': false, // Table pagination
             'ordering': true, // Column ordering
             'info': true, // Bottom left status text
             responsive: true,

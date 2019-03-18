@@ -46,6 +46,12 @@ gem 'aasm'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
+# For pagination
+gem 'kaminari'
+
+# Searching
+gem 'ransack', github: 'activerecord-hackery/ransack'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'letter_opener'

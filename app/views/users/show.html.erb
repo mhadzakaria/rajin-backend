@@ -84,6 +84,3 @@
   <strong>Skills:</strong>
   <%= @user.skills.map{|skill| skill.name}.join(",") %>
 </p>
-
-<br>
-<%= link_to 'Add Pictures', new_picture_path(pictureable_type: @user.class.name, pictureable_id: @user.id) %>

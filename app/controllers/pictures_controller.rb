@@ -6,7 +6,8 @@ class PicturesController < ApplicationController
   # GET /pictures
   # GET /pictures.json
   def index
-    @pictures = Picture.all
+    @q = Picture.ransack(params[:q])
+    @pictures = @q.result.page(params[:page])
   end
 
   # GET /pictures/1
