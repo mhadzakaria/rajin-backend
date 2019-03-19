@@ -29,7 +29,7 @@ class JobRequest < ApplicationRecord
     another_job_requests.each do |job_request|
       job_request.reject!
       job_request.reload
-      job_request.rejected_message(message)
+      job_request.rejected_message(reject_message)
     end
   end
 
