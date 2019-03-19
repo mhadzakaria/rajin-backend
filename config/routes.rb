@@ -35,7 +35,6 @@ Rails.application.routes.draw do
       resources :skills
       resources :job_categories
       resources :school_partners
-      resources :user_messages
 
       resources :job_requests do
         resources :reviews, on: :member
@@ -63,4 +62,8 @@ Rails.application.routes.draw do
   resources :job_requests
   resources :skills
   resources :pictures
+  resources :companies
+  resources :school_partners
+  resources :users, only: [:index, :show]
+  resources :mentors, only: [:index, :show]
 end

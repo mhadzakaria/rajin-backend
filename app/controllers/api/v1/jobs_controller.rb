@@ -14,9 +14,11 @@ module Api::V1
     def create
       @job = Job.new(job_params)
       if @job.save
-        if params[:job][:pictures].present?
-          params[:job][:pictures].each do |file|
-            picture = @job.pictures.build(file_url: file[:file_url], user_id: @job.user_id)
+        if params[:pictures].present?
+          params[:pictures][:files].each do |file|
+            picture = @job.pictures.build(picture_params)
+            picture.file_url = file[:file_url]
+            picture.user_id = @job.user_id
             picture.save
           end
         end
@@ -28,9 +30,11 @@ module Api::V1
 
     def update
       if @job.update(job_params)
-        if params[:job][:pictures].present?
-          params[:job][:pictures].each do |file|
-            picture = @job.pictures.build(file_url: file[:file_url], user_id: @job.user_id)
+        if params[:pictures].present?
+          params[:pictures][:files].each do |file|
+            picture = @job.pictures.build(picture_params)
+            picture.file_url = file[:file_url]
+            picture.user_id = @job.user_id
             picture.save
           end
         end
@@ -89,7 +93,7 @@ module Api::V1
     end
 
     def picture_params
-      params.require(:picture).permit(:id, :pictureable_type, :pictureable_id, :file_type, :file_url, files: [])
+      params.require(:pictures).permit(:id, :pictureable_type, :pictureable_id, :file_type, :file_url, files: [])
     end
 
     def job_params
