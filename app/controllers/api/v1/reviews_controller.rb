@@ -1,6 +1,6 @@
 module Api::V1
   class ReviewsController < Api::BaseApiController
-    before_action :set_job_request, only: [:index, :show, :destroy, :update]
+    before_action :set_job_request, only: [:create, :index, :show, :destroy, :update]
     before_action :set_review, only: [:show, :destroy, :update]
 
     def index
@@ -14,6 +14,8 @@ module Api::V1
 
     def create
       @review = Review.new(review_params)
+      @review.job_id = @job.id
+      @review.save
       if @review.save
         render json: @review, serialize: ReviewSerializer, status: 200
       else

@@ -27,10 +27,13 @@ Rails.application.routes.draw do
         collection do
           get "filter"
         end
+
+        member do
+          get "on_progress" => "jobs#on_progress"
+          get "complete" => "jobs#complete"
+          get "incomplete" => "jobs#incomplete"
+        end
       end
-      get "jobs/:id/on_progress" => "jobs#on_progress"
-      get "jobs/:id/complete" => "jobs#complete"
-      get "jobs/:id/incomplete" => "jobs#incomplete"
 
       resources :skills
       resources :job_categories
@@ -38,9 +41,9 @@ Rails.application.routes.draw do
 
       resources :job_requests do
         resources :reviews, on: :member
+        put "reject" => "job_requests#reject", on: :member
+        put "accept" => "job_requests#accept", on: :member
       end
-      put "job_requests/:id/accept" => "job_requests#accept"
-      put "job_requests/:id/reject" => "job_requests#reject"
     end
   end
   # End API routes
