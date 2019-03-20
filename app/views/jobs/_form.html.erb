@@ -43,7 +43,7 @@
           <div class="form-group row">
             <%= form.label :amount, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.number_field :amount, class: "form-control", type:"text" %>
+              <%= form.number_field :amount, class: "form-control", type:"number" %>
             </div>
           </div>
         </fieldset>
@@ -75,7 +75,7 @@
           <div class="form-group row">
             <%= form.label :postcode, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :postcode, class: "form-control", type:"text" %>
+              <%= form.text_field :postcode, class: "form-control", type:"number" %>
             </div>
           </div>
         </fieldset>
@@ -99,7 +99,7 @@
           <div class="form-group row">
             <%= form.label :start_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :start_date, class: "form-control datepicker", type:"text" %>
+              <%= form.text_field :start_date, class: "form-control datepicker" %>
             </div>
           </div>
         </fieldset>
@@ -107,7 +107,7 @@
           <div class="form-group row">
             <%= form.label :end_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :end_date, class: "form-control datepicker", type:"text" %>
+              <%= form.text_field :end_date, class: "form-control datepicker" %>
             </div>
           </div>
         </fieldset>
@@ -115,7 +115,7 @@
           <div class="form-group row">
             <%= form.label :latitude, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :latitude, class: "form-control", type:"text" %>
+              <%= form.text_field :latitude, class: "form-control", type:"number", step: "any" %>
             </div>
           </div>
         </fieldset>
@@ -123,7 +123,7 @@
           <div class="form-group row">
             <%= form.label :longitude, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :longitude, class: "form-control", type:"text" %>
+              <%= form.text_field :longitude, class: "form-control", type:"number", step: "any" %>
             </div>
           </div>
         </fieldset>
@@ -134,22 +134,6 @@
             </label>
            <div class="col-md-10">
             <%= form.collection_select :job_category_id, JobCategory.order(:name), :id, :name,{}, class: 'custom-select custom-select-sm' %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :user_id, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.number_field :user_id, class: "form-control", type:"text" %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :country, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.text_field :country, class: "form-control", type:"text" %>
             </div>
           </div>
         </fieldset>
@@ -170,7 +154,7 @@
           </div>
 
         <div class="actions">
-          <%= form.submit "Create Skill", class: "btn btn-primary" %>
+          <%= form.submit "Create Job", class: "btn btn-primary" %>
         </div>
       <% end %>
    </div>
@@ -178,6 +162,6 @@
 
 <script type="text/javascript">
   $( function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
   } );
 </script>

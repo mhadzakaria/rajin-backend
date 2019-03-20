@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_13_042143) do
+ActiveRecord::Schema.define(version: 2019_03_05_014321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_03_13_042143) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["job_id", "user_id"], name: "index_job_requests_on_job_id_and_user_id", unique: true
     t.index ["job_id"], name: "index_job_requests_on_job_id"
     t.index ["user_id"], name: "index_job_requests_on_user_id"
   end
@@ -85,12 +86,13 @@ ActiveRecord::Schema.define(version: 2019_03_13_042143) do
     t.float "longitude"
     t.string "status"
     t.integer "job_category_id"
-    t.integer "user_id"
+    t.string "ownerable_type"
+    t.bigint "ownerable_id"
     t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_category_id"], name: "index_jobs_on_job_category_id"
-    t.index ["user_id"], name: "index_jobs_on_user_id"
+    t.index ["ownerable_type", "ownerable_id"], name: "index_jobs_on_ownerable_type_and_ownerable_id"
   end
 
   create_table "mentors", force: :cascade do |t|
@@ -231,14 +233,6 @@ ActiveRecord::Schema.define(version: 2019_03_13_042143) do
     t.datetime "updated_at", null: false
     t.index ["merchant_id"], name: "index_subscription_packages_on_merchant_id"
     t.index ["user_id"], name: "index_subscription_packages_on_user_id"
-  end
-
-  create_table "user_messages", force: :cascade do |t|
-    t.integer "job_request_id"
-    t.text "message_for_accepted_user"
-    t.text "message_for_rejected_user"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

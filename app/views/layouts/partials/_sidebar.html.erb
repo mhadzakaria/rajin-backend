@@ -26,12 +26,12 @@
          <li class="nav-heading">
             <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
          </li>
-        <li class="<%#= 'active' if controller?('dashboard')%>">
+        <!-- <li class="<%#= 'active' if controller?('dashboard')%>">
             <a href="#dashboard" title="Dashboard" data-toggle="collapse">
-               <!-- <div class="badge badge-info float-right">3</div> -->
+               <div class="badge badge-info float-right">3</div>
                <em class="icon-speedometer"></em>
                <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
-            </a>
+            </a> -->
             <!-- <ul id="dashboard" class="sidebar-nav sidebar-subnav collapse <%#= 'show' if  -->controller?('dashboard') %>">
                <li class="sidebar-subnav-header">Dashboard</li> -->
 <!--                <li class="<%#= 'active' if controller?('dashboard') && action?('dashboard_v1') %>">
@@ -50,6 +50,12 @@
                   </a>
                </li> -->
             <!-- </ul> -->
+        <!-- </li> -->
+        <li>
+          <%= link_to root_path do %>
+            <em class="icon-speedometer"></em>
+            <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+          <% end %>
         </li>
         <li>
           <%= link_to jobs_path do %>

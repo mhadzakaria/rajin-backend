@@ -19,7 +19,6 @@ class PicturesController < ApplicationController
   def new
     if params[:pictureable_type] == "Job"
       @picture = @obj.pictures.build
-      @picture.user_id = @obj.user.id
     else
       @picture = @obj.build_picture
       if params[:pictureable_type] == "User"

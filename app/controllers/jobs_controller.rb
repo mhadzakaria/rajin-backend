@@ -26,6 +26,8 @@ class JobsController < ApplicationController
   # POST /jobs.json
   def create
     @job = Job.new(job_params)
+    @job.ownerable = current_person
+    @job.save
 
     respond_to do |format|
       if @job.save

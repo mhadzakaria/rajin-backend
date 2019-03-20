@@ -5,7 +5,7 @@ class Job < ApplicationRecord
 
   serialize :skill_ids, Array
 
-  belongs_to :user
+  belongs_to :ownerable, polymorphic: true
   belongs_to :job_category
 
   has_many :pictures, as: :pictureable, dependent: :destroy

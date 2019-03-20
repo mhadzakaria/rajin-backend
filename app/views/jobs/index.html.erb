@@ -37,7 +37,7 @@
                       <th>Longitude</th>
                       <th>Status</th>
                       <th>Job category</th>
-                      <th>User</th>
+                      <th>Owner</th>
                       <th>Skill ids</th>
                       <th></th>
                    </tr>
@@ -61,7 +61,7 @@
                       <td><%= job.longitude %></td>
                       <td><%= job.status %></td>
                       <td><%= job.job_category.name %></td>
-                      <td><%= job.user.full_name %></td>
+                      <td><%= job.ownerable.full_name %></td>
                       <td><%= job.skills.map{|skill| skill.name}.join(",") %></td>
                       <td>
                         <%= link_to 'Show', job %>

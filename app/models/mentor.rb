@@ -11,6 +11,7 @@ class Mentor < ApplicationRecord
 
   has_many  :school_applies
   has_one   :picture, as: :pictureable, dependent: :destroy
+  has_many  :jobs, as: :ownerable
 
   paginates_per 10
 
@@ -29,6 +30,13 @@ class Mentor < ApplicationRecord
 
   def generate_access_token
     self.access_token = SecureRandom.hex(16)
+  end
+
+  def full_name
+    name = "#{self.first_name} #{self.last_name}"
+    name = "#{self.email}" if name.blank?
+
+    return name
   end
 
   def skills

@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   layout :set_layout
 
+  def current_person
+    @current_person = current_user || current_mentor
+  end
+
   private
 
     def set_layout

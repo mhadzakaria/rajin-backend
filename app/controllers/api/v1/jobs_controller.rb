@@ -13,12 +13,13 @@ module Api::V1
 
     def create
       @job = Job.new(job_params)
+      @job.ownerable = current_person
+      @job.save
       if @job.save
-        if params[:pictures].present?
+        if params[:pictures][:files].present?
           params[:pictures][:files].each do |file|
             picture = @job.pictures.build(picture_params)
             picture.file_url = file[:file_url]
-            picture.user_id = @job.user_id
             picture.save
           end
         end
@@ -34,7 +35,6 @@ module Api::V1
           params[:pictures][:files].each do |file|
             picture = @job.pictures.build(picture_params)
             picture.file_url = file[:file_url]
-            picture.user_id = @job.user_id
             picture.save
           end
         end
@@ -73,7 +73,7 @@ module Api::V1
           skill_ids                   = params[:search][:skill_ids]
         end
 
-        user     = current_user
+        user     = current_person
         amount   = params[:search][:amount] if params[:search][:amount].present?
         distance = params[:search][:distance] if params[:search][:distance].present?
         verified = params[:search][:verified] if params[:search][:verified].present?
@@ -101,7 +101,7 @@ module Api::V1
         params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
       end
 
-      params.require(:job).permit(:user_id, :job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, skill_ids: [])
+      params.require(:job).permit(:job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, :ownerable_type, :ownerable_id, skill_ids: [])
     end
   end
 end

@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   has_many  :reviews
   has_many  :given_reviews, foreign_key: :sender_id, class_name: "Review"
-  has_many  :jobs
+  has_many  :jobs, as: :ownerable
   has_many  :job_requests
   has_many  :notifications
   has_many  :orders
