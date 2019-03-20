@@ -10,8 +10,81 @@
            <div class="text-sm"></div>
            <div id="datatable_test_filter" class="data_filter">
             <%= search_form_for @q do |f| %>
-              <%= f.label "Search by title" %>
-              <%= f.search_field :title_cont %>
+              <table>
+                <tr>
+                  <td>
+                    <%= f.label "Title" %>
+                    <%= f.search_field :title_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Amount" %>
+                    <%= f.search_field :amount_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "Payment type" %>
+                    <%= f.search_field :payment_type_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Address" %>
+                    <%= f.search_field :full_address_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "City" %>
+                    <%= f.search_field :city_cont %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label "State" %>
+                    <%= f.search_field :state_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Country" %>
+                    <%= f.search_field :country_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Postcode" %>
+                    <%= f.search_field :postcode_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "Start date" %>
+                    <%= f.search_field :start_date_gteq %>
+                  </td>
+                  <td>
+                    <%= f.label "End date" %>
+                    <%= f.search_field :end_date_lteq %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label "Job Category" %>
+                    <%= f.select :job_category_id_eq, options_from_collection_for_select(JobCategory.all, "id", "name", @q.job_category_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                  </td>
+                  <td>
+                    <%= f.label "Status" %>
+                    <%= f.search_field :status_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Latitude" %>
+                    <%= f.search_field :latitude_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "Longitude" %>
+                    <%= f.search_field :longitude_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "Skill" %>
+                    <%= f.select :skill_ids, options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, params[:skill_ids]), {}, { include_hidden: true, multiple: true, style: "width: 120px;" } %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label "Owner" %>
+                    <%= f.text_field :owner_name_in, value: params.fetch(:q, {}).fetch(:owner_name_in, nil) %>
+                  </td>
+                </tr>
+              </table>
+              <br>
               <%= f.submit %>
             <% end %>
           </div>

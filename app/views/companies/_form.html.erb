@@ -59,7 +59,7 @@
           <div class="form-group row">
             <%= form.label :postcode, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :postcode, class: "form-control", type:"text" %>
+              <%= form.text_field :postcode, class: "form-control", type:"number" %>
             </div>
           </div>
         </fieldset>
@@ -83,7 +83,7 @@
           <div class="form-group row">
             <%= form.label :latitude, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.number_field :latitude, class: "form-control", type:"number" %>
+              <%= form.number_field :latitude, class: "form-control", type:"number", step: "any" %>
             </div>
           </div>
         </fieldset>
@@ -91,7 +91,7 @@
           <div class="form-group row">
             <%= form.label :longitude, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.number_field :longitude, class: "form-control", type:"number" %>
+              <%= form.number_field :longitude, class: "form-control", type:"number", step: "any" %>
             </div>
           </div>
         </fieldset>

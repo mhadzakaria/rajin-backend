@@ -10,8 +10,53 @@
            <div class="text-sm"></div>
            <div id="datatable_test_filter" class="data_filter">
             <%= search_form_for @q do |f| %>
-              <%= f.label "Search by name" %>
-              <%= f.search_field :name_cont %>
+              <table>
+                <tr>
+                  <td>
+                    <%= f.label "Name" %>
+                    <%= f.search_field :name_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Status" %>
+                    <%= f.search_field :status_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Phone Number" %>
+                    <%= f.search_field :phone_number_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Address" %>
+                    <%= f.search_field :full_address_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "City" %>
+                    <%= f.search_field :city_cont %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%= f.label "Postcode" %>
+                    <%= f.search_field :postcode_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "State" %>
+                    <%= f.search_field :state_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Country" %>
+                    <%= f.search_field :country_cont %>
+                  </td>
+                  <td>
+                    <%= f.label "Latitude" %>
+                    <%= f.search_field :latitude_eq %>
+                  </td>
+                  <td>
+                    <%= f.label "Longitude" %>
+                    <%= f.search_field :longitude_eq %>
+                  </td>
+                </tr>
+              </table>
+              <br>
               <%= f.submit %>
             <% end %>
           </div>

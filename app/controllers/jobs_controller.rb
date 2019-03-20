@@ -5,7 +5,23 @@ class JobsController < ApplicationController
   # GET /jobs.json
   def index
     @q = Job.ransack(params[:q])
+    if params[:q].present?
+      skill_field = params[:q][:skill_ids]
+      skill_field.delete("")
+
+      skill_field = skill_field.map(&:to_i)
+    end
     @jobs = @q.result.page(params[:page])
+    if skill_field.present?
+      results = []
+      skill_field.each do |skill|
+        @jobs.each do |job|
+          result = job.skill_ids.include?(skill)
+          results << job.id if result
+        end
+      end
+      @jobs = Job.where(id: results.uniq).page(params[:page])
+    end
   end
 
   # GET /jobs/1

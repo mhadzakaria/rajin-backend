@@ -32,6 +32,25 @@ class Job < ApplicationRecord
     end
   end
 
+  ransacker :owner_name, formatter: proc { |value| 
+    job_ids = Job.where(
+      ownerable_id: User.select('users.id as ownerable_id').where('lower(first_name) LIKE ?', "%#{value.downcase}%"),
+      ownerable_type: 'User'
+    ).pluck(:id) + Job.where(
+      ownerable_id: Mentor.select('mentors.id as ownerable_id').where('lower(first_name) LIKE ?', "%#{value.downcase}%"),
+      ownerable_type: 'Mentor'
+    ).pluck(:id)
+
+    job_ids.presence
+
+    } do |parent|
+      parent.table[:id]
+  end
+
+  # ransacker :skill_ids do
+  #   Arel.sql("array_to_integer(skill_ids, ',')")
+  # end
+
   class << self
     def filter(user, skill_ids, amount, distance, verified)
       filter_skill = []
