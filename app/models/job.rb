@@ -1,7 +1,9 @@
 class Job < ApplicationRecord
+  PAYMENT_TERM = ['Cash', 'Installment']
+  PAYMENT_TYPE = ['One-off', 'Per Hours', 'Per Week', 'Others']
+
   include Geocoderable
   include AASM
-
 
   serialize :skill_ids, Array
 

@@ -1,29 +1,26 @@
 class JobRequestsController < ApplicationController
   before_action :set_job_request, only: [:show, :edit, :update, :destroy]
 
-  # GET /job_requests
-  # GET /job_requests.json
   def index
-    @q = JobRequest.ransack(params[:q])
+    # filter collection
+    @users        = User.all.map{|user| [user.full_name, user.id]}
+    @jobs         = Job.all.map{|job| [job.title, job.id]}
+    @statues      = JobRequest.aasm.states.map{|state| [state.name.to_s.humanize, state.name]}
+
+    @q            = JobRequest.ransack(params[:q])
     @job_requests = @q.result.page(params[:page])
   end
 
-  # GET /job_requests/1
-  # GET /job_requests/1.json
   def show
   end
 
-  # GET /job_requests/new
   def new
     @job_request = JobRequest.new
   end
 
-  # GET /job_requests/1/edit
   def edit
   end
 
-  # POST /job_requests
-  # POST /job_requests.json
   def create
     @job_request = current_user.job_requests.build(job_request_params)
 
@@ -38,8 +35,6 @@ class JobRequestsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /job_requests/1
-  # PATCH/PUT /job_requests/1.json
   def update
     respond_to do |format|
       if @job_request.update(job_request_params)
@@ -52,8 +47,6 @@ class JobRequestsController < ApplicationController
     end
   end
 
-  # DELETE /job_requests/1
-  # DELETE /job_requests/1.json
   def destroy
     @job_request.destroy
     respond_to do |format|
@@ -63,12 +56,10 @@ class JobRequestsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job_request
       @job_request = JobRequest.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def job_request_params
       params.require(:job_request).permit(:user_id, :job_id, :status)
     end

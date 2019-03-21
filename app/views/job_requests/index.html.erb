@@ -14,19 +14,17 @@
                 <tr>
                   <td>
                     <%= f.label "User" %>
-                    <%= f.select :user_id_eq, options_from_collection_for_select(User.all, "id", "full_name", @q.user_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                    <%= f.select :user_id_eq, options_for_select(@users, @q.user_id_eq),
+                          {include_blank: 'Select user'}, style: "width: 200px" %>
                   </td>
                   <td>
                     <%= f.label "Job" %>
-                    <%= f.select :job_id_eq, options_from_collection_for_select(Job.all, "id", "title", @q.job_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                    <%= f.select :job_id_eq, options_for_select(@jobs, @q.job_id_eq),
+                          {include_blank: 'Select job'}, style: "width: 200px" %>
                   </td>
                   <td>
                     <%= f.label "Status" %>
-                    <%= f.select :status_cont, options_for_select([
-                        ['pending'],
-                        ['on_progress'],
-                        ['completed']
-                      ]), {:include_blank => true}, style: "width: 200px" %>
+                    <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "select status"}, style: "width: 200px" %>
                   </td>
                 </tr>
               </table>

@@ -58,15 +58,13 @@
                 <tr>
                   <td>
                     <%= f.label "Job Category" %>
-                    <%= f.select :job_category_id_eq, options_from_collection_for_select(JobCategory.all, "id", "name", @q.job_category_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                    <%= f.select :job_category_id_eq, options_for_select(@job_categories, @q.job_category_id_eq),
+                        {include_blank: "Select category"}, style: "width: 200px" %>
                   </td>
                   <td>
                     <%= f.label "Status" %>
-                    <%= f.select :status_cont, options_for_select([
-                        ['pending'],
-                        ['accepted'],
-                        ['rejected']
-                      ]), {:include_blank => true}, style: "width: 200px" %>
+                    <%= f.select :status_cont, options_for_select(@statuses, @q.status_cont),
+                        {include_blank: "Select status"}, style: "width: 200px" %>
                   </td>
                   <td>
                     <%= f.label "Latitude" %>
@@ -78,7 +76,8 @@
                   </td>
                   <td>
                     <%= f.label "Skill" %>
-                    <%= f.select :skill_ids, options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, params[:skill_ids]), {}, { include_hidden: true, multiple: true, style: "width: 120px;" } %>
+                    <%= f.select :skill_ids, options_for_select(@skills, params[:skill_ids]),
+                        {}, { include_hidden: true, multiple: true, style: "width: 120px;" } %>
                   </td>
                 </tr>
                 <tr>
@@ -150,7 +149,7 @@
                 </tbody>
              </table>
           </div>
-            <%= paginate @jobs %>
+          <%= paginate @jobs %>
         </div>
      </div>
     <%= link_to 'New Job', new_job_path %>

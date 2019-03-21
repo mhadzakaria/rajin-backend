@@ -1,9 +1,13 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :edit, :update, :destroy]
+  before_action :get_collection, only: [:new, :edit, :create, :update]
 
-  # GET /jobs
-  # GET /jobs.json
   def index
+    # filter collection
+    @job_categories = JobCategory.all.map{|category|  [category.name, category.id]}
+    @statuses       = Job.aasm.states.map{|state| [state.name.to_s.humanize, state.name] }
+    @skills         = Skill.all.map{|skill| [skill.name, skill.id]}
+
     @q = Job.ransack(params[:q])
     if params[:q].present?
       skill_field = params[:q][:skill_ids]
@@ -11,7 +15,9 @@ class JobsController < ApplicationController
 
       skill_field = skill_field.map(&:to_i)
     end
+
     @jobs = @q.result.page(params[:page])
+
     if skill_field.present?
       results = []
       skill_field.each do |skill|
@@ -24,26 +30,19 @@ class JobsController < ApplicationController
     end
   end
 
-  # GET /jobs/1
-  # GET /jobs/1.json
   def show
   end
 
-  # GET /jobs/new
   def new
     @job = Job.new
   end
 
-  # GET /jobs/1/edit
   def edit
   end
 
-  # POST /jobs
-  # POST /jobs.json
   def create
     @job = Job.new(job_params)
     @job.ownerable = current_person
-    @job.save
 
     respond_to do |format|
       if @job.save
@@ -56,8 +55,6 @@ class JobsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /jobs/1
-  # PATCH/PUT /jobs/1.json
   def update
     respond_to do |format|
       if @job.update(job_params)
@@ -70,8 +67,6 @@ class JobsController < ApplicationController
     end
   end
 
-  # DELETE /jobs/1
-  # DELETE /jobs/1.json
   def destroy
     @job.destroy
     respond_to do |format|
@@ -81,14 +76,18 @@ class JobsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def job_params
       params[:job][:skill_ids] = params[:job][:skill_ids].map(&:to_i)
       params.require(:job).permit(:title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :user_id, skill_ids: [])
+    end
+
+    def get_collection
+      @job_categories = JobCategory.order(:name).map{|category| [category.name, category.id]}
+      @payment_terms  = Job::PAYMENT_TERM
+      @payment_types  = Job::PAYMENT_TYPE
     end
 end

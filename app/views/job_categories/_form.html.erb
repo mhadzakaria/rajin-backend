@@ -25,9 +25,10 @@
         </fieldset>
         <fieldset>
           <div class="form-group row">
-            <%= form.label :parent_id, class: "col-md-2 col-form-label" %>
+            <%= form.label :parent_id, "Parent Category (optional)", class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :parent_id, class: "form-control", type:"text" %>
+              <%= form.select :parent_id, options_for_select(@other_categories, @job_category.parent_id),
+                  {include_blank: "Select parent category"}, class: "form-control" %>
             </div>
           </div>
         </fieldset>

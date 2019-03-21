@@ -5,7 +5,6 @@
         <% if company.errors.any? %>
           <div id="error_explanation">
             <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
-
             <ul>
             <% company.errors.full_messages.each do |message| %>
               <li><%= message %></li>
@@ -79,24 +78,10 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :latitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.number_field :latitude, class: "form-control", type:"number", step: "any" %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :longitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.number_field :longitude, class: "form-control", type:"number", step: "any" %>
-            </div>
-          </div>
-        </fieldset>
 
         <div class="actions">
+          <%= form.hidden_field :latitude, class: "form-control" %>
+          <%= form.hidden_field :longitude, class: "form-control" %>
           <%= form.submit "Create Company", class: "btn btn-primary" %>
         </div>
       <% end %>

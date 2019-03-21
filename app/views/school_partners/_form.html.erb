@@ -71,24 +71,10 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :latitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.number_field :latitude, class: "form-control", type:"number" %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :longitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.number_field :longitude, class: "form-control", type:"number" %>
-            </div>
-          </div>
-        </fieldset>
 
         <div class="actions">
+          <%= form.hidden_field :latitude %>
+          <%= form.hidden_field :longitude %>
           <%= form.submit "Create School Partner", class: "btn btn-primary" %>
         </div>
       <% end %>

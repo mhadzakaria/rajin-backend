@@ -17,7 +17,7 @@
         <fieldset>
           <legend>Form job</legend>
           <div class="form-group row">
-            <%= form.label :title, class: "col-md-2 col-form-label" %>
+            <%= form.label :title, "Job title", class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
               <%= form.text_field :title, class: "form-control", type:"text" %>
             </div>
@@ -35,7 +35,8 @@
           <div class="form-group row">
             <%= form.label :payment_term, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_area :payment_term, class: "form-control", type:"text" %>
+              <%= form.select :payment_term, options_for_select(@payment_terms), { include_blank: "Select payment term" },
+                    class: 'form-control' %>
             </div>
           </div>
         </fieldset>
@@ -51,7 +52,8 @@
           <div class="form-group row">
             <%= form.label :payment_type, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :payment_type, class: "form-control", type:"text" %>
+              <%= form.select :payment_type, options_for_select(@payment_types), { include_blank: "Select payment type" },
+                    class: 'form-control' %>
             </div>
           </div>
         </fieldset>
@@ -99,7 +101,7 @@
           <div class="form-group row">
             <%= form.label :start_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :start_date, class: "form-control datepicker" %>
+              <%= form.text_field :start_date, class: "form-control datepicker", value: date_formater(form.object.start_date, "%d-%m-%Y") %>
             </div>
           </div>
         </fieldset>
@@ -107,23 +109,7 @@
           <div class="form-group row">
             <%= form.label :end_date, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :end_date, class: "form-control datepicker" %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :latitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.text_field :latitude, class: "form-control", type:"number", step: "any" %>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="form-group row">
-            <%= form.label :longitude, class: "col-md-2 col-form-label" %>
-            <div class="col-md-10">
-              <%= form.text_field :longitude, class: "form-control", type:"number", step: "any" %>
+              <%= form.text_field :end_date, class: "form-control datepicker", value: date_formater(form.object.end_date, "%d-%m-%Y") %>
             </div>
           </div>
         </fieldset>
@@ -133,35 +119,39 @@
               <%= form.label :job_category_id %>
             </label>
            <div class="col-md-10">
-            <%= form.collection_select :job_category_id, JobCategory.order(:name), :id, :name,{}, class: 'custom-select custom-select-sm' %>
+            <%= form.select :job_category_id, options_for_select(@job_categories), {}, class: 'custom-select custom-select-sm' %>
             </div>
           </div>
         </fieldset>
         <fieldset class="last-child">
           <div class="form-group row">
             <label class="col-md-2 col-form-label">
-              <%= form.label :skill_ids %>
+              <%= form.label :skill_ids, "Required skills" %>
             </label>
             <div class="col-xl-4">
               <%= form.select :skill_ids, options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, params[:skill_ids]), {}, { include_hidden: true, multiple: true, class: 'form-control form-control-lg' } %>
             </div>
           </div>
        </fieldset>
-          <div class="form-group row">
-            <div class="col-md-10">
-              <%= form.text_field :status, class: "form-control", type: "hidden" %>
-            </div>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <%= form.text_field :status, class: "form-control", type: "hidden" %>
           </div>
+        </div>
 
         <div class="actions">
+          <%= form.hidden_field :latitude, class: "form-control" %>
+          <%= form.hidden_field :longitude, class: "form-control" %>
           <%= form.submit "Create Job", class: "btn btn-primary" %>
         </div>
       <% end %>
    </div>
 </div>
 
-<script type="text/javascript">
-  $( function() {
-    $( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
-  } );
-</script>
+<% content_for :vendor_js_area do %>
+  <script type="text/javascript">
+    $( function() {
+      $( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    } );
+  </script>
+<% end %>

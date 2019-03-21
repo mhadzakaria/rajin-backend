@@ -13,6 +13,9 @@ Rails.application.config.assets.precompile += %w( components-jqueryui/jquery-ui.
 Rails.application.config.assets.precompile += %w( jquery-ui-touch-punch/jquery.ui.touch-punch.min )
 Rails.application.config.assets.precompile += %w( x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css )
 Rails.application.config.assets.precompile += %w( x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js )
+Rails.application.config.assets.precompile += %w( datatables/dataTables.bootstrap4.css )
+Rails.application.config.assets.precompile += %w( datatables/keyTable.bootstrap.css )
+Rails.application.config.assets.precompile += %w( datatables/responsive.bootstrap.css )
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets

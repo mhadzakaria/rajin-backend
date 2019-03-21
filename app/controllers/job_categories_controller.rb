@@ -1,29 +1,22 @@
 class JobCategoriesController < ApplicationController
   before_action :set_job_category, only: [:show, :edit, :update, :destroy]
+  before_action :get_collection, only: [:new, :edit, :create, :update]
 
-  # GET /job_categories
-  # GET /job_categories.json
   def index
     @q = JobCategory.ransack(params[:q])
     @job_categories = @q.result.page(params[:page])
   end
 
-  # GET /job_categories/1
-  # GET /job_categories/1.json
   def show
   end
 
-  # GET /job_categories/new
   def new
     @job_category = JobCategory.new
   end
 
-  # GET /job_categories/1/edit
   def edit
   end
 
-  # POST /job_categories
-  # POST /job_categories.json
   def create
     @job_category = JobCategory.new(job_category_params)
 
@@ -38,8 +31,6 @@ class JobCategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /job_categories/1
-  # PATCH/PUT /job_categories/1.json
   def update
     respond_to do |format|
       if @job_category.update(job_category_params)
@@ -52,8 +43,6 @@ class JobCategoriesController < ApplicationController
     end
   end
 
-  # DELETE /job_categories/1
-  # DELETE /job_categories/1.json
   def destroy
     @job_category.destroy
     respond_to do |format|
@@ -63,13 +52,15 @@ class JobCategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job_category
       @job_category = JobCategory.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def job_category_params
       params.require(:job_category).permit(:name, :parent_id)
+    end
+
+    def get_collection
+      @other_categories = JobCategory.where.not(id: @job_category.try(:id)).map{|category| [category.name, category.id]}
     end
 end
