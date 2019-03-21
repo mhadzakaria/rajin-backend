@@ -25,7 +25,7 @@ class JobRequestsController < ApplicationController
   # POST /job_requests
   # POST /job_requests.json
   def create
-    @job_request = JobRequest.new(job_request_params)
+    @job_request = current_user.job_requests.build(job_request_params)
 
     respond_to do |format|
       if @job_request.save

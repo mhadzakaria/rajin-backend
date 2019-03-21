@@ -10,9 +10,27 @@
            <div class="text-sm"></div>
            <div id="datatable_test_filter" class="data_filter">
             <%= search_form_for @q do |f| %>
-              <%= f.label "Search by status" %>
-              <%= f.search_field :status_cont %>
-              <%= f.submit %>
+              <table>
+                <tr>
+                  <td>
+                    <%= f.label "User" %>
+                    <%= f.select :user_id_eq, options_from_collection_for_select(User.all, "id", "full_name", @q.user_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                  </td>
+                  <td>
+                    <%= f.label "Job" %>
+                    <%= f.select :job_id_eq, options_from_collection_for_select(Job.all, "id", "title", @q.job_id_eq), {:include_blank => true}, style: "width: 200px" %>
+                  </td>
+                  <td>
+                    <%= f.label "Status" %>
+                    <%= f.select :status_cont, options_for_select([
+                        ['pending'],
+                        ['on_progress'],
+                        ['completed']
+                      ]), {:include_blank => true}, style: "width: 200px" %>
+                  </td>
+                </tr>
+              </table>
+                <%= f.submit %>
             <% end %>
           </div>
         </div>

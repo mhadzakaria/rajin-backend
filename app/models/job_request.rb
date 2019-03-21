@@ -44,6 +44,6 @@ class JobRequest < ApplicationRecord
   end
 
   def ensure_user_not_same
-    errors.add(:error, "You cannot apply job request to own job post.") if job.user_id.eql?(user_id)
+    errors.add(:error, "You cannot apply job request to own job post.") if job.ownerable_id.eql?(user_id) && job.ownerable_type == "User"
   end
 end

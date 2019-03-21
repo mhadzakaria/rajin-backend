@@ -62,7 +62,11 @@
                   </td>
                   <td>
                     <%= f.label "Status" %>
-                    <%= f.search_field :status_cont %>
+                    <%= f.select :status_cont, options_for_select([
+                        ['pending'],
+                        ['accepted'],
+                        ['rejected']
+                      ]), {:include_blank => true}, style: "width: 200px" %>
                   </td>
                   <td>
                     <%= f.label "Latitude" %>
