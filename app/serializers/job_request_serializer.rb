@@ -1,5 +1,5 @@
 class JobRequestSerializer < ActiveModel::Serializer
-  attributes :id, :job_detail, :job_request_status, :job_applier_detail, :job_owner_detail
+  attributes :id, :job_detail, :job_request_status, :job_applier_detail, :job_owner_detail, :chat_session
 
   def job_detail(data = {})
     job          = object.job
@@ -74,7 +74,7 @@ class JobRequestSerializer < ActiveModel::Serializer
 
   def job_owner_detail(data = {})
     job  = object.job
-    user = job.user
+    user = job.ownerable
     avatar = user.picture
 
     data[:id]           = user.id

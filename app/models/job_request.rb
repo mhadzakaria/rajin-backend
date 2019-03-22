@@ -4,6 +4,8 @@ class JobRequest < ApplicationRecord
   belongs_to :user
   belongs_to :job
 
+  has_one :chat_session
+
   paginates_per 10
 
   validate :ensure_user_not_same, on: :create
@@ -21,6 +23,9 @@ class JobRequest < ApplicationRecord
       transitions from: [:pending], to: :rejected
     end
   end
+
+  after_create :create_chat_session
+  after_update :update_chat_session
 
   def reject_another_job_requests(accept_message = "", reject_message = "")
     self.send_accepted_message(accept_message)
@@ -45,5 +50,22 @@ class JobRequest < ApplicationRecord
 
   def ensure_user_not_same
     errors.add(:error, "You cannot apply job request to own job post.") if job.ownerable_id.eql?(user_id) && job.ownerable_type == "User"
+  end
+
+  def create_chat_session
+    chat_session = self.build_chat_session
+    chat_session.user     = self.user
+    chat_session.user_job = self.job.ownerable
+    # chat_session.provider_url = create_provider_url #CREATE URL FORM FIREBAS
+    chat_session.save
+  end
+
+  def create_provider_url
+  end
+
+  def update_chat_session
+    if self.status.eql?('rejected')
+      self.chat_session.update(status: 1)
+    end
   end
 end

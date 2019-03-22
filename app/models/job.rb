@@ -15,6 +15,7 @@ class Job < ApplicationRecord
 
   has_many :job_requests
   has_many :reviews
+  has_many :chat_sessions, through: :job_requests
 
   paginates_per 10
 

@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many  :notifications
   has_many  :orders
   has_many  :school_applies
+  has_many  :chat_sessions
+  has_many  :my_job_chat_sessions, foreign_key: :user_job_id, class_name: "ChatSession"
 
   has_one   :subscription_package, dependent: :destroy
   has_one   :coin_balance, dependent: :destroy
