@@ -16,7 +16,7 @@ Rails.application.config.assets.precompile += %w( x-editable/dist/bootstrap3-edi
 Rails.application.config.assets.precompile += %w( datatables/dataTables.bootstrap4.css )
 Rails.application.config.assets.precompile += %w( datatables/keyTable.bootstrap.css )
 Rails.application.config.assets.precompile += %w( datatables/responsive.bootstrap.css )
-
+Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
