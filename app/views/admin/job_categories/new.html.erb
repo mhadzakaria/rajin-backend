@@ -1,0 +1,6 @@
+<h1>New Job Category</h1>
+
+<%= render partial: 'admin/job_categories/form',
+            locals: {job_category: @job_category, url: admin_job_categories_path, method: :post} %>
+
+<%= link_to 'Back', admin_job_categories_path %>

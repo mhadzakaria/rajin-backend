@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+<div class="content-wrapper">
+  <div class="content-heading">
+     <div>Pictures</div>
+  </div>
+  <div class="container-fluid">
+     <div class="card">
+        <div class="card-header">
+          <div class="card-title"></div>
+          <div class="text-sm"></div>
+          <div id="datatable_test_filter" class="data_filter">
+            <%= search_form_for @q, url: admin_pictures_path, method: :get do |f| %>
+              <%= f.label "Search by pictureable type" %>
+              <%= f.search_field :pictureable_type_cont %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+             <table class="table table-striped my-4 w-100" id="datatable_test">
+                <thead>
+                   <tr>
+                      <th>User</th>
+                      <th>Pictureable type</th>
+                      <th>Pictureable</th>
+                      <th>File url</th>
+                      <th>File type</th>
+                      <th></th>
+                   </tr>
+                </thead>
+                <tbody>
+                  <% @pictures.each do |picture| %>
+                    <tr>
+                      <td><%= picture.user.full_name unless picture.user.nil? %></td>
+                      <td><%= picture.pictureable_type %></td>
+                      <td><%= picture.pictureable_id %></td>
+                      <td><%= picture.file_url %></td>
+                      <td><%= picture.file_type %></td>
+                      <td>
+                        <%= link_to 'Show', admin_picture_path(picture) %>
+                        <%= link_to 'Edit', edit_admin_picture_path(picture) %>
+                        <%= link_to 'Destroy', admin_picture_path(picture), method: :delete, data: { confirm: 'Are you sure?' } %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+             </table>
+          </div>
+          <%= paginate @pictures %>
+        </div>
+     </div>
+    <!-- <%#= link_to 'New Picture', new_picture_path %> -->
+  </div>
+</div>

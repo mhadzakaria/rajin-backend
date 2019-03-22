@@ -51,52 +51,64 @@
                </li> -->
             <!-- </ul> -->
         <!-- </li> -->
-        <li>
-          <%= link_to root_path do %>
+        <li class='<%= sidebar_active?('home') %>'>
+          <%= link_to admin_root_path do %>
             <em class="icon-speedometer"></em>
             <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to jobs_path do %>
+        <li class='<%= sidebar_active?('jobs') %>'>
+          <%= link_to admin_jobs_path do %>
             <em class="icon-note"></em>
             <span>Jobs</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to job_categories_path do %>
+        <li class='<%= sidebar_active?('job_categories') %>'>
+          <%= link_to admin_job_categories_path do %>
             <em class="icon-grid"></em>
             <span>Job Categories</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to job_requests_path do %>
+        <li class='<%= sidebar_active?('job_requests') %>'>
+          <%= link_to admin_job_requests_path do %>
             <em class="icon-doc"></em>
             <span>Job Requests</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to skills_path do %>
+        <li class='<%= sidebar_active?('skills') %>'>
+          <%= link_to admin_skills_path do %>
             <em class="icon-note"></em>
             <span>Skills</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to companies_path do %>
+        <li class='<%= sidebar_active?('companies') %>'>
+          <%= link_to admin_companies_path do %>
             <em class="icon-grid"></em>
             <span>Companies</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to school_partners_path do %>
+        <li class='<%= sidebar_active?('school_partners') %>'>
+          <%= link_to admin_school_partners_path do %>
             <em class="icon-doc"></em>
             <span>School Partners</span>
           <% end %>
         </li>
-        <li>
-          <%= link_to pictures_path do %>
+        <li class='<%= sidebar_active?('pictures') %>'>
+          <%= link_to admin_pictures_path do %>
             <em class="far fa-folder-open"></em>
             <span>Pictures</span>
+          <% end %>
+        </li>
+        <li class='<%= sidebar_active?('mentors') %>'>
+          <%= link_to admin_mentors_path do %>
+            <em class="fas fa-user-graduate"></em>
+            <span>Mentors</span>
+          <% end %>
+        </li>
+        <li class='<%= sidebar_active?('users') %>'>
+          <%= link_to admin_users_path do %>
+            <em class="far fa-user"></em>
+            <span>Users</span>
           <% end %>
         </li>
          <!-- <li class="<%#= 'active' if controller?('widgets') && action?('index') %>">

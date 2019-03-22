@@ -1,0 +1,121 @@
+/* ========================================================================
+   Component: layout
+ ========================================================================== */
+/* line 50, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+body, .wrapper .section-container {
+  background-color: #f5f7fa;
+}
+
+/* line 54, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.wrapper .aside-container {
+  background-color: #3a3f51;
+}
+
+/* ========================================================================
+   Component: top-navbar
+ ========================================================================== */
+/* line 61, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.topnavbar {
+  background-color: #ec2121;
+  background-image: linear-gradient(to right, #ec2121 0%, #f05050 100%);
+  background-repeat: repeat-x;
+}
+@media (min-width: 992px) {
+  /* line 67, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+  .topnavbar .navbar-nav > .nav-item.show > .nav-link, .topnavbar .navbar-nav > .nav-item.show > .nav-link:hover, .topnavbar .navbar-nav > .nav-item.show > .nav-link:focus {
+    box-shadow: 0 -3px 0 #dc1313 inset;
+  }
+}
+/* line 73, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.topnavbar .navbar-nav > .nav-item > .navbar-text {
+  color: #fff;
+}
+/* line 77, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.topnavbar .navbar-nav > .nav-item > .nav-link,
+.topnavbar .navbar-nav > .nav-item.show > .nav-link {
+  color: #fff;
+}
+/* line 80, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.topnavbar .navbar-nav > .nav-item > .nav-link:hover, .topnavbar .navbar-nav > .nav-item > .nav-link:focus,
+.topnavbar .navbar-nav > .nav-item.show > .nav-link:hover,
+.topnavbar .navbar-nav > .nav-item.show > .nav-link:focus {
+  color: #9a0d0d;
+}
+/* line 85, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.topnavbar .dropdown-item.active, .topnavbar .dropdown-item:active {
+  background-color: #ec2121;
+}
+
+/* ========================================================================
+   Component: sidebar
+ ========================================================================== */
+/* line 93, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar {
+  background-color: #3a3f51;
+}
+/* line 96, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar .nav-heading {
+  color: #919DA8;
+}
+
+/* line 104, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li > a, .sidebar-nav > li > .nav-item {
+  color: #e1e2e3;
+}
+/* line 107, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li > a:focus, .sidebar-nav > li > a:hover, .sidebar-nav > li > .nav-item:focus, .sidebar-nav > li > .nav-item:hover {
+  color: #f05050;
+}
+/* line 112, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li > a > em, .sidebar-nav > li > .nav-item > em {
+  color: inherits;
+}
+/* line 120, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li.active, .sidebar-nav > li.active > a, .sidebar-nav > li.active > .nav-item, .sidebar-nav > li.active .sidebar-nav, .sidebar-nav > li.open, .sidebar-nav > li.open > a, .sidebar-nav > li.open > .nav-item, .sidebar-nav > li.open .sidebar-nav {
+  background-color: #383d4e;
+  color: #f05050;
+}
+/* line 125, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li.active > .nav-item > em, .sidebar-nav > li.active > a > em, .sidebar-nav > li.open > .nav-item > em, .sidebar-nav > li.open > a > em {
+  color: #f05050;
+}
+/* line 131, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-nav > li.active {
+  border-left-color: #f05050;
+}
+
+/* line 139, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav {
+  background-color: #3a3f51;
+}
+/* line 142, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav > .sidebar-subnav-header {
+  color: #e1e2e3;
+}
+/* line 147, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav > li > a, .sidebar-subnav > li > .nav-item {
+  color: #e1e2e3;
+}
+/* line 150, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav > li > a:focus, .sidebar-subnav > li > a:hover, .sidebar-subnav > li > .nav-item:focus, .sidebar-subnav > li > .nav-item:hover {
+  color: #f05050;
+}
+/* line 157, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav > li.active > a, .sidebar-subnav > li.active > .nav-item {
+  color: #f05050;
+}
+/* line 160, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.sidebar-subnav > li.active > a:after, .sidebar-subnav > li.active > .nav-item:after {
+  border-color: #f05050;
+  background-color: #f05050;
+}
+
+/* ========================================================================
+   Component: offsidebar
+ ========================================================================== */
+/* line 176, /home/elvin/Documents/Projects/Rails/rajin-backend/app/assets/stylesheets/angle/themes/theme-h.scss */
+.offsidebar {
+  border-left: 1px solid greyscale(#cccccc);
+  background-color: #fff;
+  color: #656565;
+}

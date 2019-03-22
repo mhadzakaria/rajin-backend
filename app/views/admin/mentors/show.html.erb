@@ -1,0 +1,86 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nickname:</strong>
+  <%= @mentor.nickname %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @mentor.email %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @mentor.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @mentor.last_name %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @mentor.phone_number %>
+</p>
+
+<p>
+  <strong>Date of birth:</strong>
+  <%= @mentor.date_of_birth %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @mentor.gender %>
+</p>
+
+<p>
+  <strong>Full address:</strong>
+  <%= @mentor.full_address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @mentor.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @mentor.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @mentor.country %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @mentor.postcode %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @mentor.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @mentor.longitude %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @mentor.position %>
+</p>
+
+<p>
+  <strong>mentor type:</strong>
+  <%= @mentor.user_type %>
+</p>
+
+<p>
+  <strong>Skills:</strong>
+  <%= @mentor.skills.map{|skill| skill.name}.join(",") %>
+</p>

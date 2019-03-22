@@ -1,0 +1,7 @@
+<h1>Editing Job Category</h1>
+
+<%= render partial: 'admin/job_categories/form',
+            locals: {job_category: @job_category, url: admin_job_category_path(@job_category), method: :patch} %>
+
+<%= link_to 'Show', admin_job_category_path(@job_category) %> |
+<%= link_to 'Back', admin_job_categories_path %>

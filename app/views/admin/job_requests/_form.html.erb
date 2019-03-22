@@ -1,0 +1,38 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for job_request, url: url, method: method, local: true do |form| %>
+        <% if job_request.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(job_request.errors.count, "error") %> prohibited this job_request from being saved:</h2>
+
+            <ul>
+            <% job_request.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :job_id %>
+            </label>
+           <div class="col-md-10">
+            <%= form.collection_select :job_id, Job.order(:title), :id, :title,{}, class: 'custom-select custom-select-sm' %>
+            </div>
+          </div>
+      </fieldset>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <%= form.text_field :status, class: "form-control", type: "hidden" %>
+          </div>
+        </div>
+
+      <div class="actions">
+        <%= form.submit submit_button_label(job_request), class: "btn btn-primary" %>
+      </div>
+      <% end %>
+   </div>
+</div>

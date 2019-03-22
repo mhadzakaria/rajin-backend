@@ -1,0 +1,111 @@
+<p id="notice"><%= notice %></p>
+<div class="content-wrapper">
+  <div class="content-heading">
+     <div>Users</div>
+  </div>
+  <div class="container-fluid">
+     <div class="card">
+        <div class="card-header">
+          <div class="card-title"></div>
+          <div class="text-sm"></div>
+          <div id="datatable_test_filter" class="data_filter">
+            <%= search_form_for @q, url: admin_users_path, method: :get do |f| %>
+              <%= f.label "Search by full name" %>
+              <%= f.search_field :full_name_cont %>
+              <%= f.submit %>
+            <% end %>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+             <table class="table table-striped my-4 w-100" id="datatable_test">
+                <thead>
+                   <tr>
+                      <th>Nickname</th>
+                      <th>First name</th>
+                      <th>Last name</th>
+                      <th>Email</th>
+                      <th>Phone number</th>
+                      <th>Date of birth</th>
+                      <th>Gender</th>
+                      <th>Full Address</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Country</th>
+                      <th>Postcode</th>
+                      <th>Latitude</th>
+                      <th>Longitude</th>
+                      <th>User Type</th>
+                      <th>Company</th>
+                      <th>Skills</th>
+                      <th></th>
+                   </tr>
+                </thead>
+                <tbody>
+                  <% @users.each do |user| %>
+                    <tr>
+                      <td>
+                        <%= user.nickname %>
+                      </td>
+                      <td>
+                        <%= user.first_name %>
+                      </td>
+                      <td>
+                        <%= user.last_name %>
+                      </td>
+                      <td>
+                        <%= user.email %>
+                      </td>
+                      <td>
+                        <%= user.phone_number %>
+                      </td>
+                      <td>
+                        <%= user.date_of_birth %>
+                      </td>
+                      <td>
+                        <%= user.gender %>
+                      </td>
+                      <td>
+                        <%= user.full_address %>
+                      </td>
+                      <td>
+                        <%= user.city %>
+                      </td>
+                      <td>
+                        <%= user.state %>
+                      </td>
+                      <td>
+                        <%= user.country %>
+                      </td>
+                      <td>
+                        <%= user.postcode %>
+                      </td>
+                      <td>
+                        <%= user.latitude %>
+                      </td>
+                      <td>
+                        <%= user.longitude %>
+                      </td>
+                      <td>
+                        <%= user.user_type %>
+                      </td>
+                      <td>
+                        <%= user.company.name unless user.company.nil? %>
+                      </td>
+                      <td>
+                        <%= user.skills.map{|skill| skill.name}.join(",") %>
+                      </td>
+                      <td>
+                        <%= link_to 'Show', admin_user_path(user) %>
+                        <%= link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>   
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+             </table>
+          </div>
+          <%= paginate @users %>
+        </div>
+     </div>
+  </div>
+</div>

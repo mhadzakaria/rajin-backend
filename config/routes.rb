@@ -58,7 +58,20 @@ Rails.application.routes.draw do
     get "users/profile", to: "users/sessions#show", as: :user_profile
   end
 
-  root  'home#home'
+
+  namespace :admin do
+    resources :jobs
+    resources :job_categories
+    resources :job_requests
+    resources :skills
+    resources :pictures
+    resources :companies
+    resources :school_partners
+    resources :users, only: [:index, :show]
+    resources :mentors, only: [:index, :show]
+
+    root to: 'home#home', as: :root
+  end
 
   resources :jobs
   resources :job_categories
@@ -69,4 +82,6 @@ Rails.application.routes.draw do
   resources :school_partners
   resources :users, only: [:index, :show]
   resources :mentors, only: [:index, :show]
+
+  root  'home#home'
 end

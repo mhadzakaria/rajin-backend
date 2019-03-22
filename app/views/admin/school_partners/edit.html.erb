@@ -1,0 +1,7 @@
+<h1>Editing School Partner</h1>
+
+<%= render partial: 'admin/school_partners/form',
+            locals: {school_partner: @school_partner, url: admin_school_partner_path(@school_partner), method: :patch} %>
+
+<%= link_to 'Show', admin_school_partner_path(@school_partner) %> |
+<%= link_to 'Back', admin_school_partners_path %>

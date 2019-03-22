@@ -1,0 +1,6 @@
+<h1>Editing Company</h1>
+
+<%= render partial: 'admin/companies/form', locals: {company: @company, url: admin_company_path(@company), method: :patch} %>
+
+<%= link_to 'Show', admin_company_path(@company) %> |
+<%= link_to 'Back', admin_companies_path %>

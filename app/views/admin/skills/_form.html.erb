@@ -1,0 +1,32 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for skill, url: url, method: method, local: true, class: "form-horizontal" do |form| %>
+        <% if skill.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(skill.errors.count, "error") %> prohibited this skill from being saved:</h2>
+
+            <ul>
+            <% skill.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form skill</legend>
+          <div class="form-group row">
+            <%= form.label :name, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :name, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <%= form.submit "Create Skill", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+   </div>
+</div>

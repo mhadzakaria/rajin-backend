@@ -1,0 +1,41 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for job_category, url: url, method: method, local: true do |form| %>
+        <% if job_category.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(job_category.errors.count, "error") %> prohibited this job_category from being saved:</h2>
+
+            <ul>
+            <% job_category.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form job category</legend>
+          <div class="form-group row">
+            <%= form.label :name, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :name, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :parent_id, "Parent Category (optional)", class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.select :parent_id, options_for_select(@other_categories, @job_category.parent_id),
+                  {include_blank: "Select parent category"}, class: "form-control" %>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <%= form.submit submit_button_label(job_category), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+   </div>
+</div>

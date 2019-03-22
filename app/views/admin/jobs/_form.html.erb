@@ -1,0 +1,157 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for job, url: url, method: method, local: true do |form| %>
+        <% if job.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
+
+            <ul>
+            <% job.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form job</legend>
+          <div class="form-group row">
+            <%= form.label :title, "Job title", class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :title, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :description, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_area :description, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :payment_term, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.select :payment_term, options_for_select(@payment_terms), { include_blank: "Select payment term" },
+                    class: 'form-control' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :amount, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :amount, class: "form-control", type:"number" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :payment_type, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.select :payment_type, options_for_select(@payment_types), { include_blank: "Select payment type" },
+                    class: 'form-control' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :full_address, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_area :full_address, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :city, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :city, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :postcode, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :postcode, class: "form-control", type:"number" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :state, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :state, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :country, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :country, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :start_date, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :start_date, class: "form-control datepicker", value: date_formater(form.object.start_date, "%d-%m-%Y") %>
+            </div>
+          </div>
+        </fieldset>
+         <fieldset>
+          <div class="form-group row">
+            <%= form.label :end_date, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.text_field :end_date, class: "form-control datepicker", value: date_formater(form.object.end_date, "%d-%m-%Y") %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :job_category_id %>
+            </label>
+           <div class="col-md-10">
+            <%= form.select :job_category_id, options_for_select(@job_categories), {}, class: 'custom-select custom-select-sm' %>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last-child">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label">
+              <%= form.label :skill_ids, "Required skills" %>
+            </label>
+            <div class="col-xl-4">
+              <%= form.select :skill_ids, options_for_select(Skill.order(:id).collect{|g| [g.name, g.id]}, params[:skill_ids]), {}, { include_hidden: true, multiple: true, class: 'form-control form-control-lg' } %>
+            </div>
+          </div>
+       </fieldset>
+        <div class="form-group row">
+          <div class="col-md-10">
+            <%= form.text_field :status, class: "form-control", type: "hidden" %>
+          </div>
+        </div>
+
+        <div class="actions">
+          <%= form.hidden_field :latitude, class: "form-control" %>
+          <%= form.hidden_field :longitude, class: "form-control" %>
+          <%= form.submit submit_button_label(job), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+   </div>
+</div>
+
+<% content_for :vendor_js_area do %>
+  <script type="text/javascript">
+    $( function() {
+      $( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+    } );
+  </script>
+<% end %>

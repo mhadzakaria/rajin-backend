@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @school_partner.name %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @school_partner.phone_number %>
+</p>
+
+<p>
+  <strong>Full address:</strong>
+  <%= @school_partner.full_address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @school_partner.city %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @school_partner.postcode %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @school_partner.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @school_partner.country %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @school_partner.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @school_partner.longitude %>
+</p>
+
+<%= link_to 'Edit', edit_admin_school_partner_path(@school_partner) %> |
+<%= link_to 'Back', admin_school_partners_path %>
