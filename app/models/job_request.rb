@@ -56,7 +56,7 @@ class JobRequest < ApplicationRecord
     chat_session = self.build_chat_session
     chat_session.user     = self.user
     chat_session.user_job = self.job.ownerable
-    # chat_session.provider_url = create_provider_url #CREATE URL FORM FIREBAS
+    chat_session.provider_url = "job_request-#{self.id}-#{self.job.id}"
     chat_session.save
   end
 

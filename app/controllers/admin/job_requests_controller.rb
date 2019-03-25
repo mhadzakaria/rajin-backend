@@ -13,6 +13,7 @@ module Admin
     end
 
     def show
+      @chat_session = @job_request.chat_session
     end
 
     def new

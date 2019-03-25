@@ -28,3 +28,5 @@
 //--- Datepicker
 //= require jquery-ui
 //= require jquery-ui/widgets/datepicker
+
+//= require firebase

@@ -14,6 +14,38 @@
   <strong>Status:</strong>
   <%= @job_request.status %>
 </p>
+<div id="message-form" data-firebase='<%= raw({ apiKey: Rails.application.secrets.firebase_apiKey, authDomain: Rails.application.secrets.firebase_authDomain, databaseURL: Rails.application.secrets.firebase_databaseURL, projectId: Rails.application.secrets.firebase_projectId, storageBucket: Rails.application.secrets.firebase_storageBucket, messagingSenderId: Rails.application.secrets.firebase_messagingSenderId }.to_json) %>'>
+  <% if !@chat_session.status.eql?('closed') %>
+    <input id="value-msg"></input>
+    <button id="adding">Add</button>
+  <% end %>
+</div>
+<strong>Messages:</strong>
+<p id="messages"></p>
 
 <%= link_to 'Edit', edit_job_request_path(@job_request) %> |
 <%= link_to 'Back', job_requests_path %>
+<script>
+  firebase.initializeApp(firebaseConfig());
+
+  var database = firebase.database();
+  var refDb = database.ref('<%= @chat_session.provider_url %>')
+
+  $('#adding').on('click', function() {
+    refDb.push({
+      id: '<%= current_user.id %>',
+      name: '<%= current_user.email %>',
+      text: $('#value-msg').val(),
+      time: "<%= Time.now.strftime('%D %H:%M:%S') %>"
+    })
+  })
+
+  const updateMessages = data => {
+    var {id, name, text, time} = data.val()
+    name = (name == '<%= current_user.email %>') ? 'You' : name
+    $('#messages').append('<span>'+name+': </span><span>"'+text+'"</span> <br>')
+    $('#value-msg').val('')
+  }
+
+  refDb.on('child_added', updateMessages)
+</script>
