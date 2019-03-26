@@ -15,6 +15,9 @@
 // require turbolinks
 // require_tree .
 
+//= require jquery.min
+//= require datatables/jquery.dataTables
+
 //--- Angle
 //= require angle/modules/common/wrapper.js
 //= require angle/app.init

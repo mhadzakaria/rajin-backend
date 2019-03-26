@@ -10,9 +10,12 @@
           <div class="text-sm"></div>
           <div id="datatable_test_filter" class="data_filter">
             <%= search_form_for @q, url: admin_job_categories_path, method: :get do |f| %>
-              <%= f.label "Search by name" %>
-              <%= f.search_field :name_cont %>
-              <%= f.submit %>
+              <div class="input-group">
+                <%= f.search_field :name_cont, class: "form-control", placeholder: "Search by name..." %>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                </div>
+              </div>
             <% end %>
           </div>
         </div>

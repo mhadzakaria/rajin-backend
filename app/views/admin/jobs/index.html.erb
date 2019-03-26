@@ -1,96 +1,98 @@
 <p id="notice"><%= notice %></p>
 <div class="content-wrapper">
   <div class="content-heading">
-     <div>Jobs</div>
+    <div>Jobs</div>
   </div>
   <div class="container-fluid">
      <div class="card">
         <div class="card-header">
            <div class="card-title"></div>
            <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="data_filter">
+           <div id="datatable_test_filter" class="table-responsive">
             <%= search_form_for @q, url: admin_jobs_path, method: :get do |f| %>
-              <table>
-                <tr>
-                  <td>
-                    <%= f.label "Title" %>
-                    <%= f.search_field :title_cont %>
-                  </td>
-                  <td>
-                    <%= f.label "Amount" %>
-                    <%= f.search_field :amount_eq %>
-                  </td>
-                  <td>
-                    <%= f.label "Payment type" %>
-                    <%= f.search_field :payment_type_cont %>
-                  </td>
-                  <td>
-                    <%= f.label "Address" %>
-                    <%= f.search_field :full_address_cont %>
-                  </td>
-                  <td>
-                    <%= f.label "City" %>
-                    <%= f.search_field :city_cont %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <%= f.label "State" %>
-                    <%= f.search_field :state_cont %>
-                  </td>
-                  <td>
-                    <%= f.label "Country" %>
-                    <%= f.search_field :country_cont %>
-                  </td>
-                  <td>
-                    <%= f.label "Postcode" %>
-                    <%= f.search_field :postcode_eq %>
-                  </td>
-                  <td>
-                    <%= f.label "Start date" %>
-                    <%= f.search_field :start_date_gteq %>
-                  </td>
-                  <td>
-                    <%= f.label "End date" %>
-                    <%= f.search_field :end_date_lteq %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <%= f.label "Job Category" %>
-                    <%= f.select :job_category_id_eq, options_for_select(@job_categories, @q.job_category_id_eq),
-                        {include_blank: "Select category"}, style: "width: 200px" %>
-                  </td>
-                  <td>
-                    <%= f.label "Status" %>
-                    <%= f.select :status_cont, options_for_select(@statuses, @q.status_cont),
-                        {include_blank: "Select status"}, style: "width: 200px" %>
-                  </td>
-                  <td>
-                    <%= f.label "Latitude" %>
-                    <%= f.search_field :latitude_eq %>
-                  </td>
-                  <td>
-                    <%= f.label "Longitude" %>
-                    <%= f.search_field :longitude_eq %>
-                  </td>
-                  <td>
-                    <%= f.label "Skill" %>
-                    <%= f.select :skill_ids, options_for_select(@skills, params[:skill_ids]),
-                        {}, { include_hidden: true, multiple: true, style: "width: 120px;" } %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <%= f.label "Owner" %>
-                    <%= f.text_field :owner_name_in, value: params.fetch(:q, {}).fetch(:owner_name_in, nil) %>
-                  </td>
-                </tr>
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <td>
+                      <%= f.label "Title" %>
+                      <%= f.search_field :title_cont, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Amount" %>
+                      <%= f.search_field :amount_eq, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Payment type" %>
+                      <%= f.search_field :payment_type_cont, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Address" %>
+                      <%= f.search_field :full_address_cont, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "City" %>
+                      <%= f.search_field :city_cont, class: 'form-control' %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <%= f.label "State" %>
+                      <%= f.search_field :state_cont, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Country" %>
+                      <%= f.search_field :country_cont, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Postcode" %>
+                      <%= f.search_field :postcode_eq, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Start date" %>
+                      <%= f.search_field :start_date_gteq, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "End date" %>
+                      <%= f.search_field :end_date_lteq, class: 'form-control' %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <%= f.label "Job Category" %>
+                      <%= f.select :job_category_id_eq, options_for_select(@job_categories, @q.job_category_id_eq),
+                          {include_blank: "Select category"}, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Status" %>
+                      <%= f.select :status_cont, options_for_select(@statuses, @q.status_cont),
+                          {include_blank: "Select status"}, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Latitude" %>
+                      <%= f.search_field :latitude_eq, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Longitude" %>
+                      <%= f.search_field :longitude_eq, class: 'form-control' %>
+                    </td>
+                    <td>
+                      <%= f.label "Skill" %>
+                      <%= f.select :skill_ids, options_for_select(@skills, params[:skill_ids]),
+                          {}, { include_hidden: true, multiple: true, class: 'form-control' } %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <%= f.label "Owner" %>
+                      <%= f.text_field :owner_name_in, value: params.fetch(:q, {}).fetch(:owner_name_in, nil), class: 'form-control' %>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <br>
-              <%= f.submit %>
+              <%= f.submit 'Search', {class: 'float-right'} %>
             <% end %>
-          </div>
+           </div>
         </div>
         <div class="card-body">
           <div class="table-responsive">

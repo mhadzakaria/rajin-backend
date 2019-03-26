@@ -10,9 +10,12 @@
           <div class="text-sm"></div>
           <div id="datatable_test_filter" class="data_filter">
             <%= search_form_for @q, url: admin_users_path, method: :get do |f| %>
-              <%= f.label "Search by full name" %>
-              <%= f.search_field :full_name_cont %>
-              <%= f.submit %>
+              <div class="input-group">
+                <%= f.search_field :full_name_cont, class: "form-control", placeholder: "Search by full name...", autofocus: true %>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="submit">Search</button>
+                </div>
+              </div>
             <% end %>
           </div>
         </div>
@@ -97,7 +100,7 @@
                       </td>
                       <td>
                         <%= link_to 'Show', admin_user_path(user) %>
-                        <%= link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>   
+                        <%#= link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                     </tr>
                   <% end %>

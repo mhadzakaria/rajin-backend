@@ -8,27 +8,27 @@
         <div class="card-header">
            <div class="card-title"></div>
            <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="data_filter">
+           <div id="datatable_test_filter" class="table-responsive">
             <%= search_form_for @q, url: admin_job_requests_path, method: :get do |f| %>
-              <table>
+              <table class="table table-borderless">
                 <tr>
                   <td>
                     <%= f.label "User" %>
                     <%= f.select :user_id_eq, options_for_select(@users, @q.user_id_eq),
-                          {include_blank: 'Select user'}, style: "width: 200px" %>
+                          {include_blank: 'Select user'}, class: 'form-control' %>
                   </td>
                   <td>
                     <%= f.label "Job" %>
                     <%= f.select :job_id_eq, options_for_select(@jobs, @q.job_id_eq),
-                          {include_blank: 'Select job'}, style: "width: 200px" %>
+                          {include_blank: 'Select job'}, class: 'form-control' %>
                   </td>
                   <td>
                     <%= f.label "Status" %>
-                    <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "select status"}, style: "width: 200px" %>
+                    <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "Select status"}, class: 'form-control' %>
                   </td>
                 </tr>
               </table>
-                <%= f.submit %>
+              <%= f.submit 'Search', {class: 'float-right'} %>
             <% end %>
           </div>
         </div>

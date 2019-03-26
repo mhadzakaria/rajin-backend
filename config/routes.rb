@@ -73,15 +73,5 @@ Rails.application.routes.draw do
     root to: 'home#home', as: :root
   end
 
-  resources :jobs
-  resources :job_categories
-  resources :job_requests
-  resources :skills
-  resources :pictures
-  resources :companies
-  resources :school_partners
-  resources :users, only: [:index, :show]
-  resources :mentors, only: [:index, :show]
-
-  root  'home#home'
+  root  'admin/home#home'
 end
