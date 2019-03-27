@@ -48,22 +48,22 @@ class ReviewSerializer < ActiveModel::Serializer
 
   def job_owner_detail(data = {})
     job  = object.job
-    user = job.user
-    avatar = user.picture
+    owner = job.ownerable
+    avatar = owner.picture
 
-    data[:id]           = user.id
-    data[:nickname]     = user.nickname
-    data[:first_name]   = user.first_name
-    data[:last_name]    = user.last_name
-    data[:phone_number] = user.phone_number
-    data[:full_address] = user.full_address
-    data[:city]         = user.city
-    data[:postcode]     = user.postcode
-    data[:state]        = user.state
-    data[:country]      = user.country
-    data[:latitude]     = user.latitude
-    data[:longitude]    = user.longitude
-    data[:avatar_url]       = avatar.try(:file_url).try(:url)
+    data[:id]           = owner.id
+    data[:nickname]     = owner.nickname
+    data[:first_name]   = owner.first_name
+    data[:last_name]    = owner.last_name
+    data[:phone_number] = owner.phone_number
+    data[:full_address] = owner.full_address
+    data[:city]         = owner.city
+    data[:postcode]     = owner.postcode
+    data[:state]        = owner.state
+    data[:country]      = owner.country
+    data[:latitude]     = owner.latitude
+    data[:longitude]    = owner.longitude
+    data[:avatar_url]   = avatar.try(:file_url).try(:url)
     # data[:company]    = user.company
 
     return data
