@@ -78,7 +78,7 @@ module Api::V1
     end
 
     def check_actor
-      render json: {error: "Only Job owner allowed to access this page. "}, status: 401 and return unless @job.user.eql?(current_user)
+      render json: {error: "Only Job owner allowed to access this page. "}, status: 401 and return unless @job.ownerable.eql?(current_user)
     end
 
     def set_job

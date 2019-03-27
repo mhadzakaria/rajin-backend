@@ -1,5 +1,6 @@
 class JobRequest < ApplicationRecord
-	include AASM
+  include AASM
+  include Notifiable
 
   belongs_to :user
   belongs_to :job
@@ -24,7 +25,7 @@ class JobRequest < ApplicationRecord
     end
   end
 
-  after_create :create_chat_session
+  after_create :create_chat_session, :send_notification
   after_update :update_chat_session
 
   def reject_another_job_requests(accept_message = "", reject_message = "")
@@ -40,12 +41,12 @@ class JobRequest < ApplicationRecord
 
   def send_accepted_message(message)
     # send notification to accepted user job request
-    NotificationMailer.job_request_accepted(self.user, message).deliver if self.accepted?
+    self.create_notification(self.user, message) if self.accepted?
   end
 
   def rejected_message(message)
     # send notification to rejected user job requests
-    NotificationMailer.job_request_rejected(self.user, message).deliver if self.rejected?
+    self.create_notification(self.user, message) if self.rejected?
   end
 
   def ensure_user_not_same
@@ -67,5 +68,11 @@ class JobRequest < ApplicationRecord
     if self.status.eql?('rejected')
       self.chat_session.update(status: 1)
     end
+  end
+
+  def send_notification
+    job_owner = job.ownerable
+    message   = "#{user.full_name} has been applied to your job offer '#{job.title}'."
+    self.create_notification(job_owner, message)
   end
 end
