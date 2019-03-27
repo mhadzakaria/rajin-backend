@@ -67,8 +67,8 @@ Rails.application.routes.draw do
     resources :pictures
     resources :companies
     resources :school_partners
-    resources :users, only: [:index, :show]
-    resources :mentors, only: [:index, :show]
+    resources :users
+    resources :mentors, only: %w[index show]
 
     root to: 'home#home', as: :root
   end

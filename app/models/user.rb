@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :company, optional: true
+  belongs_to :role, optional: true
 
   has_many  :reviews
   has_many  :given_reviews, foreign_key: :sender_id, class_name: "Review"
@@ -38,6 +39,11 @@ class User < ApplicationRecord
       ),
       parent.table[:last_name]
     )
+  end
+
+  # auth only admin can access dashboard
+  def active_for_authentication?
+    super and (role.try(:role_code).eql?('admin') || role.try(:role_code).eql?('super_admin'))
   end
 
   def generate_access_token

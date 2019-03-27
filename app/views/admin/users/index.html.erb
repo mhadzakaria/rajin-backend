@@ -99,8 +99,9 @@
                         <%= user.skills.map{|skill| skill.name}.join(",") %>
                       </td>
                       <td>
-                        <%= link_to 'Show', admin_user_path(user) %>
-                        <%#= link_to 'Destroy', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %> 
+                        <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+                        <%= link_to 'Destroy', admin_user_path(user), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                     </tr>
                   <% end %>

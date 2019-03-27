@@ -84,3 +84,11 @@
   <strong>Skills:</strong>
   <%= @user.skills.map{|skill| skill.name}.join(",") %>
 </p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role.try(:role_name) %>
+</p>
+
+<%= link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+<%= link_to 'Back', :back, class: 'btn btn-danger', data: { disable_with: 'Please wait...' } %>

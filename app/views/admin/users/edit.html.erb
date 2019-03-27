@@ -1,0 +1,6 @@
+<h1>Editing User</h1>
+
+<%= render partial: 'admin/users/partials/form', locals: {user: @user, url: admin_user_path(@user), method: :patch} %>
+
+<%= link_to 'Show', admin_user_path(@user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+<%= link_to 'Back', :back, class: 'btn btn-danger', data: { disable_with: 'Please wait...' } %>

@@ -14,5 +14,16 @@ if Rails.env.development?
   20.times do
     JobCategory.create({name: Faker::ProgrammingLanguage.name})
   end
+
+  # create roles
+  roles = [
+  	{role_name: 'Admin', role_code: 'admin', authorities: nil, status: 'Active'},
+  	{role_name: 'Super Admin', role_code: 'super_admin', authorities: nil, status: 'Active'},
+  ]
+  roles.each do |role|
+  	Role.create(role)
+  end
+  # end create roles
+  
 end
 
