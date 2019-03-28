@@ -97,7 +97,7 @@
           <div class="form-group row">
             <%= form.label :role, class: 'col-md-2 col-form-label' %>
             <div class="col-md-10">
-            	<%= form.select(:role_id, Role.all.map {|role| [role.role_name, role.id] }, class: 'form-control') %>
+            	<%= form.select(:role_id, Role.all.map {|role| [role.role_name, role.id] }, class: 'form-control', include_blank: '--select one--') %>
             </div>
           </div>
 
