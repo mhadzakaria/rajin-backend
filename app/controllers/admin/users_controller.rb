@@ -1,6 +1,7 @@
 module Admin
   class UsersController < ApplicationController
-  	before_action :set_user, only: [:show, :edit, :update, :destroy]
+    include ManageCoin
+  	before_action :set_user, only: %w[show edit update destroy top_up top_up_process]
 
     def index
       @q = User.ransack(params[:q])
@@ -25,6 +26,17 @@ module Admin
 
     def destroy
     	@user.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_users_path, notice: 'User was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    end
+
+    def top_up;end
+
+    def top_up_process
+      set_coin(@user)
+      incoming_coin(params[:user][:amount].to_i, 'Top up by Admin', {coinable_type: @user.class.to_s, coinable_id: @user.id})
       respond_to do |format|
         format.html { redirect_to admin_users_path, notice: 'User was successfully destroyed.' }
         format.json { head :no_content }

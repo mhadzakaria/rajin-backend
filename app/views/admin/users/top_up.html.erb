@@ -1,0 +1,20 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for @user, url: top_up_process_admin_user_path(@user), method: :get, local: true, class: 'form-horizontal' do |form| %>
+        <fieldset>
+          <legend>Form user</legend>
+          <div class="form-group row">
+            <%= form.label :amount, class: 'col-md-2 col-form-label' %>
+            <div class="col-md-10">
+              <%= number_field_tag "user[amount]", class: 'form-control' %>
+            </div>
+          </div>
+         </fieldset>
+
+        <div class="actions">
+          <%= form.submit 'Save', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+   </div>
+</div>

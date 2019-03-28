@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_014321) do
+ActiveRecord::Schema.define(version: 2019_03_28_093841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chat_sessions", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "user_job_id"
+    t.integer "job_request_id"
+    t.integer "status", default: 0
+    t.string "provider_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "coin_balances", force: :cascade do |t|
     t.integer "user_id"
@@ -22,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_03_05_014321) do
     t.bigint "coinable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "message"
     t.index ["coinable_type", "coinable_id"], name: "index_coin_balances_on_coinable_type_and_coinable_id"
     t.index ["user_id"], name: "index_coin_balances_on_user_id"
   end

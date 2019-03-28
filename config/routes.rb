@@ -67,7 +67,12 @@ Rails.application.routes.draw do
     resources :pictures
     resources :companies
     resources :school_partners
-    resources :users
+    resources :users do
+      member do
+        get 'top_up'
+        get 'top_up_process'
+      end
+    end
     resources :mentors, only: %w[index show]
     resources :roles
 
