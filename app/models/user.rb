@@ -41,11 +41,6 @@ class User < ApplicationRecord
     )
   end
 
-  # auth only admin can access dashboard
-  def active_for_authentication?
-    super and (role.try(:role_code).eql?('admin') || role.try(:role_code).eql?('super_admin'))
-  end
-
   def generate_access_token
     self.access_token = SecureRandom.hex(16)
   end
