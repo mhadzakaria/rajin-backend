@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     resources :school_partners
     resources :users
     resources :mentors, only: %w[index show]
+    resources :roles
 
     root to: 'home#home', as: :root
   end

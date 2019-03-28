@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Role Name:</strong>
+  <%= @role.role_name %>
+</p>
+
+<p>
+  <strong>Role Code:</strong>
+  <%= @role.role_code %>
+</p>
+
+<p>
+  <strong>Authorities:</strong>
+  <%= @role.authorities %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @role.status %>
+</p>
+
+<%= link_to 'Edit', edit_admin_role_path(@role), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+<%= link_to 'Back', admin_roles_path, class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
