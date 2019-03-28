@@ -1,10 +1,12 @@
 class User < ApplicationRecord
   include Geocoderable
+  attr_accessor :skip_password_validation  # virtual attribute to skip password validation while saving
+
   serialize :skill_ids, Array
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :invitable
 
   belongs_to :company, optional: true
   belongs_to :role, optional: true
@@ -24,6 +26,8 @@ class User < ApplicationRecord
   has_one   :config, dependent: :destroy
   has_one   :picture, as: :pictureable, dependent: :destroy
   has_many  :uploaded_pictures, class_name: "Picture", foreign_key: :user_id, dependent: :destroy
+
+  validates_presence_of :first_name, :last_name, :nickname
 
   paginates_per 10
 
@@ -65,5 +69,12 @@ class User < ApplicationRecord
     skills = Skill.where(id: self.skill_ids)
 
     return skills
+  end
+
+  protected
+
+  def password_required?
+    return false if skip_password_validation
+    super
   end
 end

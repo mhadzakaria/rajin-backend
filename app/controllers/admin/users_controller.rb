@@ -8,6 +8,27 @@ module Admin
       @users = @q.result.page(params[:page])
     end
 
+    def new
+      @user = User.new
+    end
+
+    def create
+      @user = User.find_or_initialize_by(email: user_params[:email])
+      @user.assign_attributes(user_params)
+      @user.skip_password_validation = true
+
+      respond_to do |format|
+        if @user.valid?
+          @user.invite!
+          format.html {redirect_to admin_user_path(@user), notice: "User was successfully invited."}
+          format.json { render :show, status: :ok, location: admin_user_path(@user)}
+        else
+          format.html { render :new }
+          format.json { render json: @user.errors, status: :unprocessable_entity}
+        end
+      end
+    end
+
     def show;end
 
     def edit;end
