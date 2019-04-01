@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 
 # Generating the fake data(for testing)
-gem 'faker'
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
 # For send email(testing)
 gem "letter_opener", :group => :development

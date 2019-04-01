@@ -6,7 +6,8 @@ Rails.application.routes.draw do
       devise_for :users, :controllers => {
         sessions: "api/v1/users/sessions",
         registrations: "api/v1/users/registrations",
-        passwords: "api/v1/users/passwords"
+        passwords: "api/v1/users/passwords",
+        invitations: "users/invitations",
       }
 
       devise_scope :user do
@@ -51,7 +52,8 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {
     sessions: "users/sessions",
     registrations: "users/registrations",
-    passwords: "users/passwords"
+    passwords: "users/passwords",
+    invitations: "users/invitations"
   }
 
   devise_scope :user do
@@ -71,6 +73,7 @@ Rails.application.routes.draw do
       member do
         get 'top_up'
         get 'top_up_process'
+        get 'resend_invitation'
       end
     end
     resources :mentors, only: %w[index show]
