@@ -45,6 +45,14 @@ Rails.application.routes.draw do
         put "reject" => "job_requests#reject", on: :member
         put "accept" => "job_requests#accept", on: :member
       end
+
+      # resources :orders do
+      #   collection do
+      #     get "ipay88"         => "orders#ipay88"
+      #     get "ipay88_test"    => "orders#ipay88_test"
+      #     get "ipay88_backend" => "orders#ipay88_backend"
+      #   end
+      # end
     end
   end
   # End API routes
