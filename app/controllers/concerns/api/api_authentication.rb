@@ -2,7 +2,7 @@ module Api::ApiAuthentication
   extend ActiveSupport::Concern
 
   included do
-    devise_group :person, contains: [:user, :mentor]
+    # devise_group :person, contains: [:user, :mentor]
 
     class_attribute :login_user_type
 
@@ -28,6 +28,10 @@ module Api::ApiAuthentication
     access_token = request.headers['access-token'] || params[:access_token]
     @current_mentor ||= Mentor.find_by_access_token(access_token)
     return @current_mentor.present? ? @current_mentor : nil
+  end
+
+  def current_person
+    @current_person = current_user || current_mentor
   end
 
   def check_login_time

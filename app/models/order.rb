@@ -1,12 +1,14 @@
 class Order < ApplicationRecord
+  include AASM
   include Notifiable
+  include ManageCoin
 
   PROCESSING_RATE_TIER = 0.97
   paginates_per 30 # paginate
 
-  IPAY88_MERCHANT_KEY     = 'xxxxxxxxx'
-  IPAY88_MERCHANT_CODE    = 'xxxxxxx'
-  IPAY88_REG_COMPANY_NAME = 'XXXX Sdn Bhd'
+  IPAY88_MERCHANT_KEY     = Rails.application.secrets.ipay_merchant_key
+  IPAY88_MERCHANT_CODE    = Rails.application.secrets.ipay_merchant_code
+  IPAY88_REG_COMPANY_NAME = Rails.application.secrets.ipay_merchant_company
 
   IPAY88_PAYMENT_METHODS = [
     ['Master / Visa', 'Master / Visa'],
@@ -19,13 +21,21 @@ class Order < ApplicationRecord
     ['PayPal', 'PayPal']
   ]
 
-  COIN_PACKAGES = [
-    ['COINS 20', 10],
-    ['COINS 50', 25],
-    ['COINS 100', 50]
-  ]
+  aasm :column => :status do
+    state :pending, initial: true
+    state :paid
+    state :failed
 
-  enum status: [:pending, :paid, :failed]
+    event :set_paid do
+      transitions from: [:pending], to: :paid
+    end
+    event :set_failed do
+      transitions from: [:pending], to: :failed
+    end
+    event :set_pending do
+      transitions from: [:paid, :failed], to: :pending
+    end
+  end
 
   belongs_to :user
   belongs_to :orderable, polymorphic: true
@@ -40,11 +50,20 @@ class Order < ApplicationRecord
   end
 
   def strict_change_status(new_status)
-    order = Order.where(id: self.id, status: Order.statuses[:pending]).first
+    order = Order.pending.find_by(id: self.id)
     if order.present?
-      order.send("#{new_status}!")
+      case new_status.to_s.downcase
+      when 'pending', '0'
+        order.set_pending!
+      when 'paid', '1'
+        order.set_paid!
+      when 'failed', '2'
+        order.set_failed!
+      end
+
+      return order.status
     else
-      nil
+      return nil
     end
   end
 
@@ -59,25 +78,16 @@ class Order < ApplicationRecord
   end
 
   def manual_approve!
-    # Need to change based on rajin belajar app flow
-    # if self.user.agent?
-    #   agency = self.user.agent.agency
-    #   sale = agency.sale_representatives.first
+    if self.pending?
+      self.net_amount = self.amount * Order::PROCESSING_RATE_TIER
+      self.paid
+      if self.save
+        set_coin(user)
+        incoming_coin(self.net_amount, "Manual approve Top up!", {coinable_type: user.class.name, coinable_id: user.id})
+      end
+    end
 
-    #   if self.user.agent.employee.present?
-    #     self.employee = self.user.agent.employee
-    #   else
-    #     self.employee = sale
-    #   end
-    # end
-
-    # self.net_amount = self.amount * Order::PROCESSING_RATE_TIER
-    # self.status = :paid
-
-    # if self.save
-    #   self.user.topup_credit(self.total_credits_awarded)
-    #   self.user.update_credit_expiry(self.expiry_date)
-    # end
+    return self.status
   end
 
   def ipay88_post_url
@@ -85,27 +95,27 @@ class Order < ApplicationRecord
   end
 
   def ipay88_payment_id
-    payment_id = ''
+    self.payment_id = ''
     case payment_method
     when 'Master / Visa'
-      payment_id = '2'
+      self.payment_id = '2'
     when 'Maybank2u'
-      payment_id = '6'
+      self.payment_id = '6'
     when 'Alliance Online'
-      payment_id = '8'
+      self.payment_id = '8'
     when 'AmBank Online'
-      payment_id = '10'
+      self.payment_id = '10'
     when 'RHB Online'
-      payment_id = '14'
+      self.payment_id = '14'
     when 'Hong Leong Online'
-      payment_id = '15'
+      self.payment_id = '15'
     when 'CIMB Clicks'
-      payment_id = '20'
+      self.payment_id = '20'
     when 'PayPal'
-      payment_id = '48'
+      self.payment_id = '48'
     end
 
-    return payment_id
+    return self.payment_id
   end
 
   def ipay88_payment_method(payment_id)
@@ -128,6 +138,8 @@ class Order < ApplicationRecord
     when '48'
       self.payment_method = 'PayPal'
     end
+
+    return self.payment_method
   end
 
   # def self.list_orders(year, month, today, employee)

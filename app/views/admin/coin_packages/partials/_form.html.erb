@@ -1,0 +1,41 @@
+<div class="card card-default">
+   <div class="card-header"></div>
+   <div class="card-body">
+      <%= form_for coin_package, url: url, method: method, local: true do |form| %>
+        <% if coin_package.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(coin_package.errors.count, "error") %> prohibited this coin_package from being saved:</h2>
+
+            <ul>
+            <% coin_package.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <fieldset>
+          <legend>Form Coin Package</legend>
+          <div class="form-group row">
+            <%= form.label :coin, class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :coin, class: "form-control", required: true %>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <div class="form-group row">
+            <%= form.label :amount, "Amount (MYR)", class: "col-md-2 col-form-label" %>
+            <div class="col-md-10">
+              <%= form.number_field :amount, class: "form-control", required: true %>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <%= form.submit submit_button_label(coin_package), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+   </div>
+</div>

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       resources :skills
       resources :job_categories
       resources :school_partners
+      resources :coin_packages, only: [:index, :show]
 
       resources :job_requests do
         resources :reviews, on: :member
@@ -46,13 +47,13 @@ Rails.application.routes.draw do
         put "accept" => "job_requests#accept", on: :member
       end
 
-      # resources :orders do
-      #   collection do
-      #     get "ipay88"         => "orders#ipay88"
-      #     get "ipay88_test"    => "orders#ipay88_test"
-      #     get "ipay88_backend" => "orders#ipay88_backend"
-      #   end
-      # end
+      resources :orders, only: [:index, :show, :create] do
+        collection do
+          post "ipay88"         => "orders#ipay88"
+          post "ipay88_backend" => "orders#ipay88_backend"
+          # get "ipay88_test"    => "orders#ipay88_test"
+        end
+      end
     end
   end
   # End API routes
@@ -70,13 +71,17 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    resources :coin_packages
+    resources :companies
     resources :jobs
     resources :job_categories
     resources :job_requests
-    resources :skills
+    resources :mentors, only: %w[index show]
+    resources :orders, only: %w[index show]
     resources :pictures
-    resources :companies
+    resources :skills
     resources :school_partners
+    resources :roles
     resources :users do
       member do
         get 'top_up'
@@ -84,8 +89,6 @@ Rails.application.routes.draw do
         get 'resend_invitation'
       end
     end
-    resources :mentors, only: %w[index show]
-    resources :roles
 
     root to: 'home#home', as: :root
   end

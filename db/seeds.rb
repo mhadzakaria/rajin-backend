@@ -18,12 +18,21 @@ end
 
 # create roles
 roles = [
-	{role_name: 'Admin', role_code: 'admin', authorities: nil, status: 'Active'},
-	{role_name: 'Super Admin', role_code: 'super_admin', authorities: nil, status: 'Active'},
+  {role_name: 'Admin', role_code: 'admin', authorities: nil, status: 'Active'},
+  {role_name: 'Super Admin', role_code: 'super_admin', authorities: nil, status: 'Active'},
 ]
 
 roles.each do |role|
-	Role.create(role)
+  Role.create(role)
+end
+
+coin_packages = [
+  {coin: 20, amount: 25},
+  {coin: 30, amount: 30}
+]
+
+coin_packages.each do |coin_package|
+  CoinPackage.create(coin_package)
 end
 # end create roles
 

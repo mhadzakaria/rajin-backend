@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @order.id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= link_to @user.full_name, admin_user_path(@user) %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= number_to_currency(@order.amount, unit: "MYR", separator: ',', delimiter: '.') %>
+</p>
+
+<p>
+  <strong>Net Amount:</strong>
+  <%= number_to_currency(@order.net_amount, unit: "MYR", separator: ',', delimiter: '.') %>
+</p>
+
+<p>
+  <strong>Payment Status:</strong>
+  <%= @order.status %>
+</p>
+
+<p>
+  <strong>Payment ID:</strong>
+  <%= @order.payment_id %>
+</p>
+
+<p>
+  <strong>Payment Method:</strong>
+  <%= @order.payment_method %>
+</p>
+
+<p>
+  <strong>Payment Gateway:</strong>
+  <%= @order.payment_gateway %>
+</p>
+
+<%= link_to 'Back', admin_orders_path, class: 'btn btn-danger', data: { disable_with: 'Please wait...' } %>

@@ -4,11 +4,11 @@ module Api::V1
 
     def index
       @school_partners = SchoolPartner.all
-      respond_with @school_partners, each_serializer: SchoolPartnerSerializer, status: 200
+      render json: @school_partners, each_serializer: SchoolPartnerSerializer, status: 200
     end
 
     def show
-      respond_with @school_partner, serializer: SchoolPartnerSerializer, status: 200
+      render json: @school_partner, serializer: SchoolPartnerSerializer, status: 200
     end
 
     def create
