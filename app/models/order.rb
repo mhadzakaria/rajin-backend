@@ -78,12 +78,13 @@ class Order < ApplicationRecord
   end
 
   def manual_approve!
-    if self.pending?
+    package = self.orderable
+    if self.pending? && package.class.name.eql?("CoinPackage")
       self.net_amount = self.amount * Order::PROCESSING_RATE_TIER
-      self.paid
+      self.strict_change_status(:paid)
       if self.save
         set_coin(user)
-        incoming_coin(self.net_amount, "Manual approve Top up!", {coinable_type: user.class.name, coinable_id: user.id})
+        incoming_coin(package.coin, "Manual approve Top up!", {coinable_type: user.class.name, coinable_id: user.id})
       end
     end
 
