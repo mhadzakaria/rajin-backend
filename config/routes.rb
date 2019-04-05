@@ -94,4 +94,7 @@ Rails.application.routes.draw do
   end
 
   root  'admin/home#home'
+
+  # Handing error no route match
+  match "*path", to: "application#error_404", via: :all
 end

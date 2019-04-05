@@ -51,7 +51,7 @@ module Api::V1
 
       # make sure the order not blank and orderable is coin package
       if @order.blank? || !@package.class.name.eql?("CoinPackage")
-        render json: {message: "site/bad_request"}, status: 404 and return
+        render json: {message: "site/bad_request"}, status: 400 and return
       elsif @order.paid? && params[:Status].eql?('1')
         # condition if order has been paid before
         render json: @order, serializer: OrderSerializer, status: 200
@@ -68,7 +68,7 @@ module Api::V1
           incoming_coin(@package.coin, "Top up!", {coinable_type: @user.class.name, coinable_id: @user.id})
           render json: @order, serializer: OrderSerializer, status: 200
         else
-          render json: {message: "site/bad_request"}, status: 404 and return
+          render json: {message: "site/bad_request"}, status: 400 and return
         end
       elsif params[:Status].eql?('0')
         # condition if payment was failed
@@ -76,10 +76,10 @@ module Api::V1
         if @order.strict_change_status(:failed) && @order.save
           render json: {message: "Your payment has failed, please try again!"}, status: 404 and return
         else
-          render json: {message: "site/bad_request"}, status: 404 and return
+          render json: {message: "site/bad_request"}, status: 400 and return
         end
       else
-        render json: {message: "site/bad_request"}, status: 404 and return
+        render json: {message: "site/bad_request"}, status: 400 and return
       end
     end
 
@@ -91,7 +91,7 @@ module Api::V1
 
       # make sure the order not blank and orderable is coin package
       if @order.blank? || !@package.class.name.eql?("CoinPackage")
-        render json: {message: "site/bad_request"}, status: 404 and return
+        render json: {message: "site/bad_request"}, status: 400 and return
       elsif @order.paid? && params[:Status].eql?('1')
         # condition if order has been paid before
         render plain: "RECEIVEOK"
@@ -107,10 +107,10 @@ module Api::V1
           incoming_coin(@package.coin, "Top up!", {coinable_type: @user.class.name, coinable_id: @user.id})
           render plain: "RECEIVEOK"
         else
-          render json: {message: "site/bad_request"}, status: 404 and return
+          render json: {message: "site/bad_request"}, status: 400 and return
         end
       else
-        render json: {message: "site/bad_request"}, status: 404 and return
+        render json: {message: "site/bad_request"}, status: 400 and return
       end
     end
 

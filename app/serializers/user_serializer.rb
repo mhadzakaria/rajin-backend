@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail
+  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance
 
   def password
     object.password || "Password not displayed"
@@ -65,6 +65,11 @@ class UserSerializer < ActiveModel::Serializer
     end
 
     return data
+  end
+
+  def coin_balance
+    balance = object.coin_balance
+    return "#{balance.try(:amount).to_i} Coins"
   end
 
 end

@@ -6,6 +6,8 @@ module Api
 
     before_action :verify_requested_format!
 
+    skip_before_action :check_login_time, only: [:error_404]
+
     respond_to :json
   end
 end
