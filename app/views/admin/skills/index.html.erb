@@ -35,9 +35,9 @@
                         <%= skill.name %>
                       </td>
                       <td>
-                        <%= link_to 'Show', admin_skill_path(skill) %>
-                        <%= link_to 'Edit', edit_admin_skill_path(skill) %>
-                        <%= link_to 'Destroy', admin_skill_path(skill), method: :delete, data: { confirm: 'Are you sure?' } %>   
+                        <%= link_to 'Show', admin_skill_path(skill), class: 'btn btn-primary' %>
+                        <%= link_to 'Edit', edit_admin_skill_path(skill), class: 'btn btn-info' %>
+                        <%= link_to 'Destroy', admin_skill_path(skill), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                     </tr>
                   <% end %>
@@ -47,6 +47,6 @@
           <%= paginate @skills %>
         </div>
      </div>
-    <%= link_to 'New Skill', new_admin_skill_path %>
+    <%= link_to 'New Skill', new_admin_skill_path, class: 'btn btn-primary' %>
   </div>
 </div>

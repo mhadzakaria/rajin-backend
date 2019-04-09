@@ -2,5 +2,5 @@
 
 <%= render partial: 'admin/skills/form', locals: {skill: @skill, url: admin_skill_path(@skill), method: :patch} %>
 
-<%= link_to 'Show', admin_skill_path(@skill) %> |
-<%= link_to 'Back', admin_skills_path %>
+<%= link_to 'Show', admin_skill_path(@skill), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_skills_path, class: 'btn btn-secondary' %>

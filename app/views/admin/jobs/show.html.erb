@@ -90,7 +90,7 @@
   <%= @job.skills.map{|skill| skill.name}.join(",") %>
 </p>
 
-<%= link_to 'Edit', edit_admin_job_path(@job) %> |
-<%= link_to 'Back', admin_jobs_path %>
+<%= link_to 'Edit', edit_admin_job_path(@job), class: 'btn btn-info' %>
+<%= link_to 'Back', admin_jobs_path, class: 'btn btn-secondary' %>
 <br>
-<%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @job.class.name, pictureable_id: @job.id) %>
+<%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @job.class.name, pictureable_id: @job.id), class: 'btn btn-primary mt-1' %>

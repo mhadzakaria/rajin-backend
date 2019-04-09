@@ -23,7 +23,7 @@
                     </td>
                     <td>
                       <%= f.label "Payment type" %>
-                      <%= f.search_field :payment_type_cont, class: 'form-control' %>
+                      <%= f.select :payment_type_cont, options_for_select(@payment_types), { include_blank: "Select payment type" }, class: 'form-control' %>
                     </td>
                     <td>
                       <%= f.label "Address" %>
@@ -90,7 +90,7 @@
                 </tbody>
               </table>
               <br>
-              <%= f.submit 'Search', {class: 'float-right'} %>
+              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
             <% end %>
            </div>
         </div>
@@ -142,9 +142,9 @@
                       <td><%= job.ownerable.full_name %></td>
                       <td><%= job.skills.map{|skill| skill.name}.join(",") %></td>
                       <td>
-                        <%= link_to 'Show', admin_job_path(job) %>
-                        <%= link_to 'Edit', edit_admin_job_path(job) %>
-                        <%= link_to 'Destroy', admin_job_path(job), method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to 'Show', admin_job_path(job), class: 'btn btn-primary' %>
+                        <%= link_to 'Edit', edit_admin_job_path(job), class: 'btn btn-info' %>
+                        <%= link_to 'Destroy', admin_job_path(job), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                    </tr>
                   <% end %>
@@ -154,6 +154,6 @@
           <%= paginate @jobs %>
         </div>
      </div>
-    <%= link_to 'New Job', new_admin_job_path %>
+    <%= link_to 'New Job', new_admin_job_path, class: 'btn btn-primary' %>
   </div>
 </div>

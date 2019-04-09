@@ -8,6 +8,7 @@ module Admin
       @job_categories = JobCategory.all.map{|category|  [category.name, category.id]}
       @statuses       = Job.aasm.states.map{|state| [state.name.to_s.humanize, state.name] }
       @skills         = Skill.all.map{|skill| [skill.name, skill.id]}
+      @payment_types  = Job::PAYMENT_TYPE
 
       @q = Job.ransack(params[:q])
       if params[:q].present?

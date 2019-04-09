@@ -5,7 +5,7 @@
   <%= @skill.name %>
 </p>
 
-<%= link_to 'Edit', edit_admin_skill_path(@skill) %> |
-<%= link_to 'Back', admin_skills_path %>
+<%= link_to 'Edit', edit_admin_skill_path(@skill), class: 'btn btn-info' %>
+<%= link_to 'Back', admin_skills_path, class: 'btn btn-secondary' %>
 <br>
-<%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @skill.class.name, pictureable_id: @skill.id) %>
+<%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @skill.class.name, pictureable_id: @skill.id),class: 'btn btn-primary mt-1' %>

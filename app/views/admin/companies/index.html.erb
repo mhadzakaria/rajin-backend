@@ -57,7 +57,7 @@
                 </tr>
               </table>
               <br>
-              <%= f.submit 'Search', {class: 'float-right'} %>
+              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
             <% end %>
           </div>
         </div>
@@ -93,9 +93,9 @@
                       <td><%= company.latitude %></td>
                       <td><%= company.longitude %></td>
                       <td>
-                        <%= link_to 'Show', admin_company_path(company) %>
-                        <%= link_to 'Edit', edit_admin_company_path(company) %>
-                        <%= link_to 'Destroy', admin_company_path(company), method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to 'Show', admin_company_path(company), class: 'btn btn-primary mb-1' %>
+                        <%= link_to 'Edit', edit_admin_company_path(company), class: 'btn btn-info mb-1' %>
+                        <%= link_to 'Destroy', admin_company_path(company), class: 'btn btn-danger mb-1', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                     </tr>
                   <% end %>
@@ -105,6 +105,6 @@
           <%= paginate @companies %>
         </div>
      </div>
-    <%= link_to 'New Company', new_admin_company_path %>
+    <%= link_to 'New Company', new_admin_company_path, class: 'btn btn-primary' %>
   </div>
 </div>

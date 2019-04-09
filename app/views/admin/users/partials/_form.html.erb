@@ -16,8 +16,10 @@
 
         <fieldset>
           <legend>Form user</legend>
+        </fieldset>
 
-          <% if @user.new_record? %>
+        <% if @user.new_record? %>
+          <fieldset>
             <div class="form-group row">
               <div class="col-md-2">
                 <%= form.label :email, class: 'form-label' %>
@@ -26,8 +28,10 @@
                 <%= form.email_field :email, class: 'form-control', required: true %>
               </div>
             </div>
-          <% end %>
+          </fieldset>
+        <% end %>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :nickname, class: 'form-label' %>
@@ -36,7 +40,9 @@
               <%= form.text_field :nickname, class: 'form-control', type: 'text', required: true %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :first_name, class: 'form-label' %>
@@ -45,7 +51,9 @@
               <%= form.text_field :first_name, class: 'form-control', type: 'text', required: true %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :last_name, class: 'form-label' %>
@@ -54,7 +62,9 @@
               <%= form.text_field :last_name, class: 'form-control', type: 'text', required: true %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :phone_number, class: 'form-label' %>
@@ -63,7 +73,9 @@
               <%= form.text_field :phone_number, class: 'form-control', type: 'text' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :date_of_birth, class: 'form-label' %>
@@ -72,7 +84,9 @@
               <%= form.text_field :date_of_birth, class: 'form-control', type: 'date' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :gender, class: 'form-label' %>
@@ -84,7 +98,9 @@
               <%= form.label :gender, 'Male', for: 'male' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :full_address, class: 'form-label' %>
@@ -93,7 +109,9 @@
               <%= form.text_area :full_address, class: 'form-control' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :city, class: 'form-label' %>
@@ -102,7 +120,9 @@
               <%= form.text_field :city, class: 'form-control', type: 'text' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :postcode, class: 'form-label' %>
@@ -111,7 +131,9 @@
               <%= form.text_field :postcode, class: 'form-control', type: 'number' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :state, class: 'form-label' %>
@@ -120,7 +142,9 @@
               <%= form.text_field :state, class: 'form-control', type: 'text' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :country, class: 'form-label' %>
@@ -129,17 +153,18 @@
               <%= form.text_field :country, class: 'form-control', type: 'text' %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <div class="col-md-2">
               <%= form.label :role, class: 'form-label' %>
             </div>
             <div class="col-md-10">
-            	<%= form.select(:role_id, Role.all.map {|role| [role.role_name, role.id] }, class: 'form-control', include_blank: '--select one--') %>
+            <%= form.select :role_id, Role.all.map {|role| [role.role_name, role.id] }, {include_blank: '--select one--'}, class: 'form-control' %>
             </div>
           </div>
         </fieldset>
-
         <div class="actions">
           <%= form.submit submit_button_label(user), class: 'btn btn-primary' %>
         </div>

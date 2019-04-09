@@ -2,5 +2,5 @@
 
 <%= render partial: 'admin/pictures/form', locals: {picture: @picture, url: admin_picture_path(@picture), method: :patch} %>
 
-<%= link_to 'Show', admin_picture_path(@picture) %> |
-<%= link_to 'Back', admin_pictures_path %>
+<%= link_to 'Show', admin_picture_path(@picture), class: 'btn btn-primary' %>
+<%= link_to 'Back', admin_pictures_path, class: 'btn btn-secondary' %>

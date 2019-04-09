@@ -53,7 +53,7 @@
                 </tr>
               </table>
               <br>
-              <%= f.submit 'Search', {class: 'float-right'} %>
+              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
             <% end %>
           </div>
         </div>
@@ -87,9 +87,9 @@
                         <td><%= school_partner.latitude %></td>
                         <td><%= school_partner.longitude %></td>
                         <td>
-                          <%= link_to 'Show', admin_school_partner_path(school_partner) %>
-                          <%= link_to 'Edit', edit_admin_school_partner_path(school_partner) %>
-                          <%= link_to 'Destroy', admin_school_partner_path(school_partner),
+                          <%= link_to 'Show', admin_school_partner_path(school_partner), class: 'btn btn-primary' %>
+                          <%= link_to 'Edit', edit_admin_school_partner_path(school_partner), class: 'btn btn-info' %>
+                          <%= link_to 'Destroy', admin_school_partner_path(school_partner), class: 'btn btn-danger',
                               method: :delete, data: { confirm: 'Are you sure?' } %>
                         </td>
                       </tr>
@@ -100,6 +100,6 @@
           <%= paginate @school_partners %>
         </div>
      </div>
-    <%= link_to 'New School Partner', new_admin_school_partner_path %>
+    <%= link_to 'New School Partner', new_admin_school_partner_path, class: 'btn btn-primary' %>
   </div>
 </div>

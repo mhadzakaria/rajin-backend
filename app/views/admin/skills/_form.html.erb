@@ -24,6 +24,23 @@
           </div>
         </fieldset>
 
+        <fieldset>
+          <%= form.fields_for :picture do |pic| %>
+            <div class="form-group row">
+              <%= pic.label :file_url, class: "col-md-2 col-form-label" %>
+              <div class="col-md-10">
+                <%= pic.file_field :file_url, type:"file" %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <%= pic.label :file_type, class: "col-md-2 col-form-label" %>
+              <div class="col-md-10">
+                <%= pic.text_field :file_type, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          <% end %>
+        </fieldset>
+
         <div class="actions">
           <%= form.submit submit_button_label(skill), class: "btn btn-primary" %>
         </div>

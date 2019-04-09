@@ -23,8 +23,9 @@
 <strong>Messages:</strong>
 <p id="messages"></p>
 
-<%= link_to 'Edit', edit_job_request_path(@job_request) %> |
-<%= link_to 'Back', job_requests_path %>
+<%= link_to 'Edit', edit_admin_job_request_path(@job_request), class: 'btn btn-info' %>
+<%= link_to 'Back', admin_job_requests_path, class: 'btn btn-secondary' %>
+
 <script>
   firebase.initializeApp(firebaseConfig());
 

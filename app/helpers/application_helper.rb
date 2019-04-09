@@ -11,4 +11,8 @@ module ApplicationHelper
   def sidebar_active?(section_name)
     return "active" if controller_name.eql?(section_name)
   end
+
+  def user_notifications
+    current_user.notifications
+  end
 end

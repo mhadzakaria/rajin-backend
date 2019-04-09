@@ -12,6 +12,7 @@ module Admin
 
     def new
       @skill = Skill.new
+      @picture = @skill.build_picture
     end
 
     def edit
@@ -22,6 +23,7 @@ module Admin
 
       respond_to do |format|
         if @skill.save
+          add_picture if params[:skill][:picture].present?
           format.html { redirect_to admin_skill_path(@skill), notice: 'Skill was successfully created.' }
           format.json { render :show, status: :created, location: @skill }
         else
@@ -34,6 +36,7 @@ module Admin
     def update
       respond_to do |format|
         if @skill.update(skill_params)
+          add_picture if params[:skill][:picture].present?
           format.html { redirect_to admin_skill_path(@skill), notice: 'Skill was successfully updated.' }
           format.json { render :show, status: :ok, location: @skill }
         else
@@ -52,6 +55,13 @@ module Admin
     end
 
     private
+      def add_picture
+        picture = @skill.build_picture
+        picture.file_url  = params[:skill][:picture][:file_url]
+        picture.file_type = params[:skill][:picture][:file_type]
+        picture.save
+      end
+
       def set_skill
         @skill = Skill.find(params[:id])
       end

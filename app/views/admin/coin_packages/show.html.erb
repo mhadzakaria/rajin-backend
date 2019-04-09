@@ -15,5 +15,5 @@
   <%= number_to_currency(@coin_package.amount, unit: "MYR", separator: ',', delimiter: '.') %>
 </p>
 
-<%= link_to 'Edit', edit_admin_coin_package_path(@coin_package), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %> |
-<%= link_to 'Back', admin_coin_packages_path, class: 'btn btn-danger', data: { disable_with: 'Please wait...' } %>
+<%= link_to 'Edit', edit_admin_coin_package_path(@coin_package), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+<%= link_to 'Back', admin_coin_packages_path, class: 'btn btn-secondary', data: { disable_with: 'Please wait...' } %>

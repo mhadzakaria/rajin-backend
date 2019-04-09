@@ -22,25 +22,31 @@
               <%= form.text_field :role_name, class: "form-control", type:"text" %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <%= form.label :role_code, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
               <%= form.text_field :role_code, class: "form-control", type:"text" %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <%= form.label :authorities, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
               <%= form.text_field :authorities, class: "form-control", type:"text" %>
             </div>
           </div>
+        </fieldset>
 
+        <fieldset>
           <div class="form-group row">
             <%= form.label :status, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-            	<%= form.select :status, options_for_select([["Select One", ""], 'Active', 'Non Active'], role.status), {}, { class: 'form-control', include_blank: false } %>
+              <%= form.select :status, options_for_select([["Select One", ""], 'Active', 'Non Active'], role.status), {}, { class: 'form-control', include_blank: false } %>
             </div>
           </div>
         </fieldset>

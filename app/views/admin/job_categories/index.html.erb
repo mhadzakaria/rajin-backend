@@ -35,9 +35,9 @@
                       <td><%= job_category.name %></td>
                       <td><%= job_category.parent_id %></td>
                       <td>
-                        <%= link_to 'Show', admin_job_category_path(job_category) %>
-                        <%= link_to 'Edit', edit_admin_job_category_path(job_category) %>
-                        <%= link_to 'Destroy', admin_job_category_path(job_category), method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%= link_to 'Show', admin_job_category_path(job_category), class: 'btn btn-primary' %>
+                        <%= link_to 'Edit', edit_admin_job_category_path(job_category), class: 'btn btn-info'%>
+                        <%= link_to 'Destroy', admin_job_category_path(job_category), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>
                     </tr>
                   <% end %>
@@ -47,6 +47,6 @@
           <%= paginate @job_categories %>
         </div>
      </div>
-    <%= link_to 'New Job Category', new_admin_job_category_path %>
+    <%= link_to 'New Job Category', new_admin_job_category_path, class: 'btn btn-primary' %>
   </div>
 </div>
