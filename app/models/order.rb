@@ -40,6 +40,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :orderable, polymorphic: true
 
+  scope :coin_packages, -> { where(orderable_type: "CoinPackage") }
   scope :order_desc, -> { order('created_at desc') }
   scope :today,      -> { where("DATE(created_at) = ?", Date.today) }
   scope :month,      -> (month, year) { where("MONTH(created_at) = ? AND YEAR(created_at) = ?", month, year) }
@@ -78,17 +79,24 @@ class Order < ApplicationRecord
   end
 
   def manual_approve!
+    self.topup_coin("Manual approve Top up!")
+
+    return self.status
+  end
+
+  def topup_coin(message = "Top up!")
     package = self.orderable
+    user    = self.user
+
     if self.pending? && package.class.name.eql?("CoinPackage")
       self.net_amount = self.amount * Order::PROCESSING_RATE_TIER
-      self.strict_change_status(:paid)
-      if self.save
+      if self.strict_change_status(:paid) && self.save
         set_coin(user)
-        incoming_coin(package.coin, "Manual approve Top up!", {coinable_type: user.class.name, coinable_id: user.id})
+        incoming_coin(package.coin, message, {coinable_type: user.class.name, coinable_id: user.id})
       end
     end
 
-    return self.status
+    return self
   end
 
   def ipay88_post_url

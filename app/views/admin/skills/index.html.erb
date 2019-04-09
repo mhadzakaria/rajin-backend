@@ -24,13 +24,22 @@
              <table class="table table-striped my-4 w-100" id="datatable_test">
                 <thead>
                    <tr>
+                      <th>Logo</th>
                       <th>Name</th>
                       <th></th>
                    </tr>
                 </thead>
                 <tbody>
                   <% @skills.each do |skill| %>
+                    <% picture = skill.picture %>
                     <tr>
+                      <td>
+                        <div class="d-flex align-items-center flex-wrap">
+                          <% unless picture.blank? %>
+                            <%= image_tag picture.file_url.url, class: "circle thumb24 mx-1", data: {title: skill.name, toggle: "tooltip"} %>
+                          <% end %>
+                        </div>
+                      </td>
                       <td>
                         <%= skill.name %>
                       </td>

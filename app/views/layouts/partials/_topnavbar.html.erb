@@ -4,10 +4,12 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="#/">
             <div class="brand-logo">
-                <img class="img-fluid" src="<%= image_path('angle/logo.png') %>" alt="App Logo">
+                RajinApp
+                <!-- <img class="img-fluid" src="<%#= image_path('angle/logo.png') %>" alt="App Logo"> -->
             </div>
             <div class="brand-logo-collapsed">
-                <img class="img-fluid" src="<%= image_path('angle/logo-single.png') %>" alt="App Logo">
+                R
+                <!-- <img class="img-fluid" src="<%#= image_path('angle/logo-single.png') %>" alt="App Logo"> -->
             </div>
         </a>
     </div>
@@ -54,15 +56,15 @@
                     <!-- START list group-->
                     <div class="list-group">
                         <!-- list item-->
-                        <% user_notifications.each do |un| %>
+                        <% user_notifications.each do |notification| %>
                             <div class="list-group-item list-group-item-action">
                                 <div class="media">
                                     <div class="align-self-start mr-2">
                                         <em class="fab fa-twitter fa-2x text-info"></em>
                                     </div>
                                     <div class="media-body">
-                                        <p class="m-0"><%= un.notifable_type %></p>
-                                        <p class="m-0 text-muted text-sm"><%= un.messages %></p>
+                                        <p class="m-0"><%= notification.notifable_type %></p>
+                                        <p class="m-0 text-muted text-sm"><%= notification.message %></p>
                                     </div>
                                 </div>
                             </div>
