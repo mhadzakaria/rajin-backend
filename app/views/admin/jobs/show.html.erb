@@ -1,96 +1,128 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @job.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @job.description %>
-</p>
-
-<p>
-  <strong>Payment term:</strong>
-  <%= @job.payment_term %>
-</p>
-
-<p>
-  <strong>Amount:</strong>
-  <%= @job.amount %>
-</p>
-
-<p>
-  <strong>Payment type:</strong>
-  <%= @job.payment_type %>
-</p>
-
-<p>
-  <strong>Full address:</strong>
-  <%= @job.full_address %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @job.city %>
-</p>
-
-<p>
-  <strong>Postcode:</strong>
-  <%= @job.postcode %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @job.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @job.country %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @job.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @job.end_date %>
-</p>
-
-<p>
-  <strong>Latitude:</strong>
-  <%= @job.latitude %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @job.longitude %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @job.status %>
-</p>
-
-<p>
-  <strong>Job category:</strong>
-  <%= @job.job_category.name %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @job.ownerable.full_name %>
-</p>
-
-<p>
-  <strong>Required skills:</strong>
-  <%= @job.skills.map{|skill| skill.name}.join(",") %>
-</p>
-
-<%= link_to 'Edit', edit_admin_job_path(@job), class: 'btn btn-info' %>
-<%= link_to 'Back', admin_jobs_path, class: 'btn btn-secondary' %>
-<br>
-<%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @job.class.name, pictureable_id: @job.id), class: 'btn btn-primary mt-1' %>
+<div class="content-heading mb-0">
+  <div><strong><%= @job.title %></strong>(<%= @job.status.titleize %>)</div>
+  <div class="ml-auto">
+     <%= link_to 'Edit', edit_admin_job_path(@job), class: 'btn btn-info' %>
+  </div>
+</div>
+<div class="row pt-1 mt-0">
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Details</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Description</th>
+                <td><%= @job.description %></td>
+              </tr>
+              <tr>
+                <th>Start date:</th>
+                <td><%= @job.start_date %></td>
+              </tr>
+              <tr>
+                <th>End date:</th>
+                <td><%= @job.end_date %></td>
+              </tr>
+              <tr>
+                <th>Job category:</th>
+                <td><%= @job.job_category.name %></td>
+              </tr>
+              <tr>
+                <th>User:</th>
+                <td><%= @job.ownerable.full_name %></td>
+              </tr>
+              <tr>
+                <th>Required skills:</th>
+                <td><%= @job.skills.map{|skill| skill.name}.join(",") %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-1 border-danger">
+      <div class="card-header row">
+        <div class="col-6">
+          <h4>Pictures</h4>
+        </div>
+        <div class="col-6">
+          <%= link_to 'Add Pictures', new_admin_picture_path(pictureable_type: @job.class.name, pictureable_id: @job.id), class: 'float-right btn btn-primary' %>
+        </div>
+      </div>
+      <div class="card-body pt-0">
+        <% @job.pictures.each_with_index do |pic, index| %>
+          <%= '<div class="row">'.html_safe if index.even? %>
+            <div class="col-sm-12 col-md-6">
+              <img src="<%= pic.file_url %>" style="width: 100%">
+            </div>
+          <%= '</div>'.html_safe if index.odd? || @job.pictures.size.eql?(1) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Address</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Full address:</th>
+                <td><%= @job.full_address %></td>
+              </tr>
+              <tr>
+                <th>City:</th>
+                <td><%= @job.city %></td>
+              </tr>
+              <tr>
+                <th>Postcode:</th>
+                <td><%= @job.postcode %></td>
+              </tr>
+              <tr>
+                <th>State:</th>
+                <td><%= @job.state %></td>
+              </tr>
+              <tr>
+                <th>Country:</th>
+                <td><%= @job.country %></td>
+              </tr>
+              <tr>
+                <th>Latitude:</th>
+                <td><%= @job.latitude %></td>
+              </tr>
+              <tr>
+                <th>Longitude:</th>
+                <td><%= @job.longitude %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Payment</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Payment term:</th>
+                <td><%= @job.payment_term %></td>
+              </tr>
+              <tr>
+                <th>Amount:</th>
+                <td><%= @job.amount %></td>
+              </tr>
+              <tr>
+                <th>Payment type:</th>
+                <td><%= @job.payment_type %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

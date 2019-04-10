@@ -47,7 +47,7 @@
                           <%= number_to_currency(coin_package.amount, unit: "MYR", separator: ',', delimiter: '.') %>
                         </td>
                         <td>
-                          <%= link_to 'Show', admin_coin_package_path(coin_package),
+                          <%#= link_to 'Show', admin_coin_package_path(coin_package),
                               class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
                           <%= link_to 'Edit', edit_admin_coin_package_path(coin_package),
                               class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>

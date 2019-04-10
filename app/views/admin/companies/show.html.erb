@@ -1,54 +1,77 @@
-<p id="notice"><%= notice %></p>
+<div class="content-heading mb-0">
+  <div><strong><%= @company.name %></strong></div>
+  <div class="ml-auto">
+    <%= link_to 'Edit', edit_admin_company_path(@company), class: 'btn btn-info' %>
+  </div>
+</div>
+<div class="row pt-1 mt-0">
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Details</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Status:</th>
+                <td><%= @company.status %></td>
+              </tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
+              <tr>
+                <th>Phone number:</th>
+                <td><%= @company.phone_number %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Address</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Full address:</th>
+                <td><%= @company.full_address %></td>
+              </tr>
 
-<p>
-  <strong>Status:</strong>
-  <%= @company.status %>
-</p>
+              <tr>
+                <th>City:</th>
+                <td><%= @company.city %></td>
+              </tr>
 
-<p>
-  <strong>Phone number:</strong>
-  <%= @company.phone_number %>
-</p>
+              <tr>
+                <th>Postcode:</th>
+                <td><%= @company.postcode %></td>
+              </tr>
 
-<p>
-  <strong>Full address:</strong>
-  <%= @company.full_address %>
-</p>
+              <tr>
+                <th>State:</th>
+                <td><%= @company.state %></td>
+              </tr>
 
-<p>
-  <strong>City:</strong>
-  <%= @company.city %>
-</p>
+              <tr>
+                <th>Country:</th>
+                <td><%= @company.country %></td>
+              </tr>
 
-<p>
-  <strong>Postcode:</strong>
-  <%= @company.postcode %>
-</p>
+              <tr>
+                <th>Latitude:</th>
+                <td><%= @company.latitude %></td>
+              </tr>
 
-<p>
-  <strong>State:</strong>
-  <%= @company.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @company.country %>
-</p>
-
-<p>
-  <strong>Latitude:</strong>
-  <%= @company.latitude %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @company.longitude %>
-</p>
-
-<%= link_to 'Edit', edit_admin_company_path(@company), class: 'btn btn-info' %>
-<%= link_to 'Back', admin_companies_path, class: 'btn btn-secondary' %>
+              <tr>
+                <th>Longitude:</th>
+                <td><%= @company.longitude %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

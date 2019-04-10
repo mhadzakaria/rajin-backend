@@ -1,94 +1,107 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Nickname:</strong>
-  <%= @user.nickname %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
-
-<p>
-  <strong>Phone number:</strong>
-  <%= @user.phone_number %>
-</p>
-
-<p>
-  <strong>Date of birth:</strong>
-  <%= @user.date_of_birth %>
-</p>
-
-<p>
-  <strong>Gender:</strong>
-  <%= @user.gender %>
-</p>
-
-<p>
-  <strong>Full address:</strong>
-  <%= @user.full_address %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @user.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @user.country %>
-</p>
-
-<p>
-  <strong>Postcode:</strong>
-  <%= @user.postcode %>
-</p>
-
-<p>
-  <strong>Latitude:</strong>
-  <%= @user.latitude %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @user.longitude %>
-</p>
-
-<p>
-  <strong>User type:</strong>
-  <%= @user.user_type %>
-</p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @user.company.name unless @user.company.nil? %>
-</p>
-
-<p>
-  <strong>Skills:</strong>
-  <%= @user.skills.map{|skill| skill.name}.join(",") %>
-</p>
-
-<p>
-  <strong>Role:</strong>
-  <%= @user.role.try(:role_name) %>
-</p>
-
-<%= link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
-<%= link_to 'Back', :back, class: 'btn btn-secondary', data: { disable_with: 'Please wait...' } %>
+<div class="content-heading mb-0">
+  <div><strong><%= "#{@user.first_name} #{@user.last_name}" %></strong></div>
+  <div class="ml-auto">
+    <%= link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+  </div>
+</div>
+<div class="row pt-1 mt-0">
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Details</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Date of birth:</th>
+                <td><%= @user.date_of_birth %></td>
+              </tr>
+              <tr>
+                <th>Gender:</th>
+                <td><%= @user.gender %></td>
+              </tr>              <tr>
+                <th>User type:</th>
+                <td><%= @user.user_type %></td>
+              </tr>
+              <tr>
+                <th>Skills:</th>
+                <td><%= @user.skills.map{|skill| skill.name}.join(",") %></td>
+              </tr>
+              <tr>
+                <th>Role:</th>
+                <td><%= @user.role.try(:role_name) %></td>
+              </tr>            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Contact</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Nickname:</th>
+                <td><%= @user.nickname %></td>
+              </tr>
+              <tr>
+                <th>Email:</th>
+                <td><%= @user.email %></td>
+              </tr>
+              <tr>
+                <th>Phone number:</th>
+                <td><%= @user.phone_number %></td>
+              </tr>
+              <tr>
+                <th>Company:</th>
+                <td><%= @user.company.name unless @user.company.nil? %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-1 border-danger">
+      <div class="card-header"><h4>Address</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Full address:</th>
+                <td><%= @user.full_address %></td>
+              </tr>
+              <tr>
+                <th>City:</th>
+                <td><%= @user.city %></td>
+              </tr>
+              <tr>
+                <th>State:</th>
+                <td><%= @user.state %></td>
+              </tr>
+              <tr>
+                <th>Country:</th>
+                <td><%= @user.country %></td>
+              </tr>
+              <tr>
+                <th>Postcode:</th>
+                <td><%= @user.postcode %></td>
+              </tr>
+              <tr>
+                <th>Latitude:</th>
+                <td><%= @user.latitude %></td>
+              </tr>
+              <tr>
+                <th>Longitude:</th>
+                <td><%= @user.longitude %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

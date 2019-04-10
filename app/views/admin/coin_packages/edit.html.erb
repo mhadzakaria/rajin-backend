@@ -3,5 +3,5 @@
 <%= render partial: 'admin/coin_packages/partials/form',
             locals: {coin_package: @coin_package, url: admin_coin_package_path(@coin_package), method: :patch} %>
 
-<%= link_to 'Show', admin_coin_package_path(@coin_package), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+<%#= link_to 'Show', admin_coin_package_path(@coin_package), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
 <%= link_to 'Back', admin_coin_packages_path, class: 'btn btn-secondary', data: { disable_with: 'Please wait...' } %>

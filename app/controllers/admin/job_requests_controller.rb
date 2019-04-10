@@ -28,7 +28,7 @@ module Admin
 
       respond_to do |format|
         if @job_request.save
-          format.html { redirect_to admin_job_request_path(@job_request), notice: 'Job request was successfully created.' }
+          format.html { redirect_to admin_job_requests_path, notice: 'Job request was successfully created.' }
           format.json { render :show, status: :created, location: @job_request }
         else
           format.html { render :new }
@@ -40,7 +40,7 @@ module Admin
     def update
       respond_to do |format|
         if @job_request.update(job_request_params)
-          format.html { redirect_to admin_job_request_path(@job_request), notice: 'Job request was successfully updated.' }
+          format.html { redirect_to admin_job_requests_path, notice: 'Job request was successfully updated.' }
           format.json { render :show, status: :ok, location: @job_request }
         else
           format.html { render :edit }

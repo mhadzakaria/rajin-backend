@@ -47,10 +47,10 @@
                   <% @job_requests.each do |job_request| %>
                     <tr>
                       <td><%= job_request.user.full_name %></td>
-                      <td><%= job_request.job.title %></td>
+                      <td><%= link_to job_request.job.title, admin_job_path(job_request.job) %></td>
                       <td><%= job_request.status %></td>
                       <td>
-                        <%= link_to 'Show', admin_job_request_path(job_request), class: 'btn btn-primary' %>
+                        <%#= link_to 'Show', admin_job_request_path(job_request), class: 'btn btn-primary' %>
                         <%= link_to 'Edit', edit_admin_job_request_path(job_request), class: 'btn btn-info' %>
                         <%= link_to 'Destroy', admin_job_request_path(job_request), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                       </td>

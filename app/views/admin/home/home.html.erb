@@ -81,7 +81,8 @@
          </div>
          <div class="card-wrapper">
             <div class="card-body">
-               <div class="chart-bar-stackedv2 flot-chart"></div>
+               <!-- <div class="" id="chartjs-barchart"></div> -->
+               <div><canvas id="chartjs-barchart"></canvas></div>
             </div>
          </div>
       </div>
@@ -130,3 +131,36 @@
    </div>
    <!-- END chart-->
 </div>
+
+<script type="text/javascript">
+   $(document).ready(function (){
+     dataset = <%= raw @dataset.to_json %>
+     var barData = {
+         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
+         datasets: [{
+             label: "Job",
+             backgroundColor: '#23b7e5',
+             borderColor: '#23b7e5',
+             data: dataset["jobs"]
+         }, {
+             label: "Job Request",
+             backgroundColor: '#5d9cec',
+             borderColor: '#5d9cec',
+             data: dataset["job_requests"]
+         }]
+     };
+
+     var barOptions = {
+         legend: {
+             display: true
+         }
+     };
+     var barctx = document.getElementById('chartjs-barchart').getContext('2d');
+     var barChart = new Chart(barctx, {
+         data: barData,
+         type: 'bar',
+         options: barOptions
+     });
+     
+   })
+</script>

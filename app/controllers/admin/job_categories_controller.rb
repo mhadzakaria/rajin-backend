@@ -23,7 +23,7 @@ module Admin
 
       respond_to do |format|
         if @job_category.save
-          format.html { redirect_to admin_job_category_path(@job_category), notice: 'Job category was successfully created.' }
+          format.html { redirect_to admin_job_categories_path, notice: 'Job category was successfully created.' }
           format.json { render :show, status: :created, location: @job_category }
         else
           format.html { render :new }
@@ -35,7 +35,7 @@ module Admin
     def update
       respond_to do |format|
         if @job_category.update(job_category_params)
-          format.html { redirect_to admin_job_category_path(@job_category), notice: 'Job category was successfully updated.' }
+          format.html { redirect_to admin_job_categories_path, notice: 'Job category was successfully updated.' }
           format.json { render :show, status: :ok, location: @job_category }
         else
           format.html { render :edit }

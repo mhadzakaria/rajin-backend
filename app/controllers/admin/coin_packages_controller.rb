@@ -22,7 +22,7 @@ module Admin
 
       respond_to do |format|
         if @coin_package.save
-          format.html { redirect_to admin_coin_package_path(@coin_package), notice: 'School partner was successfully created.' }
+          format.html { redirect_to admin_coin_packages_path, notice: 'School partner was successfully created.' }
           format.json { render :show, status: :created, location: @coin_package }
         else
           format.html { render :new }
@@ -34,7 +34,7 @@ module Admin
     def update
       respond_to do |format|
         if @coin_package.update(coin_package_params)
-          format.html { redirect_to admin_coin_package_path(@coin_package), notice: 'School partner was successfully updated.' }
+          format.html { redirect_to admin_coin_packages_path, notice: 'School partner was successfully updated.' }
           format.json { render :show, status: :ok, location: @coin_package }
         else
           format.html { render :edit }

@@ -102,7 +102,7 @@
                     <td>
                       <%= user.try(:coin_balance).try(:amount).to_i %>
                     </td>
-                    <td>
+                    <td nowrap>
                       <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
                       <%= link_to 'Re-send Invitation', resend_invitation_admin_user_path(user), class: 'btn btn-primary',
                           data: { disable_with: 'Please wait...' } if (user.invitation_token.present? && !user.invitation_accepted?) %>

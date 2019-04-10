@@ -4,7 +4,7 @@ module Admin
 
     def index
       @q = Skill.ransack(params[:q])
-      @skills = @q.result.page(params[:page])
+      @skills = @q.result.page(params[:page]).order(:name)
     end
 
     def show
@@ -23,8 +23,8 @@ module Admin
 
       respond_to do |format|
         if @skill.save
-          add_picture if params[:skill][:picture].present?
-          format.html { redirect_to admin_skill_path(@skill), notice: 'Skill was successfully created.' }
+          add_picture if params[:skill][:picture][:file_url].present?
+          format.html { redirect_to admin_skills_path, notice: 'Skill was successfully created.' }
           format.json { render :show, status: :created, location: @skill }
         else
           format.html { render :new }
@@ -36,8 +36,8 @@ module Admin
     def update
       respond_to do |format|
         if @skill.update(skill_params)
-          add_picture if params[:skill][:picture].present?
-          format.html { redirect_to admin_skill_path(@skill), notice: 'Skill was successfully updated.' }
+          add_picture if params[:skill][:picture][:file_url].present?
+          format.html { redirect_to admin_skills_path, notice: 'Skill was successfully updated.' }
           format.json { render :show, status: :ok, location: @skill }
         else
           format.html { render :edit }

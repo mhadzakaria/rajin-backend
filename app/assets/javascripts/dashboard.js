@@ -12,6 +12,8 @@
 //= require plugins/flot/jquery.flot.time
 //= require plugins/jquery.flot.spline/jquery.flot.spline
 //= require plugins/jquery.flot.tooltip/js/jquery.flot.tooltip
+//--- ChartJS
+//= require plugins/chart.js/dist/Chart
 // --- EasyPie
 //= require plugins/easy-pie-chart/dist/jquery.easypiechart
 //--- Moment

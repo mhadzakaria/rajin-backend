@@ -28,8 +28,10 @@
           <%= form.fields_for :picture do |pic| %>
             <div class="form-group row">
               <%= pic.label :file_url, class: "col-md-2 col-form-label" %>
-              <div class="col-md-10">
+              <div class="col-md-10 mb-1">
                 <%= pic.file_field :file_url, type:"file" %>
+                <br><br>
+                <img src="<%= skill.picture.file_url if skill.picture %>" style="width: 20%">
               </div>
             </div>
             <div class="form-group row">
