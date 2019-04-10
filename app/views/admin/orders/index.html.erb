@@ -1,77 +1,81 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Orders</div>
+<div class="content-heading mb-0">
+  <div><strong>Orders</strong></div>
+  <div class="ml-auto">
+    <%#= link_to 'New Job', new_admin_job_path, class: 'btn btn-primary' %>
   </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="table-responsive">
-            <!-- 
-            <%#= search_form_for @q, url: admin_orders_path, method: :get do |f| %>
-              <table class="table table-borderless">
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="table-responsive">
+          <!-- 
+          <%#= search_form_for @q, url: admin_orders_path, method: :get do |f| %>
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <%#= f.label "Coin" %>
+                  <%#= f.search_field :coin_eq, class: 'form-control' %>
+                </td>
+                <td>
+                  <%#= f.label "Amount" %>
+                  <%#= f.search_field :amount_eq, class: 'form-control' %>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <%#= f.submit 'Search', {class: 'float-right'} %>
+          <%# end %>
+           -->
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Payment Method</th>
+                <th>Amount</th>
+                <th>Net Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @orders.each do |order| %>
+                <% user = order.user %>
                 <tr>
+                  <td><%= order.id %></td>
+                  <td><%= link_to user.full_name, admin_user_path(user) %></td>
+                  <td><%= order.payment_method %></td>
                   <td>
-                    <%#= f.label "Coin" %>
-                    <%#= f.search_field :coin_eq, class: 'form-control' %>
+                    <%= number_to_currency(order.amount, unit: "MYR", separator: ',', delimiter: '.') %>
                   </td>
                   <td>
-                    <%#= f.label "Amount" %>
-                    <%#= f.search_field :amount_eq, class: 'form-control' %>
+                    <%= number_to_currency(order.net_amount, unit: "MYR", separator: ',', delimiter: '.') %>
+                  </td>
+                  <td><%= order.status %></td>
+                  <td>
+                    <%= link_to 'Show', admin_order_path(order),
+                        class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+                    <%#= link_to 'Edit', edit_admin_order_path(order),
+                        class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+                    <%#= link_to 'Destroy', admin_order_path(order),
+                        class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>
                 </tr>
-              </table>
-              <br>
-              <%#= f.submit 'Search', {class: 'float-right'} %>
-            <%# end %>
-             -->
-          </div>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Id</th>
-                      <th>User</th>
-                      <th>Payment Method</th>
-                      <th>Amount</th>
-                      <th>Net Amount</th>
-                      <th>Status</th>
-                      <th>Action</th>
-                   </tr>
-                </thead>
-                <tbody>
-                    <% @orders.each do |order| %>
-                      <% user = order.user %>
-                      <tr>
-                        <td><%= order.id %></td>
-                        <td><%= link_to user.full_name, admin_user_path(user) %></td>
-                        <td><%= order.payment_method %></td>
-                        <td>
-                          <%= number_to_currency(order.amount, unit: "MYR", separator: ',', delimiter: '.') %>
-                        </td>
-                        <td>
-                          <%= number_to_currency(order.net_amount, unit: "MYR", separator: ',', delimiter: '.') %>
-                        </td>
-                        <td><%= order.status %></td>
-                        <td>
-                          <%= link_to 'Show', admin_order_path(order),
-                              class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
-                          <%#= link_to 'Edit', edit_admin_order_path(order),
-                              class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
-                          <%#= link_to 'Destroy', admin_order_path(order),
-                              class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                        </td>
-                      </tr>
-                    <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @orders %>
-        </div>
-     </div>
+        <%= paginate @orders %>
+      </div>
+    </div>
   </div>
 </div>

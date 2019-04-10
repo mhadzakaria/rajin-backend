@@ -1,52 +1,55 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Job Categories</div>
-  </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-          <div class="card-title"></div>
-          <div class="text-sm"></div>
-          <div id="datatable_test_filter" class="data_filter">
-            <%= search_form_for @q, url: admin_job_categories_path, method: :get do |f| %>
-              <div class="input-group">
-                <%= f.search_field :name_cont, class: "form-control", placeholder: "Search by name..." %>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Name</th>
-                      <th>Parent</th>
-                      <th></th>
-                   </tr>
-                </thead>
-                <tbody>
-                   <% @job_categories.each do |job_category| %>
-                    <tr>
-                      <td><%= job_category.name %></td>
-                      <td><%= job_category.parent_id %></td>
-                      <td>
-                        <%#= link_to 'Show', admin_job_category_path(job_category), class: 'btn btn-primary' %>
-                        <%= link_to 'Edit', edit_admin_job_category_path(job_category), class: 'btn btn-info'%>
-                        <%= link_to 'Destroy', admin_job_category_path(job_category), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @job_categories %>
-        </div>
-     </div>
+<div class="content-heading mb-0">
+  <div><strong>Job Categories</strong></div>
+  <div class="ml-auto">
     <%= link_to 'New Job Category', new_admin_job_category_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="data_filter">
+          <%= search_form_for @q, url: admin_job_categories_path, method: :get do |f| %>
+            <div class="input-group">
+              <%= f.search_field :name_cont, class: "form-control", placeholder: "Search by name..." %>
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Parent</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+               <% @job_categories.each do |job_category| %>
+                <tr>
+                  <td><%= job_category.name %></td>
+                  <td><%= job_category.parent_id %></td>
+                  <td>
+                    <%#= link_to 'Show', admin_job_category_path(job_category), class: 'btn btn-primary' %>
+                    <%= link_to 'Edit', edit_admin_job_category_path(job_category), class: 'btn btn-info'%>
+                    <%= link_to 'Destroy', admin_job_category_path(job_category), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= paginate @job_categories %>
+      </div>
+    </div>
   </div>
 </div>

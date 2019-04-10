@@ -1,67 +1,70 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Coin Packages</div>
+<div class="content-heading mb-0">
+  <div><strong>Coin Packages</strong></div>
+  <div class="ml-auto">
+    <%= link_to 'New Coin Package', new_admin_coin_package_path, class: 'btn btn-primary' %>
   </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="table-responsive">
-            <%= search_form_for @q, url: admin_coin_packages_path, method: :get do |f| %>
-              <table class="table table-borderless">
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="table-responsive">
+          <%= search_form_for @q, url: admin_coin_packages_path, method: :get do |f| %>
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <%= f.label "Coin" %>
+                  <%= f.search_field :coin_eq, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Amount" %>
+                  <%= f.search_field :amount_eq, class: 'form-control' %>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Coin</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @coin_packages.each do |coin_package| %>
                 <tr>
+                  <td><%= coin_package.id %></td>
+                  <td><%= coin_package.coin %></td>
                   <td>
-                    <%= f.label "Coin" %>
-                    <%= f.search_field :coin_eq, class: 'form-control' %>
+                    <%= number_to_currency(coin_package.amount, unit: "MYR", separator: ',', delimiter: '.') %>
                   </td>
                   <td>
-                    <%= f.label "Amount" %>
-                    <%= f.search_field :amount_eq, class: 'form-control' %>
+                    <%#= link_to 'Show', admin_coin_package_path(coin_package),
+                        class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Edit', edit_admin_coin_package_path(coin_package),
+                        class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Destroy', admin_coin_package_path(coin_package),
+                        class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>
                 </tr>
-              </table>
-              <br>
-              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
-            <% end %>
-          </div>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Id</th>
-                      <th>Coin</th>
-                      <th>Amount</th>
-                      <th>Actions</th>
-                   </tr>
-                </thead>
-                <tbody>
-                    <% @coin_packages.each do |coin_package| %>
-                      <tr>
-                        <td><%= coin_package.id %></td>
-                        <td><%= coin_package.coin %></td>
-                        <td>
-                          <%= number_to_currency(coin_package.amount, unit: "MYR", separator: ',', delimiter: '.') %>
-                        </td>
-                        <td>
-                          <%#= link_to 'Show', admin_coin_package_path(coin_package),
-                              class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
-                          <%= link_to 'Edit', edit_admin_coin_package_path(coin_package),
-                              class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
-                          <%= link_to 'Destroy', admin_coin_package_path(coin_package),
-                              class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                        </td>
-                      </tr>
-                    <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @coin_packages %>
-        </div>
-     </div>
-    <%= link_to 'New Coin Package', new_admin_coin_package_path, class: 'btn btn-primary' %>
+        <%= paginate @coin_packages %>
+      </div>
+    </div>
   </div>
 </div>

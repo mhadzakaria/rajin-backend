@@ -1,10 +1,14 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Users</div>
+<div class="content-heading mb-0">
+  <div><strong>Users</strong></div>
+  <div class="ml-auto">
+    <%= link_to 'Invite New User', new_admin_user_path, class: 'btn btn-primary'  %>
   </div>
-  <div class="container-fluid">
-    <div class="card">
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
       <div class="card-header">
         <div class="card-title"></div>
         <div class="text-sm"></div>
@@ -21,103 +25,102 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-           <table class="table table-striped my-4 w-100" id="datatable_test">
-              <thead>
-                 <tr>
-                    <th>Nickname</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Email</th>
-                    <th>Phone number</th>
-                    <th>Date of birth</th>
-                    <th>Gender</th>
-                    <th>Full Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Country</th>
-                    <th>Postcode</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>User Type</th>
-                    <th>Company</th>
-                    <th>Skills</th>
-                    <th>Coin Balance</th>
-                    <th></th>
-                 </tr>
-              </thead>
-              <tbody>
-                <% @users.each do |user| %>
-                  <tr>
-                    <td>
-                      <%= user.nickname %>
-                    </td>
-                    <td>
-                      <%= user.first_name %>
-                    </td>
-                    <td>
-                      <%= user.last_name %>
-                    </td>
-                    <td>
-                      <%= user.email %>
-                    </td>
-                    <td>
-                      <%= user.phone_number %>
-                    </td>
-                    <td>
-                      <%= date_formater(user.date_of_birth) %>
-                    </td>
-                    <td>
-                      <%= user.gender %>
-                    </td>
-                    <td>
-                      <%= user.full_address %>
-                    </td>
-                    <td>
-                      <%= user.city %>
-                    </td>
-                    <td>
-                      <%= user.state %>
-                    </td>
-                    <td>
-                      <%= user.country %>
-                    </td>
-                    <td>
-                      <%= user.postcode %>
-                    </td>
-                    <td>
-                      <%= user.latitude %>
-                    </td>
-                    <td>
-                      <%= user.longitude %>
-                    </td>
-                    <td>
-                      <%= user.user_type %>
-                    </td>
-                    <td>
-                      <%= user.company.name unless user.company.nil? %>
-                    </td>
-                    <td>
-                      <%= user.skills.map{|skill| skill.name}.join(",") %>
-                    </td>
-                    <td>
-                      <%= user.try(:coin_balance).try(:amount).to_i %>
-                    </td>
-                    <td nowrap>
-                      <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
-                      <%= link_to 'Re-send Invitation', resend_invitation_admin_user_path(user), class: 'btn btn-primary',
-                          data: { disable_with: 'Please wait...' } if (user.invitation_token.present? && !user.invitation_accepted?) %>
-                      <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
-                      <%= link_to 'Top Up', top_up_admin_user_path(user), class: 'btn btn-success', data: { disable_with: 'Please wait...' } %>
-                      <%= link_to 'Destroy', admin_user_path(user), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-           </table>
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Nickname</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Date of birth</th>
+                <th>Gender</th>
+                <th>Full Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Postcode</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>User Type</th>
+                <th>Company</th>
+                <th>Skills</th>
+                <th>Coin Balance</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td>
+                    <%= user.nickname %>
+                  </td>
+                  <td>
+                    <%= user.first_name %>
+                  </td>
+                  <td>
+                    <%= user.last_name %>
+                  </td>
+                  <td>
+                    <%= user.email %>
+                  </td>
+                  <td>
+                    <%= user.phone_number %>
+                  </td>
+                  <td>
+                    <%= date_formater(user.date_of_birth) %>
+                  </td>
+                  <td>
+                    <%= user.gender %>
+                  </td>
+                  <td>
+                    <%= user.full_address %>
+                  </td>
+                  <td>
+                    <%= user.city %>
+                  </td>
+                  <td>
+                    <%= user.state %>
+                  </td>
+                  <td>
+                    <%= user.country %>
+                  </td>
+                  <td>
+                    <%= user.postcode %>
+                  </td>
+                  <td>
+                    <%= user.latitude %>
+                  </td>
+                  <td>
+                    <%= user.longitude %>
+                  </td>
+                  <td>
+                    <%= user.user_type %>
+                  </td>
+                  <td>
+                    <%= user.company.name unless user.company.nil? %>
+                  </td>
+                  <td>
+                    <%= user.skills.map{|skill| skill.name}.join(",") %>
+                  </td>
+                  <td>
+                    <%= user.try(:coin_balance).try(:amount).to_i %>
+                  </td>
+                  <td nowrap>
+                    <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Re-send Invitation', resend_invitation_admin_user_path(user), class: 'btn btn-primary',
+                        data: { disable_with: 'Please wait...' } if (user.invitation_token.present? && !user.invitation_accepted?) %>
+                    <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Top Up', top_up_admin_user_path(user), class: 'btn btn-success', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Destroy', admin_user_path(user), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
         <%= paginate @users %>
       </div>
     </div>
-    <%= link_to 'Invite New User', new_admin_user_path, class: 'btn btn-primary'  %>
   </div>
 </div>

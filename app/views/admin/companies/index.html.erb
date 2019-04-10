@@ -1,110 +1,113 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Companies</div>
+<div class="content-heading mb-0">
+  <div><strong>Companies</strong></div>
+  <div class="ml-auto">
+  <%= link_to 'New Company', new_admin_company_path, class: 'btn btn-primary' %>
   </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="table-responsive">
-            <%= search_form_for @q, url: admin_companies_path, method: :get do |f| %>
-              <table class="table table-borderless">
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="table-responsive">
+          <%= search_form_for @q, url: admin_companies_path, method: :get do |f| %>
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <%= f.label "Name" %>
+                  <%= f.search_field :name_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Status" %>
+                  <%= f.search_field :status_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Phone Number" %>
+                  <%= f.search_field :phone_number_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Address" %>
+                  <%= f.search_field :full_address_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "City" %>
+                  <%= f.search_field :city_cont, class: 'form-control' %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <%= f.label "Postcode" %>
+                  <%= f.search_field :postcode_eq, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "State" %>
+                  <%= f.search_field :state_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Country" %>
+                  <%= f.search_field :country_cont, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Latitude" %>
+                  <%= f.search_field :latitude_eq, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Longitude" %>
+                  <%= f.search_field :longitude_eq, class: 'form-control' %>
+                </td>
+              </tr>
+            </table>
+            <br>
+            <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Phone number</th>
+                <th>Full address</th>
+                <th>City</th>
+                <th>Postcode</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @companies.each do |company| %>
                 <tr>
+                  <td><%= company.name %></td>
+                  <td><%= company.status %></td>
+                  <td><%= company.phone_number %></td>
+                  <td><%= company.full_address %></td>
+                  <td><%= company.city %></td>
+                  <td><%= company.postcode %></td>
+                  <td><%= company.state %></td>
+                  <td><%= company.country %></td>
+                  <td><%= company.latitude %></td>
+                  <td><%= company.longitude %></td>
                   <td>
-                    <%= f.label "Name" %>
-                    <%= f.search_field :name_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Status" %>
-                    <%= f.search_field :status_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Phone Number" %>
-                    <%= f.search_field :phone_number_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Address" %>
-                    <%= f.search_field :full_address_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "City" %>
-                    <%= f.search_field :city_cont, class: 'form-control' %>
+                    <%= link_to 'Show', admin_company_path(company), class: 'btn btn-primary mb-1' %>
+                    <%= link_to 'Edit', edit_admin_company_path(company), class: 'btn btn-info mb-1' %>
+                    <%= link_to 'Destroy', admin_company_path(company), class: 'btn btn-danger mb-1', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <%= f.label "Postcode" %>
-                    <%= f.search_field :postcode_eq, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "State" %>
-                    <%= f.search_field :state_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Country" %>
-                    <%= f.search_field :country_cont, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Latitude" %>
-                    <%= f.search_field :latitude_eq, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Longitude" %>
-                    <%= f.search_field :longitude_eq, class: 'form-control' %>
-                  </td>
-                </tr>
-              </table>
-              <br>
-              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
-            <% end %>
-          </div>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Name</th>
-                      <th>Status</th>
-                      <th>Phone number</th>
-                      <th>Full address</th>
-                      <th>City</th>
-                      <th>Postcode</th>
-                      <th>State</th>
-                      <th>Country</th>
-                      <th>Latitude</th>
-                      <th>Longitude</th>
-                      <th></th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <% @companies.each do |company| %>
-                    <tr>
-                      <td><%= company.name %></td>
-                      <td><%= company.status %></td>
-                      <td><%= company.phone_number %></td>
-                      <td><%= company.full_address %></td>
-                      <td><%= company.city %></td>
-                      <td><%= company.postcode %></td>
-                      <td><%= company.state %></td>
-                      <td><%= company.country %></td>
-                      <td><%= company.latitude %></td>
-                      <td><%= company.longitude %></td>
-                      <td>
-                        <%= link_to 'Show', admin_company_path(company), class: 'btn btn-primary mb-1' %>
-                        <%= link_to 'Edit', edit_admin_company_path(company), class: 'btn btn-info mb-1' %>
-                        <%= link_to 'Destroy', admin_company_path(company), class: 'btn btn-danger mb-1', method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @companies %>
-        </div>
-     </div>
-    <%= link_to 'New Company', new_admin_company_path, class: 'btn btn-primary' %>
+        <%= paginate @companies %>
+      </div>
+    </div>
   </div>
 </div>

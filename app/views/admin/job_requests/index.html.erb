@@ -1,67 +1,70 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Job Requests</div>
+<div class="content-heading mb-0">
+  <div><strong>Job Requests</strong></div>
+  <div class="ml-auto">
+    <%= link_to 'New Job Request', new_admin_job_request_path, class: 'btn btn-primary' %>
   </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="table-responsive">
-            <%= search_form_for @q, url: admin_job_requests_path, method: :get do |f| %>
-              <table class="table table-borderless">
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="table-responsive">
+          <%= search_form_for @q, url: admin_job_requests_path, method: :get do |f| %>
+            <table class="table table-borderless">
+              <tr>
+                <td>
+                  <%= f.label "User" %>
+                  <%= f.select :user_id_eq, options_for_select(@users, @q.user_id_eq),
+                        {include_blank: 'Select user'}, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Job" %>
+                  <%= f.select :job_id_eq, options_for_select(@jobs, @q.job_id_eq),
+                        {include_blank: 'Select job'}, class: 'form-control' %>
+                </td>
+                <td>
+                  <%= f.label "Status" %>
+                  <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "Select status"}, class: 'form-control' %>
+                </td>
+              </tr>
+            </table>
+            <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Job</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @job_requests.each do |job_request| %>
                 <tr>
+                  <td><%= job_request.user.full_name %></td>
+                  <td><%= link_to job_request.job.title, admin_job_path(job_request.job) %></td>
+                  <td><%= job_request.status %></td>
                   <td>
-                    <%= f.label "User" %>
-                    <%= f.select :user_id_eq, options_for_select(@users, @q.user_id_eq),
-                          {include_blank: 'Select user'}, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Job" %>
-                    <%= f.select :job_id_eq, options_for_select(@jobs, @q.job_id_eq),
-                          {include_blank: 'Select job'}, class: 'form-control' %>
-                  </td>
-                  <td>
-                    <%= f.label "Status" %>
-                    <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "Select status"}, class: 'form-control' %>
+                    <%#= link_to 'Show', admin_job_request_path(job_request), class: 'btn btn-primary' %>
+                    <%= link_to 'Edit', edit_admin_job_request_path(job_request), class: 'btn btn-info' %>
+                    <%= link_to 'Destroy', admin_job_request_path(job_request), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>
                 </tr>
-              </table>
-              <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
-            <% end %>
-          </div>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>User</th>
-                      <th>Job</th>
-                      <th>Status</th>
-                      <th></th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <% @job_requests.each do |job_request| %>
-                    <tr>
-                      <td><%= job_request.user.full_name %></td>
-                      <td><%= link_to job_request.job.title, admin_job_path(job_request.job) %></td>
-                      <td><%= job_request.status %></td>
-                      <td>
-                        <%#= link_to 'Show', admin_job_request_path(job_request), class: 'btn btn-primary' %>
-                        <%= link_to 'Edit', edit_admin_job_request_path(job_request), class: 'btn btn-info' %>
-                        <%= link_to 'Destroy', admin_job_request_path(job_request), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @job_requests %>
-        </div>
-     </div>
-    <%= link_to 'New Job Request', new_admin_job_request_path, class: 'btn btn-primary' %>
+        <%= paginate @job_requests %>
+      </div>
+    </div>
   </div>
 </div>

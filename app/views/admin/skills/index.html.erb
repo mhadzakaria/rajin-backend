@@ -1,60 +1,64 @@
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Skills</div>
-  </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="data_filter">
-            <%= search_form_for @q, url: admin_skills_path, method: :get do |f| %>
-              <div class="input-group">
-                <%= f.search_field :name_cont, class: "form-control", placeholder: "Search by name...", autofocus: true %>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Logo</th>
-                      <th>Name</th>
-                      <th></th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <% @skills.each do |skill| %>
-                    <% picture = skill.picture %>
-                    <tr>
-                      <td>
-                        <div class="d-flex align-items-center flex-wrap">
-                          <% unless picture.blank? %>
-                            <%= image_tag picture.file_url.url, class: "circle thumb24 mx-1", data: {title: skill.name, toggle: "tooltip"} %>
-                          <% end %>
-                        </div>
-                      </td>
-                      <td>
-                        <%= skill.name %>
-                      </td>
-                      <td>
-                        <%#= link_to 'Show', admin_skill_path(skill), class: 'btn btn-primary' %>
-                        <%= link_to 'Edit', edit_admin_skill_path(skill), class: 'btn btn-info' %>
-                        <%= link_to 'Destroy', admin_skill_path(skill), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @skills %>
-        </div>
-     </div>
+<p id="notice"><%= notice %></p>
+<div class="content-heading mb-0">
+  <div><strong>Skills</strong></div>
+  <div class="ml-auto">
     <%= link_to 'New Skill', new_admin_skill_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="data_filter">
+          <%= search_form_for @q, url: admin_skills_path, method: :get do |f| %>
+            <div class="input-group">
+              <%= f.search_field :name_cont, class: "form-control", placeholder: "Search by name...", autofocus: true %>
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+               <tr>
+                  <th>Logo</th>
+                  <th>Name</th>
+                  <th></th>
+               </tr>
+            </thead>
+            <tbody>
+              <% @skills.each do |skill| %>
+                <% picture = skill.picture %>
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center flex-wrap">
+                      <% unless picture.blank? %>
+                        <%= image_tag picture.file_url.url, class: "circle thumb24 mx-1", data: {title: skill.name, toggle: "tooltip"} %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td>
+                    <%= skill.name %>
+                  </td>
+                  <td>
+                    <%#= link_to 'Show', admin_skill_path(skill), class: 'btn btn-primary' %>
+                    <%= link_to 'Edit', edit_admin_skill_path(skill), class: 'btn btn-info' %>
+                    <%= link_to 'Destroy', admin_skill_path(skill), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= paginate @skills %>
+      </div>
+    </div>
   </div>
 </div>

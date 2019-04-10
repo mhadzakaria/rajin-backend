@@ -1,56 +1,59 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Roles</div>
-  </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="data_filter">
-            <%= search_form_for @q, url: admin_roles_path, method: :get do |f| %>
-              <div class="input-group">
-                <%= f.search_field :role_name, class: "form-control", placeholder: "Search by name...", autofocus: true %>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Authorities</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @roles.each do |role| %>
-                    <tr>
-                      <td><%= role.role_name %></td>
-                      <td><%= role.role_code %></td>
-                      <td><%= role.authorities %></td>
-                      <td><%= role.status %></td>
-                      <td>
-                        <%#= link_to 'Show', admin_role_path(role), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
-                        <%= link_to 'Edit', edit_admin_role_path(role), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
-                        <%= link_to 'Destroy', admin_role_path(role), method: :delete, data: { confirm: 'Are you sure?', disable_with: 'Please wait...' }, class: 'btn btn-danger' %>   
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @roles %>
-        </div>
-     </div>
+<div class="content-heading mb-0">
+  <div><strong>Roles</strong></div>
+  <div class="ml-auto">
     <%= link_to 'New role', new_admin_role_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+         <div class="card-title"></div>
+         <div class="text-sm"></div>
+         <div id="datatable_test_filter" class="data_filter">
+          <%= search_form_for @q, url: admin_roles_path, method: :get do |f| %>
+            <div class="input-group">
+              <%= f.search_field :role_name, class: "form-control", placeholder: "Search by name...", autofocus: true %>
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Authorities</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @roles.each do |role| %>
+                <tr>
+                  <td><%= role.role_name %></td>
+                  <td><%= role.role_code %></td>
+                  <td><%= role.authorities %></td>
+                  <td><%= role.status %></td>
+                  <td>
+                    <%#= link_to 'Show', admin_role_path(role), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Edit', edit_admin_role_path(role), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Destroy', admin_role_path(role), method: :delete, data: { confirm: 'Are you sure?', disable_with: 'Please wait...' }, class: 'btn btn-danger' %>   
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <%= paginate @roles %>
+      </div>
+    </div>
   </div>
 </div>

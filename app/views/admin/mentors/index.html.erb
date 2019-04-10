@@ -1,115 +1,118 @@
 <p id="notice"><%= notice %></p>
-<div class="content-wrapper">
-  <div class="content-heading">
-     <div>Mentors</div>
+<div class="content-heading mb-0">
+  <div><strong>Mentors</strong></div>
+  <div class="ml-auto">
   </div>
-  <div class="container-fluid">
-     <div class="card">
-        <div class="card-header">
-           <div class="card-title"></div>
-           <div class="text-sm"></div>
-           <div id="datatable_test_filter" class="data_filter">
-            <%= search_form_for @q, url: admin_mentors_path, method: :get do |f| %>
-              <div class="input-group">
-                <%= f.search_field :full_name_cont, class: "form-control", placeholder: "Search by full name...", autofocus: true %>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="submit">Search</button>
-                </div>
+</div>
+
+<div class="row pt-1 mt-0">
+  <div class="col-md-12">
+    <div class="card mb-1 border-danger">
+      <div class="card-header">
+        <div class="card-title"></div>
+        <div class="text-sm"></div>
+        <div id="datatable_test_filter" class="data_filter">
+          <%= search_form_for @q, url: admin_mentors_path, method: :get do |f| %>
+            <div class="input-group">
+              <%= f.search_field :full_name_cont, class: "form-control", placeholder: "Search by full name...", autofocus: true %>
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
               </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
-             <table class="table table-striped my-4 w-100" id="datatable_test">
-                <thead>
-                   <tr>
-                      <th>Nickname</th>
-                      <th>First name</th>
-                      <th>Last name</th>
-                      <th>Email</th>
-                      <th>Phone number</th>
-                      <th>Date of birth</th>
-                      <th>Gender</th>
-                      <th>Full Address</th>
-                      <th>City</th>
-                      <th>State</th>
-                      <th>Country</th>
-                      <th>Postcode</th>
-                      <th>Latitude</th>
-                      <th>Longitude</th>
-                      <th>Position</th>
-                      <th>User Type</th>
-                      <th>Company</th>
-                      <th>Skills</th>
-                      <th></th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <% @mentors.each do |mentor| %>
-                    <tr>
-                      <td>
-                        <%= mentor.nickname %>
-                      </td>
-                      <td>
-                        <%= mentor.first_name %>
-                      </td>
-                      <td>
-                        <%= mentor.last_name %>
-                      </td>
-                      <td>
-                        <%= mentor.email %>
-                      </td>
-                      <td>
-                        <%= mentor.phone_number %>
-                      </td>
-                      <td>
-                        <%= mentor.date_of_birth %>
-                      </td>
-                      <td>
-                        <%= mentor.gender %>
-                      </td>
-                      <td>
-                        <%= mentor.full_address %>
-                      </td>
-                      <td>
-                        <%= mentor.city %>
-                      </td>
-                      <td>
-                        <%= mentor.state %>
-                      </td>
-                      <td>
-                        <%= mentor.country %>
-                      </td>
-                      <td>
-                        <%= mentor.postcode %>
-                      </td>
-                      <td>
-                        <%= mentor.latitude %>
-                      </td>
-                      <td>
-                        <%= mentor.longitude %>
-                      </td>
-                      <td>
-                        <%= mentor.position %>
-                      </td>
-                      <td>
-                        <%= mentor.user_type %>
-                      </td>
-                      <td>
-                        <%= mentor.skills.map{|skill| skill.name}.join(",") %>
-                      </td>
-                      <td>
-                        <%= link_to 'Show', admin_mentor_path(mentor) %>
-                        <%#= link_to 'Destroy', admin_mentor_path(mentor), method: :delete, data: { confirm: 'Are you sure?' } %>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-             </table>
-          </div>
-          <%= paginate @mentors %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped my-4 w-100" id="datatable_test">
+            <thead>
+              <tr>
+                <th>Nickname</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Phone number</th>
+                <th>Date of birth</th>
+                <th>Gender</th>
+                <th>Full Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Postcode</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Position</th>
+                <th>User Type</th>
+                <th>Company</th>
+                <th>Skills</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @mentors.each do |mentor| %>
+                <tr>
+                  <td>
+                    <%= mentor.nickname %>
+                  </td>
+                  <td>
+                    <%= mentor.first_name %>
+                  </td>
+                  <td>
+                    <%= mentor.last_name %>
+                  </td>
+                  <td>
+                    <%= mentor.email %>
+                  </td>
+                  <td>
+                    <%= mentor.phone_number %>
+                  </td>
+                  <td>
+                    <%= mentor.date_of_birth %>
+                  </td>
+                  <td>
+                    <%= mentor.gender %>
+                  </td>
+                  <td>
+                    <%= mentor.full_address %>
+                  </td>
+                  <td>
+                    <%= mentor.city %>
+                  </td>
+                  <td>
+                    <%= mentor.state %>
+                  </td>
+                  <td>
+                    <%= mentor.country %>
+                  </td>
+                  <td>
+                    <%= mentor.postcode %>
+                  </td>
+                  <td>
+                    <%= mentor.latitude %>
+                  </td>
+                  <td>
+                    <%= mentor.longitude %>
+                  </td>
+                  <td>
+                    <%= mentor.position %>
+                  </td>
+                  <td>
+                    <%= mentor.user_type %>
+                  </td>
+                  <td>
+                    <%= mentor.skills.map{|skill| skill.name}.join(",") %>
+                  </td>
+                  <td>
+                    <%= link_to 'Show', admin_mentor_path(mentor) %>
+                    <%#= link_to 'Destroy', admin_mentor_path(mentor), method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-     </div>
+        <%= paginate @mentors %>
+      </div>
+    </div>
   </div>
 </div>

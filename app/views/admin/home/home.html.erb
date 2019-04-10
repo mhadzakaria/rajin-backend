@@ -20,7 +20,7 @@
                   <p class="m-0 text-sm">New job request</p>
                </div>
                <div class="w-50 px-3 text-center">
-                  <!-- <div data-sparkline="" data-type="line" data-height="60" data-width="80%" data-line-width="2" data-line-color="#7266ba" data-chart-range-min="0" data-spot-color="#888" data-min-spot-color="#7266ba" data-max-spot-color="#7266ba" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="3" data-values="7,3,4,7,5,9,4,4,7,5,9,6,4" data-resize="true"></div> -->
+                  <!-- <div data-sparkline="" data-type="line" data-height="60" data-width="80%" data-line-width="2" data-line-color="#7266ba" data-chart-range-min="0" data-spot-color="#888" data-min-spot-color="#7266ba" data-max-spot-color="#7266ba" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="3" data-values="7,3,4,7,5,9,4,4,7,5,9,6,4" data-recount="true"></div> -->
                </div>
             </div>
          </div>
@@ -81,8 +81,9 @@
          </div>
          <div class="card-wrapper">
             <div class="card-body">
-               <!-- <div class="" id="chartjs-barchart"></div> -->
-               <div><canvas id="chartjs-barchart"></canvas></div>
+              <div>
+                <canvas id="chartjs-barchart"></canvas>
+              </div>
             </div>
          </div>
       </div>
@@ -94,73 +95,136 @@
    <div class="card" id="cardChart9">
       <div class="card-header">
          <!-- START button group-->
+         <!-- 
          <div class="float-right btn-group">
             <button class="dropdown-toggle dropdown-toggle-nocaret btn btn-secondary btn-sm" type="button" data-toggle="dropdown">All time</button>
             <div class="dropdown-menu dropdown-menu-right-forced fadeInLeft animated" role="menu"><a class="dropdown-item" href="#">Daily</a><a class="dropdown-item" href="#">Monthly</a>
                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">All time</a>
             </div>
          </div>
+          -->
          <!-- END button group-->
          <div class="card-title">Overall progress</div>
       </div>
       <div class="card-wrapper">
-         <div class="card-body">
-            <div class="chart-splinev2 flot-chart"></div>
-         </div>
-         <div class="card-body">
-            <div class="row">
-               <div class="col-md-3 col-6 text-center">
-                  <p>Users</p>
-                  <div class="h1"><%= @users.size %></div>
-               </div>
-               <div class="col-md-3 col-6 text-center">
-                  <p>Jobs</p>
-                  <div class="h1"><%= @jobs.size %></div>
-               </div>
-               <div class="col-md-3 col-6 text-center">
-                  <p>Job Requests</p>
-                  <div class="h1">3<%= @job_requests.size %></div>
-               </div>
-               <div class="col-md-3 col-6 text-center">
-                  <p>Orders</p>
-                  <div class="h1 text-truncate"><%= @orders.size %></div>
-               </div>
+        <div class="card-body">
+          <!-- <div class="flot-chart chart-splinev2"></div> -->
+          <div id="chart-splinev2" class="flot-chart"></div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 col-6 text-center">
+              <p>Users</p>
+              <div class="h1"><%= @users.count %></div>
             </div>
-         </div>
+            <div class="col-md-3 col-6 text-center">
+              <p>Jobs</p>
+              <div class="h1"><%= @jobs.count %></div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+              <p>Job Requests</p>
+              <div class="h1">3<%= @job_requests.count %></div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+              <p>Orders</p>
+              <div class="h1 text-truncate"><%= @orders.count %></div>
+            </div>
+          </div>
+        </div>
       </div>
    </div>
    <!-- END chart-->
 </div>
 
 <script type="text/javascript">
-   $(document).ready(function (){
-     dataset = <%= raw @dataset.to_json %>
-     var barData = {
-         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
-         datasets: [{
-             label: "Job",
-             backgroundColor: '#23b7e5',
-             borderColor: '#23b7e5',
-             data: dataset["jobs"]
-         }, {
-             label: "Job Request",
-             backgroundColor: '#5d9cec',
-             borderColor: '#5d9cec',
-             data: dataset["job_requests"]
-         }]
-     };
+  $(document).ready(function (){
+    dataset1 = <%= raw @dataset1.to_json %>
+    dataset2 = <%= raw @dataset2.to_json %>
+    var barData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
+      datasets: [{
+          label: "Job",
+          backgroundColor: '#23b7e5',
+          borderColor: '#23b7e5',
+          data: dataset1["jobs"]
+      }, {
+          label: "Job Request",
+          backgroundColor: '#5d9cec',
+          borderColor: '#5d9cec',
+          data: dataset1["job_requests"]
+      }]
+    };
+    var barOptions = {
+      legend: {
+          display: true
+      }
+    };
+    var barctx = document.getElementById('chartjs-barchart').getContext('2d');
+    var barChart = new Chart(barctx, {
+        data: barData,
+        type: 'bar',
+        options: barOptions
+    });
 
-     var barOptions = {
-         legend: {
-             display: true
-         }
-     };
-     var barctx = document.getElementById('chartjs-barchart').getContext('2d');
-     var barChart = new Chart(barctx, {
-         data: barData,
-         type: 'bar',
-         options: barOptions
-     });
-     
+    var datav2 = [
+        {
+          "label": "Users",
+          "color": "#0abe51",
+          "data": dataset2["users"]
+        },
+        {
+          "label": "Jobs",
+          "color": "#23b7e5",
+          "data": dataset2["jobs"]
+        },
+        {
+          "label": "Job Requests",
+          "color": "#7266ba",
+          "data": dataset2["job_requests"]
+        }];
+
+    var chart2Options = {
+      series: {
+          lines: {
+              show: false
+          },
+          points: {
+              show: true,
+              radius: 4
+          },
+          splines: {
+              show: true,
+              tension: 0.4,
+              lineWidth: 1,
+              fill: 0.5
+          }
+      },
+      grid: {
+          borderColor: '#eee',
+          borderWidth: 1,
+          hoverable: true,
+          backgroundColor: '#fcfcfc'
+      },
+      tooltip: true,
+      tooltipOpts: {
+          content: function(label, x, y) { return x + ' : ' + y; }
+      },
+      xaxis: {
+          tickColor: '#fcfcfc',
+          mode: 'categories'
+      },
+      yaxis: {
+          // min: 0,
+          // max: 100, // optional: use it for a clear represetation
+          tickColor: '#eee',
+          //position: 'right' or 'left',
+          tickFormatter: function(v) {
+              return v /* + ' visitors'*/ ;
+          }
+      },
+      shadowSize: 0
+    };
+ 
+    $.plot($('#chart-splinev2'), datav2, chart2Options);
    })
 </script>
