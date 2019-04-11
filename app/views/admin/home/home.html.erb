@@ -137,9 +137,10 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function (){
-    dataset1 = <%= raw @dataset1.to_json %>
-    dataset2 = <%= raw @dataset2.to_json %>
+  dataset1 = <%= raw @dataset1.to_json %>
+  dataset2 = <%= raw @dataset2.to_json %>
+
+  function initChartJS() {
     var barData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
       datasets: [{
@@ -226,5 +227,9 @@
     };
  
     $.plot($('#chart-splinev2'), datav2, chart2Options);
-   })
+  }
+
+  $(document).ready(function (){
+    initChartJS();
+  })
 </script>
