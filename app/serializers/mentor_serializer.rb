@@ -1,5 +1,5 @@
 class MentorSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :position, :user_type, :access_token, :uuid, :password, :skills, :picture
+  attributes :id, :nickname, :first_name, :last_name. :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :position, :user_type, :access_token, :uuid, :password, :skills, :picture
 
   def password
     object.password || "Password not displayed"

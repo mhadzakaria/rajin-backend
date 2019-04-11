@@ -55,6 +55,7 @@ class ReviewSerializer < ActiveModel::Serializer
     data[:nickname]     = owner.nickname
     data[:first_name]   = owner.first_name
     data[:last_name]    = owner.last_name
+    data[:email]        = owner.email
     data[:phone_number] = owner.phone_number
     data[:full_address] = owner.full_address
     data[:city]         = owner.city

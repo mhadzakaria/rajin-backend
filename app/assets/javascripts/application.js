@@ -33,4 +33,5 @@
 //= require jquery-ui/widgets/datepicker
 
 //= require chart.js/dist/Chart
+//= require custom.js
 //= require firebase

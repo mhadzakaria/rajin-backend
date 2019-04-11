@@ -10,6 +10,7 @@ class NotificationSerializer < ActiveModel::Serializer
     data[:nickname]     = user.nickname
     data[:first_name]   = user.first_name
     data[:last_name]    = user.last_name
+    data[:email]        = user.email
     data[:phone_number] = user.phone_number
     data[:full_address] = user.full_address
     data[:city]         = user.city

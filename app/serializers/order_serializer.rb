@@ -11,6 +11,7 @@ class OrderSerializer < ActiveModel::Serializer
     data[:first_name]   = user.first_name
     data[:last_name]    = user.last_name
     data[:phone_number] = user.phone_number
+    data[:email]        = user.email
     data[:full_address] = user.full_address
     data[:city]         = user.city
     data[:postcode]     = user.postcode
