@@ -30,6 +30,11 @@ module Admin
         end
         @jobs = Job.where(id: results.uniq).page(params[:page])
       end
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data Job.export(@jobs), filename: "Jobs-#{Date.today}.csv" }
+      end
     end
 
     def show

@@ -5,6 +5,11 @@ module Admin
     def index
       @q = SchoolPartner.ransack(params[:q])
       @school_partners = @q.result.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data SchoolPartner.export(@school_partners), filename: "School Partner-#{Date.today}.csv" }
+      end
     end
 
     def show

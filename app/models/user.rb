@@ -71,6 +71,23 @@ class User < ApplicationRecord
     return skills
   end
 
+  def self.export(users)
+    attributes = ["email", "nickname", "first_name", "last_name", "phone_number", "date_of_birth", "gender", "full_address", "city", "postcode", "state", "country", "company_csv", "role_csv", "latitude", "longitude", "user_type", "skill_csv", "created_at", "updated_at"]
+    to_csv(users, attributes)
+  end
+
+  def role_csv
+    self.role.try(:role_name)
+  end
+
+  def company_csv
+    self.company.try(:name)
+  end
+
+  def skill_csv
+    self.skills.map(&:name).to_sentence
+  end
+
   protected
 
   def password_required?

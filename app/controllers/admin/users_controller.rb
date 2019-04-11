@@ -6,6 +6,11 @@ module Admin
     def index
       @q = User.ransack(params[:q])
       @users = @q.result.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data User.export(@users), filename: "User-#{Date.today}.csv" }
+      end
     end
 
     def new

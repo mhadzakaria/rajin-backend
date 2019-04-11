@@ -85,4 +85,21 @@ class Job < ApplicationRecord
     return skills
   end
 
+  def self.export(jobs)
+    attributes = ["title", "description", "payment_term", "amount", "payment_type", "full_address", "city", "postcode", "state", "country", "start_date", "end_date", "latitude", "longitude", "status", "get_category", "owner", "skill", "created_at", "updated_at"]
+    to_csv(jobs, attributes)
+  end
+
+  def owner
+    self.ownerable.email
+  end
+
+  def skill
+    self.skills.map(&:name).to_sentence
+  end
+
+  def get_category
+    self.job_category.name
+  end
+
 end

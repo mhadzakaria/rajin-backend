@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div class="content-heading mb-0">
   <div><strong>Job Requests</strong></div>
   <div class="ml-auto">
@@ -33,6 +32,7 @@
               </tr>
             </table>
             <%= f.submit 'Search', {class: 'float-right btn btn-primary'} %>
+            <%= download_button %>
           <% end %>
         </div>
       </div>

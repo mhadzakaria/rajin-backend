@@ -5,4 +5,9 @@ class Company < ApplicationRecord
   has_many :users
 
   paginates_per 10
+
+  def self.export(companies)
+    attributes = ["name", "status", "phone_number", "full_address", "city", "postcode", "state", "country", "latitude", "longitude", "created_at", "updated_at"]
+    to_csv(companies, attributes)
+  end
 end

@@ -10,6 +10,11 @@ module Admin
 
       @q            = JobRequest.ransack(params[:q])
       @job_requests = @q.result.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data JobRequest.export(@job_requests), filename: "Job Requests-#{Date.today}.csv" }
+      end
     end
 
     def show

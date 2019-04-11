@@ -5,6 +5,11 @@ module Admin
     def index
       @q = CoinPackage.ransack(params[:q])
       @coin_packages = @q.result.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data CoinPackage.export(@coin_packages), filename: "Coin Package-#{Date.today}.csv" }
+      end
     end
 
     def show

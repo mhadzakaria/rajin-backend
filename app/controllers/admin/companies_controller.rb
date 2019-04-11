@@ -5,6 +5,11 @@ module Admin
     def index
       @q = Company.ransack(params[:q])
       @companies = @q.result.page(params[:page])
+
+      respond_to do |format|
+        format.html
+        format.csv { send_data Company.export(@companies), filename: "Company-#{Date.today}.csv" }
+      end
     end
 
     def show

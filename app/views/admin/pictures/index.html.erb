@@ -42,7 +42,7 @@
                   <td><%= picture.file_url %></td>
                   <td><%= picture.file_type %></td>
                   <td>
-                    <%= link_to 'Show', admin_picture_path(picture), class: 'btn btn-primary' %>
+                    <%#= link_to 'Show', admin_picture_path(picture), class: 'btn btn-primary' %>
                     <%= link_to 'Edit', edit_admin_picture_path(picture), class: 'btn btn-info' %>
                     <%= link_to 'Destroy', admin_picture_path(picture), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>

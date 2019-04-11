@@ -75,4 +75,17 @@ class JobRequest < ApplicationRecord
     message   = "#{user.full_name} has been applied to your job offer '#{job.title}'."
     self.create_notification(job_owner, message)
   end
+
+  def self.export(job_requests)
+    attributes = ["user_csv", "job_csv", "status", "created_at", "updated_at"]
+    to_csv(job_requests, attributes)
+  end
+
+  def user_csv
+    self.user.email
+  end
+
+  def job_csv
+    self.job.title
+  end
 end
