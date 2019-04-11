@@ -43,6 +43,7 @@ module RajinBelajar
     config.assets.precompile += [
                                  # Scripts
                                  'charts.js',
+                                 'custom.js',
                                  'dashboard.js',
                                  'elements.js',
                                  'extras.js',
