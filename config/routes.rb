@@ -40,6 +40,11 @@ Rails.application.routes.draw do
       resources :job_categories
       resources :school_partners
       resources :coin_packages, only: [:index, :show]
+      resources :notifications, only: [:show, :destroy] do
+        collection do
+          get :user_notifications
+        end
+      end
 
       resources :job_requests do
         resources :reviews, on: :member

@@ -1,15 +1,19 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance
+  attributes :id, :nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications
 
   def password
     object.password || "Password not displayed"
   end
 
   def config(data = {})
-    configuration        = object.config
-    data[:id]            = configuration.id
-    data[:email_notif]   = configuration.email_notif
-    data[:receive_notif] = configuration.receive_notif
+    begin
+      configuration        = object.config
+      data[:id]            = configuration.id
+      data[:email_notif]   = configuration.email_notif
+      data[:receive_notif] = configuration.receive_notif
+    rescue Exception => e
+      data
+    end
 
     return data
   end
@@ -70,6 +74,27 @@ class UserSerializer < ActiveModel::Serializer
   def coin_balance
     balance = object.coin_balance
     return "#{balance.try(:amount).to_i} Coins"
+  end
+
+  def notifications(data = [])
+    notifications = object.notifications
+
+    notifications.each do |notif|
+      notification = {}
+      notification[:id]             = notif.id
+      notification[:notifable_type] = notif.notifable_type
+      notification[:notifable_id]   = notif.notifable_id
+      notification[:message]        = notif.message
+      notification[:status]         = notif.status
+      notification[:amount]         = notif.amount
+      notification[:reduce_coin]    = notif.reduce_coin
+      notification[:created_at]     = notif.created_at
+      notification[:updated_at]     = notif.updated_at
+
+      data << notification
+    end
+
+    data
   end
 
 end
