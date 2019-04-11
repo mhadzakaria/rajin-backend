@@ -1,17 +1,14 @@
-<p id="notice"><%= notice %></p>
 <div class="content-heading mb-0">
   <div><strong>Skills</strong></div>
   <div class="ml-auto">
     <%= link_to 'New Skill', new_admin_skill_path, class: 'btn btn-primary' %>
   </div>
 </div>
-
+<%= render "layouts/partials/flash_message" %>
 <div class="row pt-1 mt-0">
   <div class="col-md-12">
     <div class="card mb-1 border-white">
       <div class="card-header">
-        <div class="card-title"></div>
-        <div class="text-sm"></div>
         <div id="datatable_test_filter" class="data_filter">
           <%= search_form_for @q, url: admin_skills_path, method: :get do |f| %>
             <div class="input-group">

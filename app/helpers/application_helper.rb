@@ -15,4 +15,9 @@ module ApplicationHelper
   def user_notifications
     current_user.notifications
   end
+
+  def download_button
+    url = request.url.include?('?') ? request.url.split('?').join('.csv?') : "#{request.url}.csv "
+    "<a class='btn btn-success' href='#{url}'>Download CSV</a>".html_safe
+  end
 end
