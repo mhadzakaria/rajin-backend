@@ -29,11 +29,13 @@ class User < ApplicationRecord
 
   validates_presence_of :first_name, :last_name, :nickname
   validates_uniqueness_of :nickname
+  validates_format_of :nickname, { :with => /\A[A-Za-z0-9_-]*\z/, :message => 'no special characters, except number, "-", "_", and "@" on first text.' }
 
   paginates_per 10
 
   before_create :generate_access_token
   after_create  :generate_default_config
+  before_validation :generate_nickname
 
   ransacker :full_name do |parent|
     Arel::Nodes::InfixOperation.new(
@@ -89,18 +91,30 @@ class User < ApplicationRecord
     self.skills.map(&:name).to_sentence
   end
 
-  def nickname=(value)
-    @nickname = value.to_s.gsub("@", "")
-  end
-
-  def nickname
-    return "@#{read_attribute(:nickname)}"
-  end
-
   protected
 
   def password_required?
     return false if skip_password_validation
     super
+  end
+
+  def generate_nickname
+    nkname = nickname
+    if !nkname.include?('@') || nkname.last.eql?('@')
+      nickname = nkname
+      return
+    end
+
+    spnkname = nkname.split('@')
+    if spnkname.size > 2 || spnkname.size.eql?(1)
+      nickname = nkname
+      return
+    end
+
+    nickname = if spnkname.first.blank?
+      spnkname.last
+    else
+      nkname
+    end
   end
 end

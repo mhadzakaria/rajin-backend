@@ -5,6 +5,10 @@ class UserSerializer < ActiveModel::Serializer
     object.password || "Password not displayed"
   end
 
+  def nickname
+    "@#{object.nickname}"
+  end
+
   def config(data = {})
     begin
       configuration        = object.config

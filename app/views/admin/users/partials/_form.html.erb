@@ -1,3 +1,8 @@
+<style type="text/css">
+  .field_with_errors{
+    flex: 1 1 auto;
+  }
+</style>
 <div class="card card-default">
    <div class="card-header"></div>
    <div class="card-body">
@@ -37,7 +42,12 @@
               <%= form.label :nickname, class: 'form-label' %>
             </div>
             <div class="col-md-10">
-              <%= form.text_field :nickname, class: 'form-control', type: 'text', required: true %>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">@</div>
+                </div>
+                <%= form.text_field :nickname, class: 'form-control', type: 'text', required: true %>
+              </div>
             </div>
           </div>
         </fieldset>
