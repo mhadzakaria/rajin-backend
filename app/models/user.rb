@@ -28,6 +28,7 @@ class User < ApplicationRecord
   has_many  :uploaded_pictures, class_name: "Picture", foreign_key: :user_id, dependent: :destroy
 
   validates_presence_of :first_name, :last_name, :nickname
+  validates_uniqueness_of :nickname
 
   paginates_per 10
 
@@ -86,6 +87,14 @@ class User < ApplicationRecord
 
   def skill_csv
     self.skills.map(&:name).to_sentence
+  end
+
+  def nickname=(value)
+    @nickname = value.to_s.gsub("@", "")
+  end
+
+  def nickname
+    return "@#{read_attribute(:nickname)}"
   end
 
   protected

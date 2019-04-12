@@ -32,6 +32,6 @@
 //= require jquery-ui
 //= require jquery-ui/widgets/datepicker
 
-//= require plugins/chart.js/dist/Chart
-//= require custom.js
+// require plugins/chart.js/dist/Chart
+// require custom.js
 //= require firebase

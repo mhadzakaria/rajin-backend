@@ -58,30 +58,33 @@
         // Bar chart
         // -----------------------------------
 
-        var barData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                backgroundColor: '#23b7e5',
-                borderColor: '#23b7e5',
-                data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
-            }, {
-                backgroundColor: '#5d9cec',
-                borderColor: '#5d9cec',
-                data: [rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor(), rFactor()]
-            }]
-        };
-
-        var barOptions = {
-            legend: {
-                display: false
-            }
-        };
-        var barctx = document.getElementById('chartjs-barchart').getContext('2d');
-        var barChart = new Chart(barctx, {
-            data: barData,
-            type: 'bar',
-            options: barOptions
-        });
+         // chart 1 dashboard page
+         var chart1 = document.getElementById('chartjs-barchart');
+         var barctx = chart1.getContext('2d');
+         var barData = {
+           labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
+           datasets: [{
+               label: "Job",
+               backgroundColor: '#23b7e5',
+               borderColor: '#23b7e5',
+               data: $(chart1).data("jobs")
+           }, {
+               label: "Job Request",
+               backgroundColor: '#5d9cec',
+               borderColor: '#5d9cec',
+               data: $(chart1).data("job-requests")
+           }]
+         };
+         var barOptions = {
+           legend: {
+               display: true
+           }
+         };
+         var barChart = new Chart(barctx, {
+             data: barData,
+             type: 'bar',
+             options: barOptions
+         });
 
         //  Doughnut chart
         // -----------------------------------
