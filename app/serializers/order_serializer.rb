@@ -7,7 +7,7 @@ class OrderSerializer < ActiveModel::Serializer
     balance = user.coin_balance
 
     data[:id]           = user.id
-    data[:nickname]     = user.nickname
+    data[:nickname]     = user.get_nickname
     data[:first_name]   = user.first_name
     data[:last_name]    = user.last_name
     data[:phone_number] = user.phone_number

@@ -6,7 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def nickname
-    "@#{object.nickname}"
+    object.get_nickname
   end
 
   def config(data = {})

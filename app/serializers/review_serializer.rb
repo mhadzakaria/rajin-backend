@@ -52,7 +52,7 @@ class ReviewSerializer < ActiveModel::Serializer
     avatar = owner.picture
 
     data[:id]           = owner.id
-    data[:nickname]     = owner.nickname
+    data[:nickname]     = owner.get_nickname
     data[:first_name]   = owner.first_name
     data[:last_name]    = owner.last_name
     data[:email]        = owner.email

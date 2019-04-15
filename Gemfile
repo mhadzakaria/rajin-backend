@@ -39,6 +39,7 @@ gem 'acts-as-taggable-on', '~> 5.0'
 # Upload Image
 gem 'carrierwave'
 gem 'mini_magick'
+gem 'carrierwave-base64'
 
 # For implementing state machines
 gem 'aasm'
