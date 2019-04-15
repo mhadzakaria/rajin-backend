@@ -37,7 +37,60 @@
           <div class="form-group row">
             <%= form.label :authorities, class: "col-md-2 col-form-label" %>
             <div class="col-md-10">
-              <%= form.text_field :authorities, class: "form-control", type:"text" %>
+              <%#= form.text_field :authorities, class: "form-control", type:"text" %>
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th width="40%">General</th>
+                      <th width="10%" class="text-center">View</th>
+                      <th width="10%" class="text-center">Add</th>
+                      <th width="10%" class="text-center">Edit</th>
+                      <th width="10%" class="text-center">Delete</th>
+                      <th width="10%" class="text-center">Print</th>
+                      <th width="10%" class="text-center">Export</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Jobs", auth_name: 'jobs', border: true,
+                                  auth_code: "J", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Job Categories", auth_name: 'job_categories', border: true,
+                                  auth_code: "JC", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Job Requests", auth_name: 'job_requests', border: true,
+                                  auth_code: "JR", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Skills", auth_name: 'skills', border: true,
+                                  auth_code: "J", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Companies", auth_name: 'companies', border: true,
+                                  auth_code: "C", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "School Partners", auth_name: 'school_partners', border: true,
+                                  auth_code: "SP", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Pictures", auth_name: 'pictures', border: true,
+                                  auth_code: "P", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Mentors", auth_name: 'mentors', border: true,
+                                  auth_code: "M", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Users", auth_name: 'users', border: true,
+                                  auth_code: "U", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Roles", auth_name: 'roles', border: true,
+                                  auth_code: "R", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Coin Packages", auth_name: 'coin_packages', border: true,
+                                  auth_code: "CP", no_print: true, no_export: true} %>
+                    <%= render partial: "admin/roles/partials/access_auth_row",
+                                locals: { f: form, role: @role, auth_label: "Orders", auth_name: 'orders', border: true,
+                                  auth_code: "O", no_print: true, no_export: true} %>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </fieldset>

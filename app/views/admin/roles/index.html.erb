@@ -29,7 +29,7 @@
               <tr>
                 <th>Name</th>
                 <th>Code</th>
-                <th>Authorities</th>
+                <!-- <th>Authorities</th> -->
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -39,10 +39,10 @@
                 <tr>
                   <td><%= role.role_name %></td>
                   <td><%= role.role_code %></td>
-                  <td><%= role.authorities %></td>
+                  <!-- <td><%#= role.authorities %></td> -->
                   <td><%= role.status %></td>
                   <td>
-                    <%#= link_to 'Show', admin_role_path(role), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
+                    <%= link_to 'Show', admin_role_path(role), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
                     <%= link_to 'Edit', edit_admin_role_path(role), class: 'btn btn-info', data: { disable_with: 'Please wait...' } %>
                     <%= link_to 'Destroy', admin_role_path(role), method: :delete, data: { confirm: 'Are you sure?', disable_with: 'Please wait...' }, class: 'btn btn-danger' %>   
                   </td>

@@ -1,0 +1,90 @@
+<% if local_assigns[:only_show] %>
+  <tr>
+    <td>
+      <%= auth_label %>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["view"]).html_safe if local_assigns[:no_view].blank? %></h4>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["add"]).html_safe if local_assigns[:no_add].blank? %></h4>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["edit"]).html_safe if local_assigns[:no_edit].blank? %></h4>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["delete"]).html_safe if local_assigns[:no_delete].blank? %></h4>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["print"]).html_safe if local_assigns[:no_print].blank? %></h4>
+    </td>
+    <td class='text-center'>
+      <h4><%= data_is_true?(role.authorities["#{auth_name}_auth"].to_h["export"]).html_safe if local_assigns[:no_export].blank? %></h4>
+    </td>
+  </tr>
+<% else %>
+  <% options   = local_assigns[:options] ? options : {} %>
+  <tr>
+    <td><%= auth_label %></td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_view].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_view".to_sym, {class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}1", name: "role[authorities][#{auth_name}_auth][view]", checked: auth_option_checked?(role, "#{auth_name}_auth".to_sym, "view")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_add].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_add".to_sym, { class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}2", name: "role[authorities][#{auth_name}_auth][add]", checked: auth_option_checked?(role, "#{auth_name}_auth".to_sym, "add")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_edit].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_edit".to_sym, { class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}3", name: "role[authorities][#{auth_name}_auth][edit]", checked: auth_option_checked?(role, "#{auth_name}_auth".to_sym, "edit")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_delete].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_delete".to_sym, { class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}4", name: "role[authorities][#{auth_name}_auth][delete]", checked: auth_option_checked?(role, "#{auth_name}_auth".to_sym, "delete")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_print].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_print".to_sym, { class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}5", name: "role[authorities][#{auth_name}_auth][print]", checked: auth_option_checked?(role, "#{auth_name}_auth".to_sym, "print")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+    <td class="text-center p-0 align-middle">
+      <% if local_assigns[:no_export].blank? %>
+      <div class="checkbox c-checkbox">
+        <label>
+          <%= f.check_box "#{auth_name}_export".to_sym, {class: "filled-in #{options[:class_name]}", id:"checkbox_table_#{auth_code}6", name: "role[authorities][#{auth_name}_auth][export]", checked: auth_option_checked?(@role, "#{auth_name}_auth", "export")}, "true", "false" %>
+          <span class="fa fa-check"></span>
+        </label>
+      </div>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

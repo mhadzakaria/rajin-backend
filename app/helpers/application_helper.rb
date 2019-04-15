@@ -20,4 +20,22 @@ module ApplicationHelper
     url = request.url.include?('?') ? request.url.split('?').join('.csv?') : "#{request.url}.csv "
     "<a class='btn btn-success' href='#{url}'>Download CSV</a>".html_safe
   end
+
+  def auth_option_checked?(obj, auth_type, type)
+    auth = obj.authorities[auth_type].to_h
+    if auth[type] == "true"
+      return true
+    else
+      return false
+    end
+  end
+
+  def data_is_true?(data)
+    if data.eql?("true")
+      return "<span class='badge badge-pill badge-success round-badge'><i class='fa fa-check'></i></span>".html_safe
+    else
+      return "<span class='badge badge-pill badge-danger round-badge'><i class='fa fa-times'></i></span>".html_safe
+    end
+  end
+
 end
