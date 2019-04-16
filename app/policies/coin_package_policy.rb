@@ -1,0 +1,1 @@
+class CoinPackagePolicy < ApplicationPolicy;end

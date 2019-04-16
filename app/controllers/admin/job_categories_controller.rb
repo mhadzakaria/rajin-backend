@@ -3,6 +3,8 @@ module Admin
     before_action :set_job_category, only: [:show, :edit, :update, :destroy]
     before_action :get_collection, only: [:new, :edit, :create, :update]
 
+    include Pundit::Authorization
+
     def index
       @q = JobCategory.ransack(params[:q])
       @job_categories = @q.result.page(params[:page])

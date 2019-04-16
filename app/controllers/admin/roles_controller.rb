@@ -2,6 +2,8 @@ module Admin
   class RolesController < ApplicationController
 		before_action :set_role, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q     = Role.ransack(params[:q])
       @roles = @q.result.page(params[:page])

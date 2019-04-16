@@ -1,0 +1,1 @@
+class JobCategoryPolicy < ApplicationPolicy;end

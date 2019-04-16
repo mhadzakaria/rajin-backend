@@ -1,0 +1,1 @@
+class JobRequestPolicy < ApplicationPolicy;end

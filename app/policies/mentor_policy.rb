@@ -1,0 +1,1 @@
+class MentorPolicy < ApplicationPolicy;end

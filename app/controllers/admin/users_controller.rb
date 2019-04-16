@@ -3,6 +3,8 @@ module Admin
     include ManageCoin
   	before_action :set_user, only: %w[show edit update destroy top_up top_up_process resend_invitation]
 
+    include Pundit::Authorization
+
     def index
       @q = User.ransack(params[:q])
       @users = @q.result.page(params[:page])

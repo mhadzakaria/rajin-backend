@@ -1,6 +1,7 @@
 include Devise::Controllers::Helpers::ClassMethods
 
 class ApplicationController < ActionController::Base
+  include Pundit
   include ErrorsHandlers
 
   protect_from_forgery with: :null_session
@@ -23,6 +24,10 @@ class ApplicationController < ActionController::Base
     def set_layout
       return 'application' if user_signed_in?
       return 'signedout_layout'
+    end
+
+    def pundit_user
+      Pundit::CurrentContext.new(current_person, @role_action, @object)
     end
 
 end

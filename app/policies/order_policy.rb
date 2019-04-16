@@ -1,0 +1,1 @@
+class OrderPolicy < ApplicationPolicy;end

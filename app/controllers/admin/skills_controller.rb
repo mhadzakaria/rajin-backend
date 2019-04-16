@@ -2,6 +2,8 @@ module Admin
   class SkillsController < ApplicationController
     before_action :set_skill, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q = Skill.ransack(params[:q])
       @skills = @q.result.page(params[:page]).order(:name)

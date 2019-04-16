@@ -2,6 +2,8 @@ module Admin
   class CoinPackagesController < ApplicationController
     before_action :set_coin_package, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q = CoinPackage.ransack(params[:q])
       @coin_packages = @q.result.page(params[:page])

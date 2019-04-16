@@ -2,6 +2,8 @@ module Admin
   class JobRequestsController < ApplicationController
     before_action :set_job_request, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       # filter collection
       @users        = User.all.map{|user| [user.full_name, user.id]}

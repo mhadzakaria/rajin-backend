@@ -2,6 +2,8 @@ module Admin
   class CompaniesController < ApplicationController
     before_action :set_company, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q = Company.ransack(params[:q])
       @companies = @q.result.page(params[:page])

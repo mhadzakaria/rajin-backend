@@ -4,6 +4,8 @@ module Admin
     before_action :set_object, only: [:new]
     after_action :save_my_previous_url, only: [:new]
 
+    include Pundit::Authorization
+
     def index
       @q = Picture.ransack(params[:q])
       @pictures = @q.result.page(params[:page])

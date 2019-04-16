@@ -2,6 +2,8 @@ module Admin
   class OrdersController < ApplicationController
     before_action :set_order, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q = Order.eager_load(:user).ransack(params[:q])
       @orders = @q.result.page(params[:page])

@@ -1,21 +1,27 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user, :record, :role_action, :object
 
-  def initialize(user, record)
-    @user = user
-    @record = record
+  def initialize(context, record)
+    @user        = context.user
+    @role_action = context.role_action
+    @object      = context.object
+    @record      = record
   end
 
   def index?
-    false
+    return false unless any_role?
+    yield if block_given?
+    return eval("#{role_attributes[action]['view']}") rescue false
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    index?
   end
 
   def create?
-    false
+    return false unless any_role?
+    yield if block_given?
+    return eval("#{role_attributes[action]['add']}") rescue false
   end
 
   def new?
@@ -23,7 +29,9 @@ class ApplicationPolicy
   end
 
   def update?
-    false
+    return false unless any_role?
+    yield if block_given?
+    return eval("#{role_attributes[action]['edit']}") rescue false
   end
 
   def edit?
@@ -31,7 +39,9 @@ class ApplicationPolicy
   end
 
   def destroy?
-    false
+    return false unless any_role?
+    yield if block_given?
+    return eval("#{role_attributes[action]['delete']}") rescue false
   end
 
   def scope
@@ -42,12 +52,32 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      @user = user
+      @user  = user
       @scope = scope
     end
 
     def resolve
       scope
     end
+  end
+
+  private
+
+  def any_role?
+    return false unless user_role
+    return false unless role_attributes.key?(action)
+    return true
+  end
+
+  def action
+    @action ||= role_action[:action]
+  end
+
+  def user_role
+    return user.role
+  end
+
+  def role_attributes
+    return user_role.try(:authorities) || {}
   end
 end

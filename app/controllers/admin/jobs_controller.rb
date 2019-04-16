@@ -3,6 +3,8 @@ module Admin
     before_action :set_job, only: [:show, :edit, :update, :destroy]
     before_action :get_collection, only: [:new, :edit, :create, :update]
 
+    include Pundit::Authorization
+
     def index
       # filter collection
       @job_categories = JobCategory.all.map{|category|  [category.name, category.id]}

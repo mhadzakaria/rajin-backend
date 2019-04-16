@@ -1,0 +1,1 @@
+class SkillPolicy < ApplicationPolicy;end

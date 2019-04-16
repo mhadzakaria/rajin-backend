@@ -1,0 +1,1 @@
+class PicturePolicy < ApplicationPolicy;end

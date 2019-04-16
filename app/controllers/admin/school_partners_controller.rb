@@ -2,6 +2,8 @@ module Admin
   class SchoolPartnersController < ApplicationController
     before_action :set_school_partner, only: [:show, :edit, :update, :destroy]
 
+    include Pundit::Authorization
+
     def index
       @q = SchoolPartner.ransack(params[:q])
       @school_partners = @q.result.page(params[:page])
