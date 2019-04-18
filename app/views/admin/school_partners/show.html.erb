@@ -66,8 +66,25 @@
               </tr>
             </tbody>
           </table>
+          <div class="card card-default">
+            <div class="card-header">Custom zoom</div>
+            <div class="card-body">
+              <div class="gmap" data-gmap="" data-latitude="<%= @school_partner.latitude %>" data-longitude="<%= @school_partner.longitude %>" data-zoom="19"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    map = new GMaps({
+      div: '.gmap',
+      zoom: 19,
+      lat: $('.gmap').data('latitude'),
+      lng: $('.gmap').data('longitude'),
+    });
+  });
+</script>
