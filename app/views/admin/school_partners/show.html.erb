@@ -69,7 +69,7 @@
           <div class="card card-default">
             <div class="card-header">Custom zoom</div>
             <div class="card-body">
-              <div class="gmap" data-gmap="" data-latitude="<%= @school_partner.latitude %>" data-longitude="<%= @school_partner.longitude %>" data-zoom="19"></div>
+              <div class="gmap" data-latitude="<%= @school_partner.latitude %>" data-longitude="<%= @school_partner.longitude %>" data-zoom="18"></div>
             </div>
           </div>
         </div>
@@ -78,13 +78,24 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function() {
-    map = new GMaps({
-      div: '.gmap',
-      zoom: 19,
-      lat: $('.gmap').data('latitude'),
-      lng: $('.gmap').data('longitude'),
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function() {
+      var mapData = $('.gmap').data();
+      
+          // init maps
+          map = new GMaps({
+             div: '.gmap',
+            zoom: mapData.zoom,
+             lat: mapData.latitude,
+             lng: mapData.longitude,
+          });
+
+          // Add marker after init map loaded
+          map.addMarker({
+            lat: mapData.latitude,
+            lng: mapData.longitude
+          });
     });
-  });
-</script>
+  </script>
+<% end %>

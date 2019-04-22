@@ -101,8 +101,36 @@
               </tr>
             </tbody>
           </table>
+          <div class="card card-default">
+            <div class="card-header">Custom zoom</div>
+            <div class="card-body">
+              <div class="gmap" data-latitude="<%= @user.latitude %>" data-longitude="<%= @user.longitude %>" data-zoom="18"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function() {
+      var mapData = $('.gmap').data();
+      
+          // init maps
+          map = new GMaps({
+             div: '.gmap',
+            zoom: mapData.zoom,
+             lat: mapData.latitude,
+             lng: mapData.longitude,
+          });
+
+          // Add marker after init map loaded
+          map.addMarker({
+            lat: mapData.latitude,
+            lng: mapData.longitude
+          });
+    });
+  </script>
+<% end %>

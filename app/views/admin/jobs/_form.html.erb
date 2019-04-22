@@ -139,19 +139,60 @@
           </div>
         </div>
 
+        <fieldset>
+          <div class="card card-default">
+            <div class="card-header">Select Location</div>
+            <div class="card-body">
+              <div class="gmap" data-latitude="<%= job.latitude %>" data-longitude="<%= job.longitude %>" data-zoom="18"></div>
+            </div>
+          </div>
+        </fieldset>
+
         <div class="actions">
-          <%= form.hidden_field :latitude, class: "form-control" %>
-          <%= form.hidden_field :longitude, class: "form-control" %>
+          <%= form.hidden_field :latitude, id: :latitude, class: "form-control" %>
+          <%= form.hidden_field :longitude, id: :longitude, class: "form-control" %>
           <%= form.submit submit_button_label(job), class: "btn btn-primary" %>
         </div>
       <% end %>
    </div>
 </div>
 
-<% content_for :vendor_js_area do %>
+<% content_for :javascripts do %>
   <script type="text/javascript">
-    $( function() {
+    $(function() {
       $( ".datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
-    } );
+    });
+
+    $(document).ready(function() {
+      // init maps
+      var mapData = $('.gmap').data();
+
+      map = new GMaps({
+         div: '.gmap',
+        zoom: mapData.zoom,
+         lat: mapData.latitude,
+         lng: mapData.longitude,
+        click: function(e) {
+          var coordinates = e.latLng;
+              latitude    = coordinates.lat();
+              longitude   = coordinates.lng();
+
+          map.removeMarkers();
+          map.addMarker({
+            lat: latitude,
+            lng: longitude
+          });
+
+          $("#latitude").val(latitude);
+          $("#longitude").val(longitude);
+        },
+      });
+
+      // Add marker after init map loaded
+      map.addMarker({
+        lat: mapData.latitude,
+        lng: mapData.longitude
+      });
+    });
   </script>
 <% end %>

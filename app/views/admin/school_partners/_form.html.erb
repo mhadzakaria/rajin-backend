@@ -71,12 +71,55 @@
             </div>
           </div>
         </fieldset>
-
+        <fieldset>
+          <div class="card card-default">
+            <div class="card-header">Select Location</div>
+            <div class="card-body">
+              <div class="gmap" data-latitude="<%= school_partner.latitude %>" data-longitude="<%= school_partner.longitude %>" data-zoom="18"></div>
+            </div>
+          </div>
+        </fieldset>
         <div class="actions">
-          <%= form.hidden_field :latitude %>
-          <%= form.hidden_field :longitude %>
+          <%= form.hidden_field :latitude, id: :latitude %>
+          <%= form.hidden_field :longitude, id: :longitude %>
           <%= form.submit submit_button_label(school_partner), class: "btn btn-primary" %>
         </div>
       <% end %>
    </div>
 </div>
+
+<% content_for :javascripts do %>
+  <script>
+    $(document).ready(function() {
+      // init maps
+      var mapData = $('.gmap').data();
+
+      map = new GMaps({
+         div: '.gmap',
+        zoom: mapData.zoom,
+         lat: mapData.latitude,
+         lng: mapData.longitude,
+        click: function(e) {
+          var coordinates = e.latLng;
+              latitude    = coordinates.lat();
+              longitude   = coordinates.lng();
+
+          map.removeMarkers();
+          map.addMarker({
+            lat: latitude,
+            lng: longitude
+          });
+
+          $("#latitude").val(latitude);
+          $("#longitude").val(longitude);
+        },
+      });
+
+      // Add marker after init map loaded
+      map.addMarker({
+        lat: mapData.latitude,
+        lng: mapData.longitude
+      });
+    });
+  </script>
+<% end %>
