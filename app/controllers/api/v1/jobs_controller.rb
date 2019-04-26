@@ -14,10 +14,10 @@ module Api::V1
     def create
       @job = Job.new(job_params)
       @job.ownerable = current_person
-      @job.save
       if @job.save
-        if params[:pictures][:files].present?
-          params[:pictures][:files].each do |file|
+        if params[:pictures].present?
+          files = params[:pictures][:files]
+          files.try(:each) do |file|
             picture = @job.pictures.build(picture_params)
             picture.file_url = file[:file_url]
             picture.save
@@ -32,7 +32,8 @@ module Api::V1
     def update
       if @job.update(job_params)
         if params[:pictures].present?
-          params[:pictures][:files].each do |file|
+          files = params[:pictures][:files]
+          files.try(:each) do |file|
             picture = @job.pictures.build(picture_params)
             picture.file_url = file[:file_url]
             picture.save
