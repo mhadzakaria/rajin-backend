@@ -5,6 +5,8 @@ ruby '2.5.3'
 
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
+gem 'omniauth-oauth2', '~> 1.3.1'
+gem 'omniauth-facebook', '~> 4.0'
 gem 'rails', '~> 5.2.2'
 gem 'pg'
 gem 'puma', '~> 3.11'

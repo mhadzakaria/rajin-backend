@@ -2,8 +2,6 @@ class Mentor < ApplicationRecord
   include Geocoderable
   serialize :skill_ids, Array
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
