@@ -9,4 +9,14 @@ class NotificationMailer < ApplicationMailer
 
     mail(to: @user.email, subject: @subject)
   end
+
+  # mailer for model user notification
+  def send_user_current_password(user, current_password)
+    @user             = user
+    @current_password = current_password
+    @subject   = "Your account has been registered"
+
+    mail(to: @user.email, subject: @subject)
+  end
+
 end

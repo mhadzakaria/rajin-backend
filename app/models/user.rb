@@ -96,6 +96,28 @@ class User < ApplicationRecord
     return "@#{self.nickname}"
   end
 
+   def self.from_omniauth(auth)
+    unless auth.blank?
+      user   = self.find_by(email: auth[:email])
+      user ||= self.where(provider: auth[:provider], uid: auth[:uid]).first_or_initialize
+
+      user.first_name = auth[:first_name]
+      user.last_name  = auth[:last_name]
+      user.nickname   = auth[:nickname]
+      user.email      = auth[:email]
+      user.uid        = auth[:uid]
+      user.provider   = auth[:provider]
+
+      if user.new_record? && user.valid?
+        default_password = Devise.friendly_token[0,20]
+        user.password    = default_password
+        NotificationMailer.send_user_current_password(user, default_password).deliver
+      end
+
+      return user
+    end
+   end
+
   protected
 
   def password_required?

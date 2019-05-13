@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
   devise_for :mentors
   # Start API routes
-  namespace :api do
+  namespace :api, defaults: {format: :json} do
     namespace :v1 do
-      # devise_for :users, :controllers => {
-      #   sessions: "api/v1/users/sessions",
-      #   registrations: "api/v1/users/registrations",
-      #   passwords: "api/v1/users/passwords",
-      #   invitations: "api/v1/users/invitations",
-      #   omniauth_callbacks: 'api/v1/users/omniauth_callbacks'
-      # }
+      devise_for :users, :controllers => {
+        sessions: "api/v1/users/sessions",
+        registrations: "api/v1/users/registrations",
+        passwords: "api/v1/users/passwords",
+        invitations: "api/v1/users/invitations",
+        omniauth_callbacks: 'api/v1/users/omniauth_callbacks'
+      }
 
-      # devise_scope :user do
-      #   get "users/profile", to: "users/sessions#show", as: :user_profile
-      # end
+      devise_scope :user do
+        get "users/profile", to: "users/sessions#show", as: :user_profile
+      end
 
       devise_for :mentors, :controllers => {
         sessions: "api/v1/mentors/sessions",
