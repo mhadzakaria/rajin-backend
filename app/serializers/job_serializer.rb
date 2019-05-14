@@ -1,14 +1,5 @@
-class JobSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :skills, :pictures, :chat_sessions, :job_owner
-
-  # def skills
-  #   if object.skill_ids.present?
-   #    skills = object.skill_ids.tr('[]', '').split(',').map(&:to_i)
-   #    skills.each do |skill|
-   #      Skill.find(skill).name
-   #    end
-   #  end
-  # end
+class JobSerializer < ApplicationSerializer
+  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category_id, :skills, :pictures, :chat_sessions, :job_owner_detail
 
   def skills(data = [])
     skills = object.skills
@@ -16,8 +7,6 @@ class JobSerializer < ActiveModel::Serializer
       datum        = {}
       datum[:id]   = skill.id
       datum[:name] = skill.name
-      # datum[:skill_logo_url]  = skill.picture.file_url
-      # datum[:skill_logo_type] = skill.picture.file_type
       data << datum
     end
     
@@ -40,27 +29,10 @@ class JobSerializer < ActiveModel::Serializer
     return data
   end
 
-  def job_owner(data = {})
-    user = object.ownerable
-    avatar = user.picture
+  def job_owner_detail(data = {})
+    owner = object.ownerable
 
-    data[:id]           = user.id
-    data[:nickname]     = user.get_nickname
-    data[:first_name]   = user.first_name
-    data[:last_name]    = user.last_name
-    data[:email]        = user.email
-    data[:phone_number] = user.phone_number
-    data[:full_address] = user.full_address
-    data[:city]         = user.city
-    data[:postcode]     = user.postcode
-    data[:state]        = user.state
-    data[:country]      = user.country
-    data[:latitude]     = user.latitude
-    data[:longitude]    = user.longitude
-    data[:avatar_url]       = avatar.try(:file_url).try(:url)
-    # data[:company]    = user.company
-
-    return data
+    return user_details(owner)
   end
 
 end

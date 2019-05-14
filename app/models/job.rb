@@ -56,26 +56,44 @@ class Job < ApplicationRecord
   # end
 
   class << self
-    def filter(user, skill_ids, amount, distance, verified)
-      filter_skill = []
-      filter_amount = []
-      filter_distance = []
-      if skill_ids.present?
-        skill_ids.each do |skill|
-          Job.all.each do |job|
-            if job.skill_ids.include?(skill)
-              filter_skill << job
-            end
+    def filter(user, search)
+      filter                = {}
+      filtered_skill_ids    = []
+      filtered_distance_ids = []
+
+      jobs = Job.all
+
+      # collect job id by skill ids
+      search[:skill_ids].each do |skill|
+        jobs.each do |job|
+          if job.skill_ids.include?(skill)
+            filtered_skill_ids << job.id
           end
         end
+      end unless search[:skill_ids].blank?
+
+      # collect job id by distance from user location
+      if filter[:distance].present?
+        filtered_distance_ids = jobs.near(user.coordinates, filter[:distance], units: :km).map(&:id)
       end
-      if amount.present?
-        filter_amount = Job.all.where(amount: amount)
-      end
-      if distance.present?
-        filter_distance = Geocoderable.distance_filter(user, distance)
-      end
-      return (filter_amount + filter_distance + filter_skill).uniq
+
+      # filter job by skill ids and distance
+      filtered_ids               = filtered_skill_ids + filtered_distance_ids
+
+      # build ransack filter query (amount and specific location data)
+      filter[:amount_eq]         = search[:amount] if search[:amount].present?
+      filter[:full_address_cont] = search[:full_address] if search[:full_address].present?
+      filter[:city_cont]         = search[:city] if search[:city].present?
+      filter[:state_cont]        = search[:state] if search[:state].present?
+      filter[:country_cont]      = search[:country] if search[:country].present?
+      filter[:postcode_eq]       = search[:postcode] if search[:postcode].present?
+
+      # filter job with ransack
+      query = jobs.ransack(filter)
+      # filter job to find match skill and distance location
+      jobs  = query.result.where(id: filtered_ids)
+
+      return jobs
     end
   end
 

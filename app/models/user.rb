@@ -116,7 +116,11 @@ class User < ApplicationRecord
 
       return user
     end
-   end
+  end
+
+  def coordinates
+    return [self.latitude, self.longitude]
+  end
 
   protected
 

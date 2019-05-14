@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
       resources :jobs do
         collection do
-          get "filter"
+          post "filter"
         end
 
         member do
@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :skills
       resources :job_categories
       resources :school_partners
+      resources :roles, only: [:index, :show]
       resources :coin_packages, only: [:index, :show]
       resources :notifications, only: [:show, :destroy] do
         collection do

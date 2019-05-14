@@ -1,4 +1,4 @@
-class ReviewSerializer < ActiveModel::Serializer
+class ReviewSerializer < ApplicationSerializer
   attributes :id, :user_id, :sender_id, :job_id, :comment, :rate, :job_detail, :job_owner_detail
 
   def job_detail(data = {})
@@ -47,26 +47,9 @@ class ReviewSerializer < ActiveModel::Serializer
   end
 
   def job_owner_detail(data = {})
-    job  = object.job
+    job   = object.job
     owner = job.ownerable
-    avatar = owner.picture
 
-    data[:id]           = owner.id
-    data[:nickname]     = owner.get_nickname
-    data[:first_name]   = owner.first_name
-    data[:last_name]    = owner.last_name
-    data[:email]        = owner.email
-    data[:phone_number] = owner.phone_number
-    data[:full_address] = owner.full_address
-    data[:city]         = owner.city
-    data[:postcode]     = owner.postcode
-    data[:state]        = owner.state
-    data[:country]      = owner.country
-    data[:latitude]     = owner.latitude
-    data[:longitude]    = owner.longitude
-    data[:avatar_url]   = avatar.try(:file_url).try(:url)
-    # data[:company]    = user.company
-
-    return data
+    return user_details(owner)
   end
 end

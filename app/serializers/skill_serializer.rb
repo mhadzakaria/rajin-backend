@@ -1,4 +1,4 @@
-class SkillSerializer < ActiveModel::Serializer
+class SkillSerializer < ApplicationSerializer
   attributes :id, :name, :picture
 
    def picture(data = [])

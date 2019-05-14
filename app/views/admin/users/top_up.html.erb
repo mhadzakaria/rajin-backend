@@ -3,7 +3,7 @@
    <div class="card-body">
       <%= form_for @user, url: top_up_process_admin_user_path(@user), method: :get, local: true, class: 'form-horizontal' do |form| %>
         <fieldset>
-          <legend>Form user</legend>
+          <legend>Top up user coin</legend>
           <div class="form-group row">
             <%= form.label :amount, class: 'col-md-2 col-form-label' %>
             <div class="col-md-10">

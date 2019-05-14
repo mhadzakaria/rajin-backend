@@ -1,28 +1,9 @@
-class OrderSerializer < ActiveModel::Serializer
+class OrderSerializer < ApplicationSerializer
   attributes :id, :full_id, :status, :amount, :net_amount, :payment_id, :payment_gateway, :payment_method, :user_detail, :orderable, :created_at
 
   def user_detail(data = {})
-    user    = object.user
-    avatar  = user.picture
-    balance = user.coin_balance
-
-    data[:id]           = user.id
-    data[:nickname]     = user.get_nickname
-    data[:first_name]   = user.first_name
-    data[:last_name]    = user.last_name
-    data[:phone_number] = user.phone_number
-    data[:email]        = user.email
-    data[:full_address] = user.full_address
-    data[:city]         = user.city
-    data[:postcode]     = user.postcode
-    data[:state]        = user.state
-    data[:country]      = user.country
-    data[:latitude]     = user.latitude
-    data[:longitude]    = user.longitude
-    data[:avatar_url]   = avatar.try(:file_url).try(:url)
-    data[:coin_balance] = "#{balance.try(:amount).to_i} Coins"
-
-    return data
+    user = object.user
+    return user_details(user)
   end
 
   def orderable(data = {})

@@ -1,3 +1,3 @@
-class JobCategorySerializer < ActiveModel::Serializer
+class JobCategorySerializer < ApplicationSerializer
   attributes :id, :name, :parent_id
 end

@@ -80,7 +80,7 @@
                   </td>
                   <td>
                     <%= f.label "Skill" %>
-                    <%= f.select :skill_ids, options_for_select(@skills, params[:skill_ids]),
+                    <%= f.select :skill_ids, options_for_select(@skills, (params[:q][:skill_ids] rescue [])),
                         {}, { include_hidden: true, multiple: true, class: 'form-control' } %>
                   </td>
                 </tr>

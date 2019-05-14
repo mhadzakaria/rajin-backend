@@ -1,4 +1,4 @@
-class JobRequestSerializer < ActiveModel::Serializer
+class JobRequestSerializer < ApplicationSerializer
   attributes :id, :job_detail, :job_request_status, :job_applier_detail, :job_owner_detail, :chat_session
 
   def job_detail(data = {})
@@ -50,51 +50,16 @@ class JobRequestSerializer < ActiveModel::Serializer
     return object.status
   end
 
-  def job_applier_detail(data = {})
+  def job_applier_detail
     user   = object.user
-    avatar = user.picture
-
-    data[:id]           = user.id
-    data[:nickname]     = user.get_nickname
-    data[:first_name]   = user.first_name
-    data[:last_name]    = user.last_name
-    data[:email]        = user.email
-    data[:phone_number] = user.phone_number
-    data[:full_address] = user.full_address
-    data[:city]         = user.city
-    data[:postcode]     = user.postcode
-    data[:state]        = user.state
-    data[:country]      = user.country
-    data[:latitude]     = user.latitude
-    data[:longitude]    = user.longitude
-    data[:avatar_url]       = avatar.try(:file_url).try(:url)
-    # data[:company]    = user.company
-
-    return data
+    return user_details(user)
   end
 
-  def job_owner_detail(data = {})
-    job  = object.job
-    user = job.ownerable
-    avatar = user.picture
+  def job_owner_detail
+    job   = object.job
+    owner = job.ownerable
 
-    data[:id]           = user.id
-    data[:nickname]     = user.get_nickname
-    data[:first_name]   = user.first_name
-    data[:last_name]    = user.last_name
-    data[:email]        = user.email
-    data[:phone_number] = user.phone_number
-    data[:full_address] = user.full_address
-    data[:city]         = user.city
-    data[:postcode]     = user.postcode
-    data[:state]        = user.state
-    data[:country]      = user.country
-    data[:latitude]     = user.latitude
-    data[:longitude]    = user.longitude
-    data[:avatar_url]       = avatar.try(:file_url).try(:url)
-    # data[:company]    = user.company
-
-    return data
+    return user_details(owner)
   end
 
 end

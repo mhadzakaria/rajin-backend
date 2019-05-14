@@ -1,5 +1,5 @@
-class UserSerializer < ActiveModel::Serializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications
+class UserSerializer < ApplicationSerializer
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role
 
   def password
     object.password || "Password not displayed"
@@ -99,6 +99,19 @@ class UserSerializer < ActiveModel::Serializer
     end
 
     data
+  end
+
+  def role(data = {})
+    role = object.role
+    unless role.blank?
+      data[:id]          = role.id
+      data[:role_name]   = role.role_name
+      data[:role_code]   = role.role_code
+      data[:authorities] = role.authorities
+      data[:status]      = role.status
+    end
+
+    return data
   end
 
 end

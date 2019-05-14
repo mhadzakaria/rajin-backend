@@ -1,3 +1,3 @@
-class CoinPackageSerializer < ActiveModel::Serializer
+class CoinPackageSerializer < ApplicationSerializer
   attributes :id, :coin, :amount
 end

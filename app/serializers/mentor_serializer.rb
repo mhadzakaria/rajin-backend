@@ -1,4 +1,4 @@
-class MentorSerializer < ActiveModel::Serializer
+class MentorSerializer < ApplicationSerializer
   attributes :id, :nickname, :first_name, :last_name. :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :position, :user_type, :access_token, :uuid, :password, :skills, :picture
 
   def password
@@ -12,8 +12,8 @@ class MentorSerializer < ActiveModel::Serializer
         datum        = {}
         datum[:id]   = skill.id
         datum[:name] = skill.name
-        # datum[:skill_logo_url]  = skill.picture.file_url
-        # datum[:skill_logo_type] = skill.picture.file_type
+        datum[:skill_logo_url]  = skill.picture.file_url
+        datum[:skill_logo_type] = skill.picture.file_type
         data << datum
       end
     end

@@ -66,24 +66,16 @@ module Api::V1
     end
 
     def filter
-      skill_ids = []
-
       if params[:search].present?
         if params[:search][:skill_ids].present?
           params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
-          skill_ids                   = params[:search][:skill_ids]
         end
 
-        user     = current_person
-        amount   = params[:search][:amount] if params[:search][:amount].present?
-        distance = params[:search][:distance] if params[:search][:distance].present?
-        verified = params[:search][:verified] if params[:search][:verified].present?
-
-        @jobs = Job.filter(user, skill_ids, amount, distance, verified)
-        respond_with @jobs, each_serializer: JobSerializer, status: 200
+        @jobs = Job.filter(current_person, params[:search])
+        render json: @jobs, each_serializer: JobSerializer, status: 200
       else
         @jobs = Job.all
-        respond_with @jobs, each_serializer: JobSerializer, status: 200
+        render json: @jobs, each_serializer: JobSerializer, status: 200
       end
     end
 
