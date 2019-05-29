@@ -63,8 +63,6 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "rajin_belajar_#{Rails.env}"
 
-  config.action_mailer.perform_caching = false
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -83,6 +81,8 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  config.action_mailer.perform_caching = false
+  
   config.action_mailer.smtp_settings = {
     user_name: Rails.application.secrets.sendgrid_user_name,
     password: Rails.application.secrets.sendgrid_password,
@@ -96,7 +96,8 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { :host => "test.com" }
+  config.action_mailer.default_url_options = { host: "rajin-belajar.herokuapp.com" }
+  config.action_mailer.asset_host = 'https://rajin-belajar.herokuapp.com/'
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
