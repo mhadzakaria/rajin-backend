@@ -54,6 +54,8 @@ Rails.application.routes.draw do
         put "accept" => "job_requests#accept", on: :member
       end
 
+      resources :chat_sessions, only: [:index]
+
       resources :orders, only: [:index, :show, :create] do
         collection do
           post "ipay88"         => "orders#ipay88"
