@@ -8,7 +8,8 @@ module Notifiable
   def create_notification(user, message = "")
     data  = {user_id: user.try(:id), status: 'sent', message: message}
     notif = self.notifications.build(data)
-    notif.send_email_notification if notif.save
+    notif.save
+    # notif.send_email_notification if notif.save
 
     return notif
   end
