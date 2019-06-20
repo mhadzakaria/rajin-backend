@@ -56,7 +56,7 @@ module RajinBelajar
                                  'blog.js',
                                  'ecommerce.js',
                                  'forum.js',
-                                 'plugins/chart.js/dist/Chart.js',
+                                 # 'plugins/chart.js/dist/Chart.js',
                                  # Stylesheets
                                  'charts.css',
                                  'dashboard.css',
