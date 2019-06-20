@@ -63,6 +63,12 @@ Rails.application.routes.draw do
           # get "ipay88_test"    => "orders#ipay88_test"
         end
       end
+
+      resources :companies, only: [:index] do
+        collection do
+          get 'verified'
+        end
+      end
     end
   end
   # End API routes
