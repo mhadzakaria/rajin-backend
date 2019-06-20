@@ -87,6 +87,7 @@ class Job < ApplicationRecord
       filter[:state_cont]        = search[:state] if search[:state].present?
       filter[:country_cont]      = search[:country] if search[:country].present?
       filter[:postcode_eq]       = search[:postcode] if search[:postcode].present?
+      filter[:job_category_id_eq]= search[:job_category_id] if search[:job_category_id].present?
 
       # filter job with ransack
       query = jobs.ransack(filter)

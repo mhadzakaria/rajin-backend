@@ -1,5 +1,5 @@
 class ChatSessionSerializer < ApplicationSerializer
-  attributes :id, :job_detail, :chat_session_status, :job_applier_detail, :job_owner_detail, :firebase_url
+  attributes :id, :job_detail, :chat_session_status, :job_applier_detail, :job_owner_detail, :job_request, :firebase_url
 
   def job_detail(data = {})
     job          = object.job
