@@ -10,4 +10,11 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
   end
+
+  def json_delete_timestamp
+    attribute = self.attributes
+    attribute.delete('created_at')
+    attribute.delete('updated_at')
+    attribute
+  end
 end
