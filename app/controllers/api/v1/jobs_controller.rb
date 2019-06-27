@@ -79,6 +79,25 @@ module Api::V1
       end
     end
 
+    def verified_jobs
+      verified_comp = Company.verified
+      verified_user = verified_comp.map{ |vc| vc.users }.flatten
+      @jobs = verified_user.map{ |vu| vu.jobs }.flatten
+
+      render json: @jobs, each_serializer: JobSerializer, status: 200
+    end
+
+    def normal_jobs
+      unverifi_comp = Company.not_verified
+      unverifi_user = unverifi_comp.map{ |uc| uc.users }.flatten
+      @jobs = unverifi_user.map{ |uu| uu.jobs }.flatten
+
+      uwithout_comp = User.where(company: nil)
+      @jobs = uwithout_comp.map{ |us| us.jobs }.flatten + @jobs
+
+      render json: @jobs, each_serializer: JobSerializer, status: 200
+    end
+
     private
 
     def set_job

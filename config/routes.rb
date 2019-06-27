@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       resources :jobs do
         collection do
           post "filter"
+          get "verified_jobs" => 'jobs#verified_jobs'
+          get "normal_jobs" => 'jobs#normal_jobs'
         end
 
         member do

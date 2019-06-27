@@ -7,6 +7,7 @@ class Company < ApplicationRecord
   paginates_per 10
 
   scope :verified, -> { where(status: "v") }
+  scope :not_verified, -> { where.not(status: "v") }
 
   enum status: {"Pending" => "p", "Active" => "a", "Verified" => "v"}
 
