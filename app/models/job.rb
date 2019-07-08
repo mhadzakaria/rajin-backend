@@ -96,6 +96,20 @@ class Job < ApplicationRecord
 
       return jobs
     end
+
+    def filter_user_or_company(users, jobs = [])
+      users.each do |user|
+        jobs += self.where(ownerable_type: "User", ownerable_id: user.id)
+      end
+      return jobs
+    end
+
+    def filter_completed_jobs(jobs, result = [])
+      jobs.each do |job|
+        result << job if job.completed?
+      end
+      return result
+    end
   end
 
   def skills

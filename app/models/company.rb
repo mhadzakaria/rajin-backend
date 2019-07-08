@@ -3,6 +3,7 @@ class Company < ApplicationRecord
 
   has_one  :picture, as: :pictureable
   has_many :users
+  has_many :jobs, through: :users
 
   paginates_per 10
 

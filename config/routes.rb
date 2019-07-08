@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           post "filter"
           get "verified_jobs" => 'jobs#verified_jobs'
           get "normal_jobs" => 'jobs#normal_jobs'
+          get "filter_user_or_company" => 'jobs#filter_user_or_company'
         end
 
         member do

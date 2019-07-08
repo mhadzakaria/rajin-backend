@@ -79,6 +79,29 @@ module Api::V1
       end
     end
 
+    def filter_user_or_company
+      if params[:search].present?
+        if params[:search][:user_id].present?
+          @jobs = Job.where(ownerable_type: "User", ownerable_id: params[:search][:user_id])
+        elsif params[:search][:company_id].present?
+          users = User.where(company_id: params[:search][:company_id])
+          @jobs = Job.filter_user_or_company(users)
+        else
+          @jobs = Job.where(ownerable_type: "User")
+        end
+
+        if params[:search][:completed].present?
+          if @jobs.present?
+            @jobs = Job.filter_completed_jobs(@jobs)
+          end
+        end
+      else
+        @jobs = Job.where(ownerable_type: "User")
+      end
+
+      render json: @jobs, each_serializer: JobSerializer, status: 200
+    end
+
     def verified_jobs
       verified_comp = Company.verified
       verified_user = verified_comp.map{ |vc| vc.users }.flatten
