@@ -1,5 +1,5 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job
 
   def password
     object.password || "Password not displayed"
@@ -112,6 +112,14 @@ class UserSerializer < ApplicationSerializer
     end
 
     return data
+  end
+
+  def count_of_completed_job
+    object.jobs.where(status: "completed").count
+  end
+
+  def count_of_offer_job
+    object.jobs.where(status: "pending").count
   end
 
 end
