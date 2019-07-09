@@ -7,6 +7,16 @@ class JobSerializer < ApplicationSerializer
       datum        = {}
       datum[:id]   = skill.id
       datum[:name] = skill.name
+
+      if skill.picture.present?
+        datum[:id] = skill.picture.id
+        datum[:user_id] = skill.picture.user_id
+        datum[:pictureable_id] = skill.picture.pictureable_id
+        datum[:pictureable_type] = skill.picture.pictureable_type
+        datum[:file_type] = skill.picture.file_type
+        datum[:file_url] = skill.picture.file_url
+      end
+
       data << datum
     end
     
