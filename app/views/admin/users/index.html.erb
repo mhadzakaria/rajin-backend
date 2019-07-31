@@ -35,6 +35,7 @@
                 <th>Phone number</th>
                 <th>Date of birth</th>
                 <th>Gender</th>
+                <th>Description</th>
                 <th>Full Address</th>
                 <th>City</th>
                 <th>State</th>
@@ -46,6 +47,9 @@
                 <th>Company</th>
                 <th>Skills</th>
                 <th>Coin Balance</th>
+                <th>Twitter</th>
+                <th>Facebook</th>
+                <th>LinkedIn</th>
                 <th></th>
               </tr>
             </thead>
@@ -72,6 +76,9 @@
                   </td>
                   <td>
                     <%= user.gender %>
+                  </td>
+                  <td>
+                    <%= user.description %>
                   </td>
                   <td>
                     <%= user.full_address %>
@@ -105,6 +112,15 @@
                   </td>
                   <td>
                     <%= user.try(:coin_balance).try(:amount).to_i %>
+                  </td>
+                  <td>
+                    <%= user.twitter %>
+                  </td>
+                  <td>
+                    <%= user.facebook %>
+                  </td>
+                  <td>
+                    <%= user.linkedin %>
                   </td>
                   <td nowrap>
                     <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>

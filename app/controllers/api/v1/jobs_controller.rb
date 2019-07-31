@@ -1,6 +1,6 @@
 module Api::V1
   class JobsController < Api::BaseApiController
-    before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete]
+    before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant]
 
     def index
       @jobs = Job.all
@@ -119,6 +119,26 @@ module Api::V1
       @jobs = uwithout_comp.map{ |us| us.jobs }.flatten + @jobs
 
       render json: @jobs, each_serializer: JobSerializer, status: 200
+    end
+
+    def pending
+      @jobs = Job.pending
+      render json: @jobs
+    end
+
+    def completed
+      @jobs = Job.completed
+      render json: @jobs
+    end
+
+    def accepted
+      @jobs = Job.accepted
+      render json: @jobs
+    end
+
+    def applicant
+      @applicants = @job.job_requests.map(&:user)
+      render json: @applicants
     end
 
     private

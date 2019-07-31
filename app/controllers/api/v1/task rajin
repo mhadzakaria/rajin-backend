@@ -1,0 +1,8 @@
+- user has many photos
+- user has description (max chars)
+- social media (twitter, facebook, linkedIn)
+
+- Top 10 category (based on the top job amount)
+
+- API For filter job request (pending, accepted, rejected) - status
+- list job applicants APIs

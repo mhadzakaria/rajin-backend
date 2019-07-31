@@ -90,7 +90,8 @@ module Api::V1::Users
         params[:user][:full_address] = query.display_name if query.present?
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
-                :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, skill_ids: []
+                :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, :description, :twitter,
+                :facebook, :linkedin, skill_ids: []
                ]
       end
   end

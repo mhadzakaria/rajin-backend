@@ -20,6 +20,10 @@ class Job < ApplicationRecord
 
   paginates_per 10
 
+  scope :pending,   -> { where.not(status: "pending") }
+  scope :completed, -> { where.not(status: "completed") }
+  scope :accepted,  -> { where.not(status: "on_progress") }
+
   aasm :column => :status do
     state :pending, initial: true
     state :on_progress

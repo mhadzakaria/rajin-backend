@@ -31,17 +31,25 @@ Rails.application.routes.draw do
           get "verified_jobs" => 'jobs#verified_jobs'
           get "normal_jobs" => 'jobs#normal_jobs'
           get "filter_user_or_company" => 'jobs#filter_user_or_company'
+          get "pending" => 'jobs#pending'
+          get "completed" => 'jobs#completed'
+          get "accepted" => 'jobs#accepted'
         end
 
         member do
           get "on_progress" => "jobs#on_progress"
           get "complete" => "jobs#complete"
           get "incomplete" => "jobs#incomplete"
+          get "applicant"  => 'jobs#applicant'
         end
       end
 
       resources :skills
-      resources :job_categories
+      resources :job_categories do
+        collection do
+          get 'top_ten' => 'job_categories#top_ten'
+        end
+      end
       resources :school_partners
       resources :roles, only: [:index, :show]
       resources :coin_packages, only: [:index, :show]
