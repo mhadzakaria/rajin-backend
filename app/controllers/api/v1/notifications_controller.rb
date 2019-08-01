@@ -13,7 +13,7 @@ module Api::V1
     end
 
     def user_notifications
-      @notifications = current_user.notifications
+      @notifications = current_user.notifications.showable
       render json: @notifications, each_serializer: NotificationSerializer, status: 200
     end
 

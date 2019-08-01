@@ -4,6 +4,8 @@ class Notification < ApplicationRecord
 
   validates_presence_of :message, allow_blank: false
 
+  scope :showable, -> { where(is_show: true) }
+
   def send_email_notification
     NotificationMailer.send_notification(self).deliver
   end

@@ -11,13 +11,14 @@ class JobRequest < ApplicationRecord
 
   validate :ensure_user_not_same, on: :create
   validates :job_id, uniqueness: { scope: :user_id, message: "Request already applied to this job before." }
+  validates :job_id, uniqueness: { message: "Job already have worker." }, if: :accepted_job_request
 
   aasm :column => :status do
     state :pending, initial: true
     state :accepted
     state :rejected
 
-    event :accept do
+    event :accept, after: :hide_another_notif do
       transitions from: [:pending], to: :accepted
     end
     event :reject do
@@ -25,8 +26,22 @@ class JobRequest < ApplicationRecord
     end
   end
 
-  after_create :create_chat_session, :send_notification
+  after_create :send_notification
+  # after_create :create_chat_session, :send_notification
   after_update :update_chat_session
+
+  def hide_another_notif
+    notifications = self.job.job_requests.map{|jr| jr.notifications}.flatten
+    notifications.each do |notif|
+      if !notif.notifable.eql?(accept)
+        notif.update(is_show: false)
+      end
+    end
+  end
+
+  def accepted_job_request
+    job.job_requests.where(status: 'accepted').present?
+  end
 
   def reject_another_job_requests(accept_message = "", reject_message = "")
     self.send_accepted_message(accept_message)
@@ -65,7 +80,7 @@ class JobRequest < ApplicationRecord
   end
 
   def update_chat_session
-    if self.status.eql?('rejected')
+    if self.status.eql?('rejected') && self.chat_session
       self.chat_session.update(status: 1)
     end
   end
