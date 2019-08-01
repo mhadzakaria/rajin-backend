@@ -20,9 +20,9 @@ class Job < ApplicationRecord
 
   paginates_per 10
 
-  scope :pending,   -> { where.not(status: "pending") }
-  scope :completed, -> { where.not(status: "completed") }
-  scope :accepted,  -> { where.not(status: "on_progress") }
+  scope :pending,   -> { where(status: "pending") }
+  scope :completed, -> { where(status: "completed") }
+  scope :accepted,  -> { where(status: "on_progress") }
 
   aasm :column => :status do
     state :pending, initial: true
@@ -96,7 +96,11 @@ class Job < ApplicationRecord
       # filter job with ransack
       query = jobs.ransack(filter)
       # filter job to find match skill and distance location
-      jobs  = query.result.where(id: filtered_ids)
+      if filtered_ids.blank?
+        jobs  = query.result
+      else
+        jobs  = query.result.where(id: filtered_ids)
+      end
 
       return jobs
     end

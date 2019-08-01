@@ -1,6 +1,36 @@
 class UserSerializer < ApplicationSerializer
   attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
 
+  attribute :coin_balance,      if: :is_applicant
+  attribute :notifications,     if: :is_applicant
+  attribute :role,              if: :is_applicant
+  attribute :access_token,      if: :is_applicant
+  attribute :uuid,              if: :is_applicant
+  attribute :password,          if: :is_applicant
+  attribute :config,            if: :is_applicant
+  attribute :uploaded_pictures, if: :is_applicant
+
+  def uploaded_pictures
+    if object.uploaded_pictures.present?
+      pictures = object.uploaded_pictures.map do |picture|
+        {
+          :id               => picture.id,
+          :user_id          => picture.user_id,
+          :pictureable_id   => picture.pictureable_id,
+          :pictureable_type => picture.pictureable_type,
+          :file_type        => picture.file_type,
+          :file_url         => picture.file_url
+        }
+      end
+    end
+
+    return pictures
+  end
+
+  def is_applicant
+    @instance_options[:applicant].blank?
+  end
+
   def password
     object.password || "Password not displayed"
   end
@@ -81,7 +111,7 @@ class UserSerializer < ApplicationSerializer
   end
 
   def notifications(data = [])
-    notifications = object.notifications
+    notifications = object.notifications.showable
 
     notifications.each do |notif|
       notification = {}

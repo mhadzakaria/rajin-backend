@@ -31,7 +31,16 @@ class JobSerializer < ApplicationSerializer
       datum[:pictureable_id]   = picture.pictureable_id
       datum[:pictureable_type] = picture.pictureable_type
       datum[:file_type]        = picture.file_type
-      datum[:file_url]         = picture.file_url
+
+      file_url = picture.file_url
+      datum[:file_url] = {
+        file_url: {
+          url: @instance_options[:base_url] + file_url.url,
+          thumb: {
+            url: @instance_options[:base_url] + file_url.thumb.url
+          }
+        }
+      }
 
       data << datum
     end

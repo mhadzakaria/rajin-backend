@@ -15,8 +15,8 @@ module Api::V1::Users
       if resource.persisted?
 
         if params[:picture].present?
-          picture      = resource.build_picture(picture_params)
-          picture.user = resource
+          picture = resource.build_picture(picture_params)
+          # picture.pictureable = resource
           picture.save
         end
 
@@ -41,7 +41,7 @@ module Api::V1::Users
         if params[:picture].present?
           picture            = current_user.picture || current_user.build_picture
           picture.attributes = picture_params
-          picture.user_id    = current_user.id
+          # picture.pictureable = current_user
           picture.save
         end
 

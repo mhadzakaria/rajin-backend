@@ -25,6 +25,12 @@ Rails.application.routes.draw do
         get "mentors/profile", to: "mentors/sessions#show", as: :mentor_profile
       end
 
+      resources :pictures, only: [] do
+        collection do
+          post 'upload'
+        end
+      end
+
       resources :jobs do
         collection do
           post "filter"

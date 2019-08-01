@@ -8,7 +8,7 @@ module Api::V1
     end
 
     def show
-      respond_with @job, serializer: JobSerializer, status: 200
+      respond_with @job, serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -138,7 +138,7 @@ module Api::V1
 
     def applicant
       @applicants = @job.job_requests.map(&:user)
-      render json: @applicants
+      render json: @applicants, applicant: true, each_serializer: UserSerializer, status: 200
     end
 
     private
