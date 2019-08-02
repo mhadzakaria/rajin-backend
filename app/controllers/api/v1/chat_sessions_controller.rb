@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       @chat_sessions = ChatSession.normal_user(current_user.id).or(ChatSession.owner_job(current_user.id))
-      respond_with @chat_sessions, each_serializer: ChatSessionSerializer, status: 200
+      respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -17,7 +17,7 @@ module Api::V1
       end
 
       if @chat_session.errors.blank?
-        render json: @chat_session, serialize: ChatSessionSerializer, status: 200
+        render json: @chat_session, serialize: ChatSessionSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @chat_session.errors.full_messages }, status: 422
       end

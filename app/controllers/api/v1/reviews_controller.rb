@@ -5,11 +5,11 @@ module Api::V1
 
     def index
       @reviews = @job.reviews
-      respond_with @reviews, each_serializer: ReviewSerializer, status: 200
+      respond_with @reviews, each_serializer: ReviewSerializer, base_url: request.base_url, status: 200
     end
 
     def show
-      respond_with @review, serializer: ReviewSerializer, status: 200
+      respond_with @review, serializer: ReviewSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -17,7 +17,7 @@ module Api::V1
       @review.job_id = @job.id
       @review.save
       if @review.save
-        render json: @review, serialize: ReviewSerializer, status: 200
+        render json: @review, serialize: ReviewSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @review.errors.full_messages }, status: 422
       end
@@ -25,7 +25,7 @@ module Api::V1
 
     def update
       if @review.update(review_params)
-        render json: @review, serialize: ReviewSerializer, status: 200
+        render json: @review, serialize: ReviewSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @review.errors.full_messages }, status: 422
       end
@@ -33,7 +33,7 @@ module Api::V1
 
     def destroy
       @review.destroy
-      render json: @review, serialize: ReviewSerializer, status: 204
+      render json: @review, serialize: ReviewSerializer, base_url: request.base_url, status: 204
     end
 
     private

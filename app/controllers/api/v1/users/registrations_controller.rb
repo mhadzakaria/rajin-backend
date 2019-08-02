@@ -23,11 +23,11 @@ module Api::V1::Users
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           sign_up(resource_name, resource)
-          render json: resource, serializer: UserSerializer, status: 200 and return
+          render json: resource, serializer: UserSerializer, base_url: request.base_url, status: 200 and return
         else
           set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
-          render json: resource, serializer: UserSerializer, status: 200 and return
+          render json: resource, serializer: UserSerializer, base_url: request.base_url, status: 200 and return
         end
       else
         clean_up_passwords resource
@@ -45,7 +45,7 @@ module Api::V1::Users
           picture.save
         end
 
-        render json: current_user, serializer: UserSerializer, status: 200 and return
+        render json: current_user, serializer: UserSerializer, base_url: request.base_url, status: 200 and return
       else
         clean_up_passwords current_user
         set_minimum_password_length

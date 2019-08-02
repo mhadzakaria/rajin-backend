@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       @jobs = Job.all
-      respond_with @jobs, each_serializer: JobSerializer, status: 200
+      respond_with @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def show
@@ -23,7 +23,7 @@ module Api::V1
             picture.save
           end
         end
-        render json: @job, serialize: JobSerializer, status: 200
+        render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @job.errors.full_messages }, status: 422
       end
@@ -39,7 +39,7 @@ module Api::V1
             picture.save
           end
         end
-        render json: @job, serialize: JobSerializer, status: 200
+        render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @job.errors.full_messages }, status: 422
       end
@@ -47,22 +47,22 @@ module Api::V1
 
     def destroy
       @job.destroy
-      render json: @job, serialize: JobSerializer, status: 204
+      render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 204
     end
 
     def complete
       @job.complete!
-      render json: @job, serialize: JobSerializer, status: 200
+      render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def on_progress
       @job.on_progress!
-      render json: @job, serialize: JobSerializer, status: 200
+      render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def incomplete
       @job.incomplete!
-      render json: @job, serialize: JobSerializer, status: 200
+      render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def filter
@@ -72,10 +72,10 @@ module Api::V1
         end
 
         @jobs = Job.filter(current_person, params[:search])
-        render json: @jobs, each_serializer: JobSerializer, status: 200
+        render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       else
         @jobs = Job.all
-        render json: @jobs, each_serializer: JobSerializer, status: 200
+        render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       end
     end
 
@@ -99,7 +99,7 @@ module Api::V1
         @jobs = Job.where(ownerable_type: "User")
       end
 
-      render json: @jobs, each_serializer: JobSerializer, status: 200
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def verified_jobs
@@ -107,7 +107,7 @@ module Api::V1
       verified_user = verified_comp.map{ |vc| vc.users }.flatten
       @jobs = verified_user.map{ |vu| vu.jobs }.flatten
 
-      render json: @jobs, each_serializer: JobSerializer, status: 200
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def normal_jobs
@@ -118,7 +118,7 @@ module Api::V1
       uwithout_comp = User.where(company: nil)
       @jobs = uwithout_comp.map{ |us| us.jobs }.flatten + @jobs
 
-      render json: @jobs, each_serializer: JobSerializer, status: 200
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def pending

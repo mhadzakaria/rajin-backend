@@ -9,7 +9,8 @@ class SkillSerializer < ApplicationSerializer
       datum[:pictureable_id] = object.picture.pictureable_id
       datum[:pictureable_type] = object.picture.pictureable_type
       datum[:file_type] = object.picture.file_type
-      datum[:file_url] = object.picture.file_url
+      datum[:file_url] = picture_details(object.picture.file_url)
+
       data << datum
     end
 

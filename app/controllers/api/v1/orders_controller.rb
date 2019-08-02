@@ -9,11 +9,11 @@ module Api::V1
 
     def index
       @orders = current_user.orders.order(id: :asc)
-      render json: @orders, each_serializer: OrderSerializer, status: 200
+      render json: @orders, each_serializer: OrderSerializer, base_url: request.base_url, status: 200
     end
 
     def show
-      render json: @order, serializer: OrderSerializer, status: 200
+      render json: @order, serializer: OrderSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -24,7 +24,7 @@ module Api::V1
       @order.orderable_type = @package.class.name
 
       if @order.save
-        render json: @order, serialize: OrderSerializer, status: 200
+        render json: @order, serialize: OrderSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @order.errors.full_messages }, status: 422
       end
@@ -54,7 +54,7 @@ module Api::V1
         render json: {message: "site/bad_request"}, status: 400 and return
       elsif @order.paid? && params[:Status].eql?('1')
         # condition if order has been paid before
-        render json: @order, serializer: OrderSerializer, status: 200
+        render json: @order, serializer: OrderSerializer, base_url: request.base_url, status: 200
       elsif params[:Status].eql?('1') && @order.pending? && @order.ipay88_response_code(params[:PaymentId]).eql?(params[:Signature])
         # condition if order still pending / not paid
         @order.net_amount      = @package.amount * Order::PROCESSING_RATE_TIER
@@ -66,7 +66,7 @@ module Api::V1
           @order.reload
           set_coin(@user)
           incoming_coin(@package.coin, "Top up!", {coinable_type: @user.class.name, coinable_id: @user.id})
-          render json: @order, serializer: OrderSerializer, status: 200
+          render json: @order, serializer: OrderSerializer, base_url: request.base_url, status: 200
         else
           render json: {message: "site/bad_request"}, status: 400 and return
         end

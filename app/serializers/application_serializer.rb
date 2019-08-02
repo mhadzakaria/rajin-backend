@@ -20,11 +20,20 @@ class ApplicationSerializer < ActiveModel::Serializer
       data[:country]      = user.country
       data[:latitude]     = user.latitude
       data[:longitude]    = user.longitude
-      data[:avatar_url]   = avatar.try(:file_url).try(:url)
+      file_url = avatar.try(:file_url)
+      data[:avatar_url] = if file_url.present?
+        datum[:file_url] = base_url + file_url.url
+      else
+        ''
+      end
       data[:coin_balance] = "#{balance.try(:amount).to_i} Coins"
     end
 
     return data
+  end
+
+  def base_url
+    "#{@instance_options[:base_url]}"
   end
 
   def category_detail(category)
@@ -43,5 +52,56 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
 
     return data 
+  end
+
+  def skill_with_picture(skills, result = [])
+    skills.each do |skill|
+      datum = {}
+      file_url = skill.picture.try(:file_url)
+
+      datum[:name]    = skill.name
+      datum[:picture] = if file_url.present?
+        base_url + file_url.url
+      else
+        ''
+      end
+
+      result << datum
+    end
+
+    result
+  end
+
+  def picture_details_list(pictures, result = [])
+    pictures.each do |picture|
+      datum = {}
+      file_url = picture.file_url
+
+      datum[:file_url] = if file_url.present?
+        base_url + file_url.url
+      else
+        ''
+      end
+      datum[:file_type] = picture.file_type
+
+      result << datum
+    end
+
+    result
+  end
+
+  def picture_details(file_url)
+    if file_url.present?
+      {
+        file_url: {
+          url: base_url + file_url.url,
+          thumb: {
+            url: base_url + file_url.thumb.url
+          }
+        }
+      }
+    else
+      {}
+    end
   end
 end

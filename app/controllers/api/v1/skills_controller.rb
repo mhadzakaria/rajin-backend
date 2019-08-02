@@ -4,11 +4,11 @@ module Api::V1
 
     def index
       @skills = Skill.all
-      respond_with @skills, each_serializer: SkillSerializer, status: 200
+      respond_with @skills, each_serializer: SkillSerializer, base_url: request.base_url, status: 200
     end
 
     def show
-      respond_with @skill, serializer: SkillSerializer, status: 200
+      respond_with @skill, serializer: SkillSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -19,7 +19,7 @@ module Api::V1
           picture.save
         end
 
-        render json: @skill, serialize: SkillSerializer, status: 200
+        render json: @skill, serialize: SkillSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422
       end
@@ -33,7 +33,7 @@ module Api::V1
           picture.save
         end
 
-        render json: @skill, serialize: SkillSerializer, status: 200
+        render json: @skill, serialize: SkillSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @skill.errors.full_messages }, status: 422
       end
@@ -41,7 +41,7 @@ module Api::V1
 
     def destroy
       @skill.destroy
-      render json: @skill, serialize: SkillSerializer, status: 204
+      render json: @skill, serialize: SkillSerializer, base_url: request.base_url, status: 204
     end
 
     private

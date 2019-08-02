@@ -26,7 +26,7 @@ module Api::V1::Users
           resource.save
 
           format.html {sign_in_and_redirect resource, event: :authentication} #this will throw if resource is not activated
-          format.json {render json: resource, serializer: UserSerializer, status: 200}
+          format.json {render json: resource, serializer: UserSerializer, base_url: request.base_url, status: 200}
         else
           session["devise.facebook_data"] = request.env["omniauth.auth"]
 

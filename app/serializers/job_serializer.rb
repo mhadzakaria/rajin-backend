@@ -9,12 +9,12 @@ class JobSerializer < ApplicationSerializer
       datum[:name] = skill.name
 
       if skill.picture.present?
-        datum[:id] = skill.picture.id
-        datum[:user_id] = skill.picture.user_id
-        datum[:pictureable_id] = skill.picture.pictureable_id
+        datum[:id]               = skill.picture.id
+        datum[:user_id]          = skill.picture.user_id
+        datum[:pictureable_id]   = skill.picture.pictureable_id
         datum[:pictureable_type] = skill.picture.pictureable_type
-        datum[:file_type] = skill.picture.file_type
-        datum[:file_url] = skill.picture.file_url
+        datum[:file_type]        = skill.picture.file_type
+        datum[:file_url]         = picture_details(skill.picture.file_url)
       end
 
       data << datum
@@ -31,16 +31,7 @@ class JobSerializer < ApplicationSerializer
       datum[:pictureable_id]   = picture.pictureable_id
       datum[:pictureable_type] = picture.pictureable_type
       datum[:file_type]        = picture.file_type
-
-      file_url = picture.file_url
-      datum[:file_url] = {
-        file_url: {
-          url: @instance_options[:base_url] + file_url.url,
-          thumb: {
-            url: @instance_options[:base_url] + file_url.thumb.url
-          }
-        }
-      }
+      datum[:file_url]         = picture_details(picture.file_url)
 
       data << datum
     end

@@ -61,9 +61,8 @@ class Job < ApplicationRecord
 
   class << self
     def filter(user, search)
-      filter                = {}
-      filtered_skill_ids    = []
-      filtered_distance_ids = []
+      filter             = {}
+      filtered_skill_ids = []
 
       jobs = Job.all
 
@@ -77,12 +76,7 @@ class Job < ApplicationRecord
       end unless search[:skill_ids].blank?
 
       # collect job id by distance from user location
-      if filter[:distance].present?
-        filtered_distance_ids = jobs.near(user.coordinates, filter[:distance], units: :km).map(&:id)
-      end
-
-      # filter job by skill ids and distance
-      filtered_ids               = filtered_skill_ids + filtered_distance_ids
+      jobs = jobs.near(user.coordinates, search[:distance] || 5, units: :km)
 
       # build ransack filter query (amount and specific location data)
       filter[:amount_eq]         = search[:amount] if search[:amount].present?
@@ -96,7 +90,7 @@ class Job < ApplicationRecord
       # filter job with ransack
       query = jobs.ransack(filter)
       # filter job to find match skill and distance location
-      if filtered_ids.blank?
+      if filtered_skill_ids.blank?
         jobs  = query.result
       else
         jobs  = query.result.where(id: filtered_ids)

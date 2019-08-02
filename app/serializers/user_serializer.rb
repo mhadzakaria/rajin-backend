@@ -19,7 +19,8 @@ class UserSerializer < ApplicationSerializer
           :pictureable_id   => picture.pictureable_id,
           :pictureable_type => picture.pictureable_type,
           :file_type        => picture.file_type,
-          :file_url         => picture.file_url
+          :file_url         => picture_details(picture.file_url)
+
         }
       end
     end
@@ -61,8 +62,12 @@ class UserSerializer < ApplicationSerializer
 
       datum[:id]             = skill.id
       datum[:name]           = skill.name
-      datum[:logo_url]       = picture.try(:file_url).try(:url)
       datum[:logo_file_type] = picture.try(:file_type)
+      datum[:logo_url]       = if picture.try(:file_url)
+        base_url + picture.file_url.url
+      else
+        ''
+      end
       data << datum
     end
 
@@ -78,7 +83,7 @@ class UserSerializer < ApplicationSerializer
       data[:pictureable_id]   = picture.pictureable_id
       data[:pictureable_type] = picture.pictureable_type
       data[:file_type]        = picture.file_type
-      data[:file_url]         = picture.file_url
+      data[:file_url]         = picture_details(picture.file_url)
     end
 
     return data
@@ -99,7 +104,11 @@ class UserSerializer < ApplicationSerializer
       data[:country]      = company.country
       data[:latitude]     = company.latitude
       data[:longitude]    = company.longitude
-      data[:logo_url]     = picture.try(:file_url).try(:url)
+      data[:logo_url]     = if picture.try(:file_url)
+        base_url + picture.file_url.url
+      else
+        ''
+      end
     end
 
     return data
