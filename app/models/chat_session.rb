@@ -11,4 +11,11 @@ class ChatSession < ApplicationRecord
   def job
     self.job_request.job
   end
+
+  def build_firebase_key(job_id)
+    random_key   = SecureRandom.hex(10)
+    firebase_key = "job_request-#{job_request_id}-#{job_id}-#{random_key}"
+
+    self.provider_url = firebase_key
+  end
 end
