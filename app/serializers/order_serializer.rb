@@ -34,6 +34,7 @@ class OrderSerializer < ApplicationSerializer
       data[:latitude]        = orderable.latitude
       data[:longitude]       = orderable.longitude
       data[:status]          = orderable.status
+      data[:duration]        = orderable.duration
       data[:job_category]    = job_category.name
       data[:required_skills] = []
       data[:pictures]        = []

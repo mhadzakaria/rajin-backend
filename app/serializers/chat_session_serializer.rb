@@ -23,6 +23,7 @@ class ChatSessionSerializer < ApplicationSerializer
     data[:latitude]        = job.latitude
     data[:longitude]       = job.longitude
     data[:status]          = job.status
+    data[:duration]        = job.duration
     data[:job_category]    = job_category.json_delete_timestamp
     data[:required_skills] = []
     data[:pictures]        = []

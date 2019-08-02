@@ -1,5 +1,5 @@
 class JobSerializer < ApplicationSerializer
-  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail
+  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail, :duration
 
   def skills(data = [])
     skills = object.skills
