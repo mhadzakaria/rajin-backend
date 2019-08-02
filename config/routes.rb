@@ -69,6 +69,12 @@ Rails.application.routes.draw do
         resources :reviews, on: :member
         put "reject" => "job_requests#reject", on: :member
         put "accept" => "job_requests#accept", on: :member
+
+        collection do
+          get "pending"  => 'job_requests#pending'
+          get "rejected" => 'job_requests#rejected'
+          get "accepted" => 'job_requests#accepted'
+        end
       end
 
       resources :chat_sessions, only: [:index, :create]

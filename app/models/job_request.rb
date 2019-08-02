@@ -13,6 +13,11 @@ class JobRequest < ApplicationRecord
   validates :job_id, uniqueness: { scope: :user_id, message: "Request already applied to this job before." }
   validates :job_id, uniqueness: { message: "Job already have worker." }, if: :accepted_job_request
 
+  scope :pending,  -> { where(status: "pending") }
+  scope :rejected, -> { where(status: "rejected") }
+  scope :accepted, -> { where(status: "accepted") }
+
+
   aasm :column => :status do
     state :pending, initial: true
     state :accepted

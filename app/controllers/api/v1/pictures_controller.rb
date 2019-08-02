@@ -14,7 +14,7 @@ module Api::V1
       end
 
       if errors.blank?
-        render json: current_user, serializer: UserSerializer, status: 200 and return
+        render json: current_user, serializer: UserSerializer, base_url: request.base_url, status: 200
       else
         render json: errors, status: 400
       end

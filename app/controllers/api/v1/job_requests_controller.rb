@@ -67,6 +67,21 @@ module Api::V1
       end
     end
 
+    def pending
+      @job_requests = JobRequest.pending
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
+    end
+
+    def rejected
+      @job_requests = JobRequest.rejected
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
+    end
+
+    def accepted
+      @job_requests = JobRequest.accepted
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
+    end
+
     private
 
     def set_job_request
