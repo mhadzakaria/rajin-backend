@@ -20,7 +20,6 @@ class UserSerializer < ApplicationSerializer
           :pictureable_type => picture.pictureable_type,
           :file_type        => picture.file_type,
           :file_url         => picture_details(picture.file_url)
-
         }
       end
     end

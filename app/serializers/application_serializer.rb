@@ -22,7 +22,7 @@ class ApplicationSerializer < ActiveModel::Serializer
       data[:longitude]    = user.longitude
       file_url = avatar.try(:file_url)
       data[:avatar_url] = if file_url.present?
-        datum[:file_url] = base_url + file_url.url
+        base_url + file_url.url
       else
         ''
       end
@@ -93,11 +93,9 @@ class ApplicationSerializer < ActiveModel::Serializer
   def picture_details(file_url)
     if file_url.present?
       {
-        file_url: {
-          url: base_url + file_url.url,
-          thumb: {
-            url: base_url + file_url.thumb.url
-          }
+        url: base_url + file_url.url,
+        thumb: {
+          url: base_url + file_url.thumb.url
         }
       }
     else
