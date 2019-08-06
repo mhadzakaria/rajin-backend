@@ -35,7 +35,7 @@ class OrderSerializer < ApplicationSerializer
       data[:longitude]       = orderable.longitude
       data[:status]          = orderable.status
       data[:duration]        = orderable.duration
-      data[:job_category]    = job_category.name
+      data[:job_category]    = category_detail(job_category)
       data[:required_skills] = skill_with_picture(skills)
       data[:pictures]        = picture_details_list(pictures)
     end

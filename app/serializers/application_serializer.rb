@@ -42,12 +42,12 @@ class ApplicationSerializer < ActiveModel::Serializer
     unless category.blank?
       parent   = category.parent
 
-      data[:id]    = category.id
-      data[:title] = category.title
+      data[:id]   = category.id
+      data[:name] = category.name
 
       data[:main_category] = {
-           id: parent.id,
-        title: parent.title
+          id: parent.id,
+        name: parent.name
       } if parent.present?
     end
 
