@@ -51,4 +51,8 @@ class JobSerializer < ApplicationSerializer
     object.start_date.try(:strftime, "%B %Y, ").to_s + "#{object.duration} days."
   end
 
+  def chat_sessions
+    object.chat_sessions.open_chat
+  end
+
 end

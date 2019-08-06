@@ -3,7 +3,7 @@ module Api::V1
     before_action :set_job_request, only: [:create]
 
     def index
-      @chat_sessions = ChatSession.normal_user(current_user.id).or(ChatSession.owner_job(current_user.id))
+      @chat_sessions = ChatSession.normal_user(current_user.id).or(ChatSession.owner_job(current_user.id)).open_chat
       respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
     end
 
