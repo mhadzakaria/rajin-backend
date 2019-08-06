@@ -23,6 +23,18 @@ module Api::V1
       end
     end
 
+    def pending
+      job_requests = current_user.job_requests.pending
+      @chat_sessions = ChatSession.where(job_request_id: job_requests.map(&:id))
+      respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
+    end
+
+    def confirmed
+      job_requests = current_user.job_requests.accepted
+      @chat_sessions = ChatSession.where(job_request_id: job_requests.map(&:id))
+      respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
+    end
+
     private
 
     def set_job_request

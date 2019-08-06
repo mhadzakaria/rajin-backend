@@ -77,7 +77,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :chat_sessions, only: [:index, :create]
+      resources :chat_sessions, only: [:index, :create] do
+        collection do
+          get 'pending' => 'chat_sessions#pending'
+          get 'confirmed' => 'chat_sessions#confirmed'
+        end
+      end
 
       resources :orders, only: [:index, :show, :create] do
         collection do

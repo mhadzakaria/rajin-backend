@@ -36,11 +36,20 @@ class JobRequest < ApplicationRecord
   after_update :update_chat_session
 
   def hide_another_notif
-    notifications = self.job.job_requests.map{|jr| jr.notifications}.flatten
+    job_job_requests = self.job.job_requests
+
+    # hide another job_requests notifications
+    notifications = job_job_requests.map{|jr| jr.notifications}.flatten
     notifications.each do |notif|
       if !notif.notifable.eql?(self)
         notif.update(is_show: false)
       end
+    end
+
+    # hide another job_requests chat_sessions
+    job_requests = job_job_requests.map{|jr| jr.chat_session }
+    job_requests.each do |chat|
+      chat.update(status: 1)
     end
   end
 
