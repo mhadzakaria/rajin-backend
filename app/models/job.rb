@@ -76,7 +76,13 @@ class Job < ApplicationRecord
       end unless search[:skill_ids].blank?
 
       # collect job id by distance from user location
-      jobs = jobs.near(user.coordinates, search[:distance] || 5, units: :km)
+      coordinate = if search[:latitude].present? && search[:longitude].present?
+        [search[:latitude], search[:longitude]]
+      else
+        user.coordinates
+      end
+
+      jobs = jobs.near(coordinate, search[:distance] || 15, units: :km)
 
       # build ransack filter query (amount and specific location data)
       filter[:amount_eq]         = search[:amount] if search[:amount].present?
@@ -135,6 +141,14 @@ class Job < ApplicationRecord
 
   def get_category
     self.job_category.name
+  end
+
+  def applicant(user = nil)
+    if job_requests.accepted.present?
+      user = job_requests.accepted.last.user
+    end
+
+    user
   end
 
 end

@@ -24,7 +24,7 @@ class MentorSerializer < ApplicationSerializer
   end
 
   def picture(data = [])
-    if object.picture.present?
+    if object.picture.present? && object.picture.file_url.present?
       datum = {}
       datum[:id]               = object.picture.id
       datum[:user_id]          = object.picture.user_id

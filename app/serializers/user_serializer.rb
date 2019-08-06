@@ -10,10 +10,12 @@ class UserSerializer < ApplicationSerializer
   attribute :config,            if: :is_applicant
   attribute :uploaded_pictures, if: :is_applicant
 
-  def uploaded_pictures
+  def uploaded_pictures(pictures = [])
     if object.uploaded_pictures.present?
-      pictures = object.uploaded_pictures.map do |picture|
-        {
+      object.uploaded_pictures.each do |picture|
+        next if picture.file_url.blank?
+
+        data = {
           :id               => picture.id,
           :user_id          => picture.user_id,
           :pictureable_id   => picture.pictureable_id,
@@ -21,6 +23,8 @@ class UserSerializer < ApplicationSerializer
           :file_type        => picture.file_type,
           :file_url         => picture_details(picture.file_url)
         }
+
+        pictures << data
       end
     end
 
@@ -76,7 +80,7 @@ class UserSerializer < ApplicationSerializer
   def avatar(data = {})
     picture = object.picture
 
-    if picture.present?
+    if picture.present? && picture.file_url.present?
       data[:id]               = picture.id
       data[:user_id]          = picture.user_id
       data[:pictureable_id]   = picture.pictureable_id

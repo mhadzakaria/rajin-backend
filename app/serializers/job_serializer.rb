@@ -1,5 +1,5 @@
 class JobSerializer < ApplicationSerializer
-  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail, :duration
+  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail, :duration, :date_details
 
   def skills(data = [])
     skills = object.skills
@@ -8,7 +8,7 @@ class JobSerializer < ApplicationSerializer
       datum[:id]   = skill.id
       datum[:name] = skill.name
 
-      if skill.picture.present?
+      if skill.picture.present? && skill.picture.file_url.present?
         datum[:id]               = skill.picture.id
         datum[:user_id]          = skill.picture.user_id
         datum[:pictureable_id]   = skill.picture.pictureable_id
@@ -25,6 +25,8 @@ class JobSerializer < ApplicationSerializer
 
   def pictures(data = [])
     object.pictures.each do |picture|
+      next if picture.file_url.blank?
+
       datum = {}
       datum[:id]               = picture.id
       datum[:user_id]          = picture.user_id
@@ -43,6 +45,10 @@ class JobSerializer < ApplicationSerializer
     owner = object.ownerable
 
     return user_details(owner)
+  end
+
+  def date_details
+    object.start_date.strftime("%B %Y, ") + "#{duration} days."
   end
 
 end
