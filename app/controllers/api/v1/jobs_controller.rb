@@ -123,9 +123,18 @@ module Api::V1
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
-    def pending
-      @job_requests = current_person.job_requests
-      @jobs = Job.where(id: @job_requests.map(&:job_id)).pending
+    def my_job_pending
+      @jobs = current_person.jobs.pending
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
+    end
+
+    def my_job_on_progress
+      @jobs = current_person.jobs.accepted
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
+    end
+
+    def my_job_completed
+      @jobs = current_person.jobs.completed
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 

@@ -40,6 +40,9 @@ Rails.application.routes.draw do
           get "pending" => 'jobs#pending'
           get "completed" => 'jobs#completed'
           get "accepted" => 'jobs#accepted'
+          get 'my_job_pending' => 'jobs#my_job_pending'
+          get 'my_job_on_progress' => 'jobs#my_job_on_progress'
+          get 'my_job_completed' => 'jobs#my_job_completed'
         end
 
         member do
