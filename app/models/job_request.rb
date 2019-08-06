@@ -23,7 +23,7 @@ class JobRequest < ApplicationRecord
     state :accepted
     state :rejected
 
-    event :accept, after: :hide_another_notif do
+    event :accept, after: [:hide_another_notif, :job_on_progress] do
       transitions from: [:pending], to: :accepted
     end
     event :reject do
@@ -47,10 +47,14 @@ class JobRequest < ApplicationRecord
     end
 
     # hide another job_requests chat_sessions
-    job_requests = job_job_requests.map{|jr| jr.chat_session }
+    job_requests = job_job_requests.map{|jr| jr.chat_session }.compact
     job_requests.each do |chat|
       chat.update(status: 1)
     end
+  end
+
+  def job_on_progress
+    job.on_progress!
   end
 
   def accepted_job_request
