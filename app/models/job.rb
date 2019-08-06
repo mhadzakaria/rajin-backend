@@ -82,7 +82,7 @@ class Job < ApplicationRecord
         user.coordinates
       end
 
-      jobs = jobs.near(coordinate, search[:distance] || 15, units: :km)
+      jobs = jobs.near(coordinate, search[:distance] || 15, units: :km) if coordinate.present? && !coordinate.include?(0.0)
 
       # build ransack filter query (amount and specific location data)
       filter[:amount_eq]         = search[:amount] if search[:amount].present?

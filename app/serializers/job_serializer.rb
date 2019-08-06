@@ -48,7 +48,7 @@ class JobSerializer < ApplicationSerializer
   end
 
   def date_details
-    object.start_date.strftime("%B %Y, ") + "#{duration} days."
+    object.start_date.try(:strftime, "%B %Y, ").to_s + "#{object.duration} days."
   end
 
 end

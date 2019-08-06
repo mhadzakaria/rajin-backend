@@ -3,7 +3,7 @@ module Api::V1
     before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant]
 
     def index
-      @jobs = Job.all.page params[:page] || 1
+      @jobs = Job.all
       respond_with @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
@@ -71,10 +71,10 @@ module Api::V1
           params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
         end
 
-        @jobs = Job.filter(current_person, params[:search]).page(params[:page] || 1)
+        @jobs = Job.filter(current_person, params[:search])
         render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       else
-        @jobs = Job.all.page(params[:page] || 1)
+        @jobs = Job.all
         render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       end
     end
@@ -82,21 +82,21 @@ module Api::V1
     def filter_user_or_company
       if params[:search].present?
         if params[:search][:user_id].present?
-          @jobs = Job.where(ownerable_type: "User", ownerable_id: params[:search][:user_id]).page(params[:page] || 1)
+          @jobs = Job.where(ownerable_type: "User", ownerable_id: params[:search][:user_id])
         elsif params[:search][:company_id].present?
           users = User.where(company_id: params[:search][:company_id])
-          @jobs = Job.filter_user_or_company(users).page(params[:page] || 1)
+          @jobs = Job.filter_user_or_company(users)
         else
-          @jobs = Job.where(ownerable_type: "User").page(params[:page] || 1)
+          @jobs = Job.where(ownerable_type: "User")
         end
 
         if params[:search][:completed].present?
           if @jobs.present?
-            @jobs = Job.filter_completed_jobs(@jobs).page(params[:page] || 1)
+            @jobs = Job.filter_completed_jobs(@jobs)
           end
         end
       else
-        @jobs = Job.where(ownerable_type: "User").page(params[:page] || 1)
+        @jobs = Job.where(ownerable_type: "User")
       end
 
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
@@ -105,7 +105,7 @@ module Api::V1
     def verified_jobs
       verified_comp = Company.verified
       verified_user = verified_comp.map{ |vc| vc.users }.flatten
-      @jobs = Job.where(ownerable: verified_user).page(params[:page] || 1)
+      @jobs = Job.where(ownerable: verified_user)
 
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
@@ -118,29 +118,32 @@ module Api::V1
       uwithout_comp = User.where(company: nil)
       # @jobs = uwithout_comp.map{ |us| us.jobs }.flatten + @jobs
 
-      @jobs = Job.where(ownerable: unverifi_user + uwithout_comp).page(params[:page] || 1)
+      @jobs = Job.where(ownerable: unverifi_user + uwithout_comp)
 
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def pending
-      @jobs = Job.pending.page(params[:page] || 1)
-      render json: @jobs
+      @job_requests = current_person.job_requests
+      @jobs = Job.where(id: @job_requests.map(&:job_id)).pending
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def completed
-      @jobs = Job.completed.page(params[:page] || 1)
-      render json: @jobs
+      @job_requests = current_person.job_requests
+      @jobs = Job.where(id: @job_requests.map(&:job_id)).completed
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def accepted
-      @jobs = Job.accepted.page(params[:page] || 1)
-      render json: @jobs
+      @job_requests = current_person.job_requests
+      @jobs = Job.where(id: @job_requests.map(&:job_id)).accepted
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def applicant
-      @applicants = @job.job_requests.map(&:user)
-      render json: @applicants, applicant: true, each_serializer: UserSerializer, status: 200
+      @job_requests = @job.job_requests
+      render json: @job_requests, each_serializer: JobRequestSerializer, base_url: request.base_url, status: 200
     end
 
     private

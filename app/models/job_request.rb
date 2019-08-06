@@ -38,7 +38,6 @@ class JobRequest < ApplicationRecord
   def hide_another_notif
     notifications = self.job.job_requests.map{|jr| jr.notifications}.flatten
     notifications.each do |notif|
-      debugger
       if !notif.notifable.eql?(self)
         notif.update(is_show: false)
       end
