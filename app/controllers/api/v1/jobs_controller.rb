@@ -155,6 +155,12 @@ module Api::V1
       render json: @job_requests, each_serializer: JobRequestSerializer, base_url: request.base_url, status: 200
     end
 
+    def promoted_jobs
+      # add filter is_promoted
+      @jobs = Job.is_promoted
+      render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
+    end
+
     private
 
     def set_job
@@ -170,7 +176,7 @@ module Api::V1
         params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
       end
 
-      params.require(:job).permit(:job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, :ownerable_type, :ownerable_id, :duration, skill_ids: [])
+      params.require(:job).permit(:job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, :ownerable_type, :ownerable_id, :duration, :is_promoted. skill_ids: [])
     end
   end
 end

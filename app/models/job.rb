@@ -24,6 +24,8 @@ class Job < ApplicationRecord
   scope :completed, -> { where(status: "completed") }
   scope :accepted,  -> { where(status: "on_progress") }
 
+  scope :is_promoted, -> (cond = true) { where(is_promoted: cond) }
+
   aasm :column => :status do
     state :pending, initial: true
     state :on_progress
