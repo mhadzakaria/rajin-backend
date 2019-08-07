@@ -60,6 +60,8 @@ Rails.application.routes.draw do
           get 'top_ten' => 'job_categories#top_ten'
         end
       end
+
+      resources :users, only: [:show]
       resources :school_partners
       resources :roles, only: [:index, :show]
       resources :coin_packages, only: [:index, :show]
