@@ -3,7 +3,7 @@ module Api::V1
     before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant, :set_to_promoted]
 
     def index
-      @jobs = Job.all
+      @jobs = Job.all.page(params[:page] || 1)
       respond_with @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
@@ -71,10 +71,10 @@ module Api::V1
           params[:search][:skill_ids] = params[:search][:skill_ids].split(',').map(&:to_i)
         end
 
-        @jobs = Job.filter(current_person, params[:search])
+        @jobs = Job.filter(current_person, params[:search]).page(params[:page] || 1)
         render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       else
-        @jobs = Job.all
+        @jobs = Job.all.page(params[:page] || 1)
         render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
       end
     end
@@ -99,13 +99,15 @@ module Api::V1
         @jobs = Job.where(ownerable_type: "User")
       end
 
+      @jobs = @jobs.page(params[:page] || 1)
+
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def verified_jobs
       verified_comp = Company.verified
       verified_user = verified_comp.map{ |vc| vc.users }.flatten
-      @jobs = Job.where(ownerable: verified_user)
+      @jobs = Job.where(ownerable: verified_user).page(params[:page] || 1)
 
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
@@ -118,35 +120,35 @@ module Api::V1
       uwithout_comp = User.where(company: nil)
       # @jobs = uwithout_comp.map{ |us| us.jobs }.flatten + @jobs
 
-      @jobs = Job.where(ownerable: unverifi_user + uwithout_comp)
+      @jobs = Job.where(ownerable: unverifi_user + uwithout_comp).page(params[:page] || 1)
 
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_pending
-      @jobs = current_person.jobs.pending
+      @jobs = current_person.jobs.pending.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_on_progress
-      @jobs = current_person.jobs.accepted
+      @jobs = current_person.jobs.accepted.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_completed
-      @jobs = current_person.jobs.completed
+      @jobs = current_person.jobs.completed.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def completed
       @job_requests = current_person.job_requests
-      @jobs = Job.where(id: @job_requests.map(&:job_id)).completed
+      @jobs = Job.where(id: @job_requests.map(&:job_id)).completed.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def accepted
       @job_requests = current_person.job_requests
-      @jobs = Job.where(id: @job_requests.map(&:job_id)).accepted
+      @jobs = Job.where(id: @job_requests.map(&:job_id)).accepted.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
@@ -157,7 +159,7 @@ module Api::V1
 
     def promoted_jobs
       # add filter is_promoted
-      @jobs = Job.is_promoted
+      @jobs = Job.is_promoted.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 

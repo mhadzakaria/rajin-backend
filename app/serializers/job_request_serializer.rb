@@ -24,6 +24,7 @@ class JobRequestSerializer < ApplicationSerializer
     data[:longitude]       = job.longitude
     data[:status]          = job.status
     data[:duration]        = job.duration
+    data[:is_promoted]     = job.is_promoted
     data[:job_category]    = category_detail(job_category)
     data[:required_skills] = skill_with_picture(skills)
     data[:pictures]        = picture_details_list(pictures)
