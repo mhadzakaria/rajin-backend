@@ -57,14 +57,16 @@ class UserSerializer < ApplicationSerializer
   end
 
   def skills(data = [])
-    skills = object.skills
+    level_skills = object.level_skills
 
-    skills.each do |skill|
+    level_skills.each do |level|
+      skill                  = level.skill
       picture                = skill.picture
       datum                  = {}
 
       datum[:id]             = skill.id
       datum[:name]           = skill.name
+      datum[:level]          = level.level
       datum[:logo_file_type] = picture.try(:file_type)
       datum[:logo_url]       = if picture.try(:file_url)
         base_url + picture.file_url.url

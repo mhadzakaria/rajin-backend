@@ -105,6 +105,7 @@ class Job < ApplicationRecord
       filter[:amount_eq]         = search[:amount] if search[:amount].present?
       filter[:full_address_cont] = search[:full_address] if search[:full_address].present?
       filter[:city_cont]         = search[:city] if search[:city].present?
+      filter[:is_promoted_eq]    = search[:is_promoted] if search[:is_promoted].present?
       filter[:state_cont]        = search[:state] if search[:state].present?
       filter[:country_cont]      = search[:country] if search[:country].present?
       filter[:postcode_eq]       = search[:postcode] if search[:postcode].present?

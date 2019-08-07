@@ -10,6 +10,11 @@ module Api::V1::Users
 
     def create
       build_resource(sign_up_params)
+
+      JSON.parse(params[:user][:skills].to_json).each do |skill_param|
+        skill = resource.level_skills.new(skill_param)
+      end
+
       resource.save
 
       if resource.persisted?
@@ -37,6 +42,15 @@ module Api::V1::Users
     end
 
     def update
+      new_skills = []
+      JSON.parse(params[:user][:skills].to_json).each do |skill_param|
+        skill = current_user.level_skills.find_or_initialize_by(skill_param.except('level'))
+        skill.level = skill_param['level']
+
+        new_skills << skill
+      end
+      current_user.level_skills = new_skills
+
       if current_user.update(account_update_params)
         if params[:picture].present?
           picture            = current_user.picture || current_user.build_picture
@@ -75,9 +89,9 @@ module Api::V1::Users
 
       def user_params
         # User skills
-        if params[:user][:skill_ids].present?
-          params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
-        end
+        # if params[:user][:skill_ids].present?
+        #   params[:user][:skill_ids] = params[:user][:skill_ids].split(',').map(&:to_i)
+        # end
         
         # Location Coordinate
         params[:user][:latitude]  = params[:user][:coordinates][:latitude] rescue 0.0
