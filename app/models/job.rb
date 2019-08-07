@@ -68,6 +68,21 @@ class Job < ApplicationRecord
 
       jobs = Job.all
 
+      if search[:verified].present?
+        if eval(search[:verified])
+          verified_comp = Company.verified
+          verified_user = verified_comp.map{ |vc| vc.users }.flatten
+
+          jobs = jobs.where(ownerable: verified_user)
+        else
+          unverifi_comp = Company.not_verified
+          unverifi_user = unverifi_comp.map{ |uc| uc.users }.flatten
+          uwithout_comp = User.where(company: nil)
+
+          jobs = jobs.where(ownerable: unverifi_user + uwithout_comp)
+        end
+      end
+
       # collect job id by skill ids
       search[:skill_ids].each do |skill|
         jobs.each do |job|
