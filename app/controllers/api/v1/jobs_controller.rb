@@ -1,6 +1,6 @@
 module Api::V1
   class JobsController < Api::BaseApiController
-    before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant]
+    before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant, :set_to_promoted]
 
     def index
       @jobs = Job.all
@@ -159,6 +159,11 @@ module Api::V1
       # add filter is_promoted
       @jobs = Job.is_promoted
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
+    end
+
+    def set_to_promoted
+      @job.update(is_promoted: true)
+      render json: @job, serialize: JobSerializer, base_url: request.base_url, status: 200
     end
 
     private

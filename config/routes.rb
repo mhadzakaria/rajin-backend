@@ -50,6 +50,7 @@ Rails.application.routes.draw do
           get "complete" => "jobs#complete"
           get "incomplete" => "jobs#incomplete"
           get "applicant"  => 'jobs#applicant'
+          get "set_to_promoted" => 'jobs#set_to_promoted'
         end
       end
 
