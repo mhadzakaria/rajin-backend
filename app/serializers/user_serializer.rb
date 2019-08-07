@@ -1,5 +1,5 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
 
   attribute :coin_balance,      if: :is_current_user
   attribute :notifications,     if: :is_current_user
@@ -164,6 +164,16 @@ class UserSerializer < ApplicationSerializer
 
   def count_of_offer_job
     object.jobs.where(status: "pending").count
+  end
+
+  def verified
+    company = object.company
+
+    if company.present?
+      company.status.eql?('Verified') || company.status.eql?('v')
+    else
+      false
+    end
   end
 
 end
