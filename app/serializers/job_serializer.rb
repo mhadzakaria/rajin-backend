@@ -1,5 +1,5 @@
 class JobSerializer < ApplicationSerializer
-  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :end_date, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail, :duration, :date_details
+  attributes :id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode, :state, :country, :start_date, :duration, :duration_type, :latitude, :longitude, :status, :job_category, :skills, :pictures, :chat_sessions, :job_owner_detail
 
   def skills(data = [])
     skills = object.skills
@@ -45,10 +45,6 @@ class JobSerializer < ApplicationSerializer
     owner = object.ownerable
 
     return user_details(owner)
-  end
-
-  def date_details
-    object.start_date.try(:strftime, "%B %Y, ").to_s + "#{object.duration} days."
   end
 
   def chat_sessions
