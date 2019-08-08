@@ -15,10 +15,6 @@ class UserSerializer < ApplicationSerializer
         next if picture.file_url.blank?
 
         data = {
-          :id               => picture.id,
-          :user_id          => picture.user_id,
-          :pictureable_id   => picture.pictureable_id,
-          :pictureable_type => picture.pictureable_type,
           :file_type        => picture.file_type,
           :file_url         => picture_details(picture.file_url)
         }
@@ -63,11 +59,11 @@ class UserSerializer < ApplicationSerializer
       picture                = skill.picture
       datum                  = {}
 
-      datum[:id]             = skill.id
-      datum[:name]           = skill.name
-      datum[:level]          = level.level
-      datum[:logo_file_type] = picture.try(:file_type)
-      datum[:logo_url]       = if picture.try(:file_url)
+      datum[:id]        = skill.id
+      datum[:name]      = skill.name
+      datum[:level]     = level.level
+      datum[:file_type] = picture.try(:file_type)
+      datum[:file_url]  = if picture.try(:file_url)
         base_url + picture.file_url.url
       else
         ''
@@ -81,16 +77,7 @@ class UserSerializer < ApplicationSerializer
   def avatar(data = {})
     picture = object.picture
 
-    if picture.present? && picture.file_url.present?
-      data[:id]               = picture.id
-      data[:user_id]          = picture.user_id
-      data[:pictureable_id]   = picture.pictureable_id
-      data[:pictureable_type] = picture.pictureable_type
-      data[:file_type]        = picture.file_type
-      data[:file_url]         = picture_details(picture.file_url)
-    end
-
-    return data
+    return picture.try(:file_url).present? ? base_url + picture.file_url.url : ''
   end
 
   def company_detail(data = {})

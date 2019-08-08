@@ -92,18 +92,15 @@ class ApplicationSerializer < ActiveModel::Serializer
 
   def picture_details(file_url)
     if file_url.present?
-      {
-        url: base_url + file_url.url,
-        thumb: {
-          url: base_url + file_url.thumb.url
-        }
-      }
+      base_url + file_url.url
     else
-      {}
+      ''
     end
   end
 
   def user_more_details(user, data = {})
+    file_url = user.picture.try(:file_url)
+
     data[:id]                     = user.id
     data[:nickname]               = user.nickname
     data[:first_name]             = user.first_name
@@ -122,7 +119,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     data[:user_type]              = user.user_type
     data[:verified]               = verified(user)
     data[:skills]                 = user.skills
-    data[:avatar]                 = avatar(user)
+    data[:avatar]                 = file_url.present? ? base_url + file_url.url : ''
     data[:company_detail]         = company_detail(user)
     data[:coin_balance]           = coin_balance(user)
     data[:count_of_completed_job] = count_of_completed_job(user)
@@ -186,18 +183,4 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  def avatar(user, data = {})
-    picture = user.picture
-
-    if picture.present? && picture.file_url.present?
-      data[:id]               = picture.id
-      data[:user_id]          = picture.user_id
-      data[:pictureable_id]   = picture.pictureable_id
-      data[:pictureable_type] = picture.pictureable_type
-      data[:file_type]        = picture.file_type
-      data[:file_url]         = picture_details(picture.file_url)
-    end
-
-    return data
-  end
 end

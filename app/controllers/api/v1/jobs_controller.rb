@@ -144,21 +144,23 @@ module Api::V1
 
     def my_job_on_progress
       if @user.present?
-        @jobs = @user.jobs.accepted.page(params[:page] || 1)
+        @jobs = @user.jobs
       else
-        @jobs = current_person.jobs.accepted.page(params[:page] || 1)
+        @jobs = current_person.jobs
       end
 
+      @jobs = @jobs.accepted.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_completed
       if @user.present?
-        @jobs = @user.jobs.completed.page(params[:page] || 1)
+        @jobs = @user.jobs
       else
-        @jobs = current_person.jobs.completed.page(params[:page] || 1)
+        @jobs = current_person.jobs
       end
 
+      @jobs = @jobs.completed.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
@@ -219,9 +221,9 @@ module Api::V1
     end
 
     def job_params
-      if params[:job][:skill_ids].present?
-        params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
-      end
+      # if params[:job][:skill_ids].present?
+      #   params[:job][:skill_ids] = params[:job][:skill_ids].split(',').map(&:to_i)
+      # end
 
       params.require(:job).permit(:job_category_id, :title, :description, :payment_term, :amount, :payment_type, :full_address, :city, :postcode,:state, :country, :start_date, :end_date, :latitude, :longitude, :status, :ownerable_type, :ownerable_id, :duration, :is_promoted, :duration_type, skill_ids: [])
     end

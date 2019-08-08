@@ -49,7 +49,9 @@ class JobRequest < ApplicationRecord
     # hide another job_requests chat_sessions
     job_requests = job_job_requests.map{|jr| jr.chat_session }.compact
     job_requests.each do |chat|
-      chat.update(status: 1)
+      if !chat.job_request.eql?(self)
+        chat.update(status: 1)
+      end
     end
   end
 
