@@ -37,7 +37,6 @@ Rails.application.routes.draw do
           get "verified_jobs" => 'jobs#verified_jobs'
           get "normal_jobs" => 'jobs#normal_jobs'
           get "filter_user_or_company" => 'jobs#filter_user_or_company'
-          get "pending" => 'jobs#pending'
           get "completed" => 'jobs#completed'
           get "accepted" => 'jobs#accepted'
           get 'my_job_pending' => 'jobs#my_job_pending'

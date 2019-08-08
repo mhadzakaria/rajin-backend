@@ -1,7 +1,6 @@
 class UserSerializer < ApplicationSerializer
   attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
 
-  attribute :coin_balance,      if: :is_not_current_user
   attribute :notifications,     if: :is_not_current_user
   attribute :role,              if: :is_not_current_user
   attribute :access_token,      if: :is_not_current_user
@@ -159,11 +158,14 @@ class UserSerializer < ApplicationSerializer
   end
 
   def count_of_completed_job
-    object.jobs.where(status: "completed").count
+    job_requests = object.job_requests.accepted
+    jobs = Job.where(id: job_requests.map(&:job_id)).completed
+
+    jobs.count
   end
 
   def count_of_offer_job
-    object.jobs.where(status: "pending").count
+    object.jobs.pending.count
   end
 
   def verified

@@ -1,6 +1,7 @@
 module Api::V1
   class JobsController < Api::BaseApiController
     before_action :set_job, only: [:show, :destroy, :update, :on_progress, :complete, :incomplete, :applicant, :set_to_promoted]
+    before_action :set_company_or_user, only: [:my_job_pending, :my_job_completed, :my_job_on_progress, :completed, :accepted]
 
     def index
       @jobs = Job.all.page(params[:page] || 1)
@@ -126,28 +127,43 @@ module Api::V1
     end
 
     def my_job_pending
-      @jobs = current_person.jobs.pending.page(params[:page] || 1)
+      if @user.present?
+        @jobs = @user.jobs.pending.page(params[:page] || 1)
+      else
+        @jobs = current_person.jobs.pending.page(params[:page] || 1)
+      end
+
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_on_progress
-      @jobs = current_person.jobs.accepted.page(params[:page] || 1)
+      if @user.present?
+        @jobs = @user.jobs.accepted.page(params[:page] || 1)
+      else
+        @jobs = current_person.jobs.accepted.page(params[:page] || 1)
+      end
+
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def my_job_completed
-      @jobs = current_person.jobs.completed.page(params[:page] || 1)
+      if @user.present?
+        @jobs = @user.jobs.completed.page(params[:page] || 1)
+      else
+        @jobs = current_person.jobs.completed.page(params[:page] || 1)
+      end
+
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def completed
-      @job_requests = current_person.job_requests
+      set_job_requests
       @jobs = Job.where(id: @job_requests.map(&:job_id)).completed.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 
     def accepted
-      @job_requests = current_person.job_requests
+      set_job_requests
       @jobs = Job.where(id: @job_requests.map(&:job_id)).accepted.page(params[:page] || 1)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
@@ -169,6 +185,24 @@ module Api::V1
     end
 
     private
+
+    def set_company_or_user
+      if params[:user_id]
+        @user = User.find(params[:user_id])
+      end
+
+      @user
+    end
+
+    def set_job_requests
+      if @user.present?
+        @job_requests = @user.job_requests.accepted
+      else
+        @job_requests = current_person.job_requests.accepted
+      end
+
+      @job_requests
+    end
 
     def set_job
       @job = Job.find(params[:id])
