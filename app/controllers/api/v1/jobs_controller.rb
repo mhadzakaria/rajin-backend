@@ -127,12 +127,18 @@ module Api::V1
     end
 
     def my_job_pending
-      if @user.present?
-        @jobs = @user.jobs.pending.page(params[:page] || 1)
+      if params[:company_id].present?
+        users = User.where(company_id: params[:company_id])
+        @jobs = Job.filter_user_or_company(users)
       else
-        @jobs = current_person.jobs.pending.page(params[:page] || 1)
+        if @user.present?
+          @jobs = @user.jobs
+        else
+          @jobs = current_person.jobs
+        end
       end
 
+      @jobs = @jobs.pending.page(params[:page] || 1).order(:created_at)
       render json: @jobs, each_serializer: JobSerializer, base_url: request.base_url, status: 200
     end
 

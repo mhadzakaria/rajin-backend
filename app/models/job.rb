@@ -123,11 +123,8 @@ class Job < ApplicationRecord
       return jobs
     end
 
-    def filter_user_or_company(users, jobs = [])
-      users.each do |user|
-        jobs += self.where(ownerable_type: "User", ownerable_id: user.id)
-      end
-      return jobs
+    def filter_user_or_company(users)
+      self.where(ownerable: users)
     end
 
     def filter_completed_jobs(jobs, result = [])

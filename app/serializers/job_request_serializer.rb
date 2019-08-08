@@ -45,7 +45,7 @@ class JobRequestSerializer < ApplicationSerializer
     job   = object.job
     owner = job.ownerable
 
-    return user_details(owner)
+    return user_more_details(owner)
   end
 
 end
