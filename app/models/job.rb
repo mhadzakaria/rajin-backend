@@ -20,6 +20,8 @@ class Job < ApplicationRecord
 
   paginates_per 10
 
+  default_scope { order(created_at: :desc) }
+
   scope :pending,   -> { where(status: "pending") }
   scope :completed, -> { where(status: "completed") }
   scope :accepted,  -> { where(status: "on_progress") }
@@ -120,7 +122,7 @@ class Job < ApplicationRecord
         jobs  = query.result.where(id: filtered_ids)
       end
 
-      return jobs.order(created_at: :desc)
+      return jobs
     end
 
     def filter_user_or_company(users)

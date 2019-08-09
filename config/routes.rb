@@ -81,6 +81,7 @@ Rails.application.routes.draw do
           get "accepted" => 'job_requests#accepted'
         end
       end
+      get 'reviews/user_reviews/:user_id', to: 'reviews#user_reviews', as: :user_reviews
 
       resources :chat_sessions, only: [:index, :create] do
         collection do
