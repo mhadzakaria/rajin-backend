@@ -66,7 +66,7 @@ class Job < ApplicationRecord
       filter             = {}
       filtered_skill_ids = []
 
-      jobs = Job.all
+      jobs = Job.pending
 
       if search[:verified].present?
         if eval(search[:verified])
@@ -120,11 +120,11 @@ class Job < ApplicationRecord
         jobs  = query.result.where(id: filtered_ids)
       end
 
-      return jobs
+      return jobs.order(created_at: :desc)
     end
 
     def filter_user_or_company(users)
-      self.where(ownerable: users)
+      self.where(ownerable: users).order(created_at: :desc)
     end
 
     def filter_completed_jobs(jobs, result = [])

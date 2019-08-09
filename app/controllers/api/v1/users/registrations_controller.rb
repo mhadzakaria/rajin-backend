@@ -43,13 +43,15 @@ module Api::V1::Users
 
     def update
       new_skills = []
-      JSON.parse(params[:user][:skills].to_json).each do |skill_param|
-        skill = current_user.level_skills.find_or_initialize_by(skill_param.except('level'))
-        skill.level = skill_param['level']
+      if params[:user][:skills].present?
+        JSON.parse(params[:user][:skills].to_json).each do |skill_param|
+          skill = current_user.level_skills.find_or_initialize_by(skill_param.except('level'))
+          skill.level = skill_param['level']
 
-        new_skills << skill
+          new_skills << skill
+        end
+        current_user.level_skills = new_skills
       end
-      current_user.level_skills = new_skills
 
       if current_user.update(account_update_params)
         if params[:picture].present?

@@ -13,7 +13,7 @@ module Api::V1
     end
 
     def user_notifications
-      @notifications = current_user.notifications.showable
+      @notifications = current_user.notifications.showable.order(created_at: :desc)
       render json: @notifications, each_serializer: NotificationSerializer, base_url: request.base_url, status: 200
     end
 

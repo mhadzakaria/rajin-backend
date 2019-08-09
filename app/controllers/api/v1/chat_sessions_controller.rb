@@ -24,14 +24,14 @@ module Api::V1
     end
 
     def pending
-      job_requests = current_user.job_requests.pending
-      @chat_sessions = ChatSession.where(job_request_id: job_requests.map(&:id))
+      my_chat = ChatSession.my_chat(current_user).open_chat
+      @chat_sessions = my_chat.select { |ch| ch.job_request.try(:status).eql?('pending') }
       respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
     end
 
     def confirmed
-      job_requests = current_user.job_requests.accepted
-      @chat_sessions = ChatSession.where(job_request_id: job_requests.map(&:id))
+      my_chat = ChatSession.my_chat(current_user).open_chat
+      @chat_sessions = my_chat.select { |ch| ch.job_request.try(:status).eql?('accepted') }
       respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
     end
 
