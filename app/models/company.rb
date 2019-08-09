@@ -3,10 +3,12 @@ class Company < ApplicationRecord
 
   has_one  :picture, as: :pictureable
   has_many :users
+  has_many :jobs, through: :users
 
   paginates_per 10
 
   scope :verified, -> { where(status: "v") }
+  scope :not_verified, -> { where.not(status: "v") }
 
   enum status: {"Pending" => "p", "Active" => "a", "Verified" => "v"}
 

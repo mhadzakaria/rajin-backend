@@ -1,5 +1,34 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
+
+  attribute :notifications,     if: :is_not_current_user
+  attribute :role,              if: :is_not_current_user
+  attribute :access_token,      if: :is_not_current_user
+  attribute :uuid,              if: :is_not_current_user
+  attribute :password,          if: :is_not_current_user
+  attribute :config,            if: :is_not_current_user
+  attribute :uploaded_pictures, if: :is_not_current_user
+
+  def uploaded_pictures(pictures = [])
+    if object.uploaded_pictures.present?
+      object.uploaded_pictures.each do |picture|
+        next if picture.file_url.blank?
+
+        data = {
+          :file_type        => picture.file_type,
+          :file_url         => picture_details(picture.file_url)
+        }
+
+        pictures << data
+      end
+    end
+
+    return pictures
+  end
+
+  def is_not_current_user
+    !@instance_options[:not_current_user]
+  end
 
   def password
     object.password || "Password not displayed"
@@ -23,16 +52,22 @@ class UserSerializer < ApplicationSerializer
   end
 
   def skills(data = [])
-    skills = object.skills
+    level_skills = object.level_skills
 
-    skills.each do |skill|
+    level_skills.each do |level|
+      skill                  = level.skill
       picture                = skill.picture
       datum                  = {}
 
-      datum[:id]             = skill.id
-      datum[:name]           = skill.name
-      datum[:logo_url]       = picture.try(:file_url).try(:url)
-      datum[:logo_file_type] = picture.try(:file_type)
+      datum[:id]        = skill.id
+      datum[:name]      = skill.name
+      datum[:level]     = level.level
+      datum[:file_type] = picture.try(:file_type)
+      datum[:file_url]  = if picture.try(:file_url)
+        base_url + picture.file_url.url
+      else
+        ''
+      end
       data << datum
     end
 
@@ -42,16 +77,7 @@ class UserSerializer < ApplicationSerializer
   def avatar(data = {})
     picture = object.picture
 
-    if picture.present?
-      data[:id]               = picture.id
-      data[:user_id]          = picture.user_id
-      data[:pictureable_id]   = picture.pictureable_id
-      data[:pictureable_type] = picture.pictureable_type
-      data[:file_type]        = picture.file_type
-      data[:file_url]         = picture.file_url
-    end
-
-    return data
+    return picture.try(:file_url).present? ? base_url + picture.file_url.url : ''
   end
 
   def company_detail(data = {})
@@ -69,7 +95,11 @@ class UserSerializer < ApplicationSerializer
       data[:country]      = company.country
       data[:latitude]     = company.latitude
       data[:longitude]    = company.longitude
-      data[:logo_url]     = picture.try(:file_url).try(:url)
+      data[:logo_url]     = if picture.try(:file_url)
+        base_url + picture.file_url.url
+      else
+        ''
+      end
     end
 
     return data
@@ -81,7 +111,7 @@ class UserSerializer < ApplicationSerializer
   end
 
   def notifications(data = [])
-    notifications = object.notifications
+    notifications = object.notifications.showable
 
     notifications.each do |notif|
       notification = {}
@@ -112,6 +142,27 @@ class UserSerializer < ApplicationSerializer
     end
 
     return data
+  end
+
+  def count_of_completed_job
+    job_requests = object.job_requests.accepted
+    jobs = Job.where(id: job_requests.map(&:job_id)).completed
+
+    jobs.count
+  end
+
+  def count_of_offer_job
+    object.jobs.pending.count
+  end
+
+  def verified
+    company = object.company
+
+    if company.present?
+      company.status.eql?('Verified') || company.status.eql?('v')
+    else
+      false
+    end
   end
 
 end

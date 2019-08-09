@@ -4,17 +4,17 @@ module Api::V1
 
     def show
       @notification.read
-      respond_with @notification, serializer: NotificationSerializer, status: 200
+      respond_with @notification, serializer: NotificationSerializer, base_url: request.base_url, status: 200
     end
 
     def destroy
       @notification.destroy
-      render json: @notification, serialize: NotificationSerializer, status: 204
+      render json: @notification, serialize: NotificationSerializer, base_url: request.base_url, status: 204
     end
 
     def user_notifications
-      @notifications = current_user.notifications
-      render json: @notifications, each_serializer: NotificationSerializer, status: 200
+      @notifications = current_user.notifications.showable.order(created_at: :desc)
+      render json: @notifications, each_serializer: NotificationSerializer, base_url: request.base_url, status: 200
     end
 
     private

@@ -8,7 +8,7 @@ module Api::V1::Mentors
     before_action :check_login_time, only: %i[show]
 
     def show
-      respond_with current_mentor, serializer: MentorSerializer, status: 200
+      respond_with current_mentor, serializer: MentorSerializer, base_url: request.base_url, status: 200
     end
 
     def create
@@ -18,7 +18,7 @@ module Api::V1::Mentors
         sign_in(resource_name, resource)
         resource.generate_access_token
         resource.save
-        render json: resource, serializer: MentorSerializer, status: 200
+        render json: resource, serializer: MentorSerializer, base_url: request.base_url, status: 200
       else
         render json: {message: "Unauthorized! Please check your username and password!"}, status: 401
       end

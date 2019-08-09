@@ -20,6 +20,12 @@ class Job < ApplicationRecord
 
   paginates_per 10
 
+  scope :pending,   -> { where(status: "pending") }
+  scope :completed, -> { where(status: "completed") }
+  scope :accepted,  -> { where(status: "on_progress") }
+
+  scope :is_promoted, -> (cond = true) { where(is_promoted: cond) }
+
   aasm :column => :status do
     state :pending, initial: true
     state :on_progress
@@ -57,11 +63,25 @@ class Job < ApplicationRecord
 
   class << self
     def filter(user, search)
-      filter                = {}
-      filtered_skill_ids    = []
-      filtered_distance_ids = []
+      filter             = {}
+      filtered_skill_ids = []
 
-      jobs = Job.all
+      jobs = Job.pending
+
+      if search[:verified].present?
+        if eval(search[:verified])
+          verified_comp = Company.verified
+          verified_user = verified_comp.map{ |vc| vc.users }.flatten
+
+          jobs = jobs.where(ownerable: verified_user)
+        else
+          unverifi_comp = Company.not_verified
+          unverifi_user = unverifi_comp.map{ |uc| uc.users }.flatten
+          uwithout_comp = User.where(company: nil)
+
+          jobs = jobs.where(ownerable: unverifi_user + uwithout_comp)
+        end
+      end
 
       # collect job id by skill ids
       search[:skill_ids].each do |skill|
@@ -73,17 +93,19 @@ class Job < ApplicationRecord
       end unless search[:skill_ids].blank?
 
       # collect job id by distance from user location
-      if filter[:distance].present?
-        filtered_distance_ids = jobs.near(user.coordinates, filter[:distance], units: :km).map(&:id)
+      coordinate = if search[:latitude].present? && search[:longitude].present?
+        [search[:latitude], search[:longitude]]
+      else
+        user.coordinates
       end
 
-      # filter job by skill ids and distance
-      filtered_ids               = filtered_skill_ids + filtered_distance_ids
+      jobs = jobs.near(coordinate, search[:distance] || 15, units: :km) if coordinate.present? && !coordinate.include?(0.0)
 
       # build ransack filter query (amount and specific location data)
       filter[:amount_eq]         = search[:amount] if search[:amount].present?
       filter[:full_address_cont] = search[:full_address] if search[:full_address].present?
       filter[:city_cont]         = search[:city] if search[:city].present?
+      filter[:is_promoted_eq]    = search[:is_promoted] if search[:is_promoted].present?
       filter[:state_cont]        = search[:state] if search[:state].present?
       filter[:country_cont]      = search[:country] if search[:country].present?
       filter[:postcode_eq]       = search[:postcode] if search[:postcode].present?
@@ -92,9 +114,24 @@ class Job < ApplicationRecord
       # filter job with ransack
       query = jobs.ransack(filter)
       # filter job to find match skill and distance location
-      jobs  = query.result.where(id: filtered_ids)
+      if filtered_skill_ids.blank?
+        jobs  = query.result
+      else
+        jobs  = query.result.where(id: filtered_ids)
+      end
 
-      return jobs
+      return jobs.order(created_at: :desc)
+    end
+
+    def filter_user_or_company(users)
+      self.where(ownerable: users).order(created_at: :desc)
+    end
+
+    def filter_completed_jobs(jobs, result = [])
+      jobs.each do |job|
+        result << job if job.completed?
+      end
+      return result
     end
   end
 
@@ -119,6 +156,14 @@ class Job < ApplicationRecord
 
   def get_category
     self.job_category.name
+  end
+
+  def applicant(user = nil)
+    if job_requests.accepted.present?
+      user = job_requests.accepted.last.user
+    end
+
+    user
   end
 
 end

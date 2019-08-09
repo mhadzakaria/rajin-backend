@@ -20,7 +20,12 @@
               <tr>
                 <th>Gender:</th>
                 <td><%= @user.gender %></td>
-              </tr>              <tr>
+              </tr>
+              <tr>
+                <th>Description:</th>
+                <td><%= @user.description unless @user.company.nil? %></td>
+              </tr>
+              <tr>
                 <th>User type:</th>
                 <td><%= @user.user_type %></td>
               </tr>
@@ -57,6 +62,18 @@
               <tr>
                 <th>Company:</th>
                 <td><%= @user.company.name unless @user.company.nil? %></td>
+              </tr>
+              <tr>
+                <th>Twitter:</th>
+                <td><%= @user.twitter unless @user.company.nil? %></td>
+              </tr>
+              <tr>
+                <th>Facebook:</th>
+                <td><%= @user.facebook unless @user.company.nil? %></td>
+              </tr>
+              <tr>
+                <th>LinkedIn:</th>
+                <td><%= @user.linkedin unless @user.company.nil? %></td>
               </tr>
             </tbody>
           </table>

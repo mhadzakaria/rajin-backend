@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def user_notifications
-    current_user.notifications
+    current_user.notifications.showable
   end
 
   def download_button

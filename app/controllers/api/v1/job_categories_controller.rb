@@ -33,6 +33,11 @@ module Api::V1
       render json: @job_category, serialize: JobCategorySerializer, status: 204
     end
 
+    def top_ten
+      @job_categories = JobCategory.top_ten
+      respond_with @job_categories, each_serializer: JobCategorySerializer, status: 200
+    end
+
     private
 
     def set_job_category

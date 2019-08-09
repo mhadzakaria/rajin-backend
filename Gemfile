@@ -59,6 +59,8 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 # For user role authorities
 gem "pundit"
 
+gem 'kaminari'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'letter_opener'

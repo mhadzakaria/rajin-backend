@@ -21,6 +21,9 @@ class User < ApplicationRecord
   has_many  :school_applies
   has_many  :chat_sessions
   has_many  :my_job_chat_sessions, foreign_key: :user_job_id, class_name: "ChatSession"
+  has_many  :level_skills, dependent: :destroy
+  has_many  :skills, through: :level_skills
+
 
   has_one   :subscription_package, dependent: :destroy
   has_one   :coin_balance, dependent: :destroy
@@ -35,6 +38,7 @@ class User < ApplicationRecord
   paginates_per 10
 
   before_create :generate_access_token
+  before_save   :check_limit_skill
   after_create  :generate_default_config
   before_validation :generate_nickname
 
@@ -47,6 +51,13 @@ class User < ApplicationRecord
       ),
       parent.table[:last_name]
     )
+  end
+
+  def check_limit_skill
+    if skill_ids.size > 10
+      errors.add(:skill, "maximum is 10 skills.")
+      throw(:abort)
+    end
   end
 
   def generate_access_token
@@ -69,11 +80,11 @@ class User < ApplicationRecord
     end
   end
 
-  def skills
-    skills = Skill.where(id: self.skill_ids)
+  # def skills
+  #   skills = Skill.where(id: self.skill_ids)
 
-    return skills
-  end
+  #   return skills
+  # end
 
   def self.export(users)
     attributes = ["email", "nickname", "first_name", "last_name", "phone_number", "date_of_birth", "gender", "full_address", "city", "postcode", "state", "country", "company_csv", "role_csv", "latitude", "longitude", "user_type", "skill_csv", "created_at", "updated_at"]

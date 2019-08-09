@@ -14,12 +14,12 @@
   <strong>Status:</strong>
   <%= @job_request.status %>
 </p>
-<div id="message-form" data-firebase='<%= raw({ apiKey: Rails.application.secrets.firebase_apiKey, authDomain: Rails.application.secrets.firebase_authDomain, databaseURL: Rails.application.secrets.firebase_databaseURL, projectId: Rails.application.secrets.firebase_projectId, storageBucket: Rails.application.secrets.firebase_storageBucket, messagingSenderId: Rails.application.secrets.firebase_messagingSenderId }.to_json) %>'>
-  <% if !@chat_session.status.eql?('closed') %>
+<!-- <div id="message-form" data-firebase='<%#= raw({ apiKey: Rails.application.secrets.firebase_apiKey, authDomain: Rails.application.secrets.firebase_authDomain, databaseURL: Rails.application.secrets.firebase_databaseURL, projectId: Rails.application.secrets.firebase_projectId, storageBucket: Rails.application.secrets.firebase_storageBucket, messagingSenderId: Rails.application.secrets.firebase_messagingSenderId }.to_json) %>'>
+  <%# if !@chat_session.status.eql?('closed') %>
     <input id="value-msg"></input>
     <button id="adding">Add</button>
-  <% end %>
-</div>
+  <%# end %>
+</div> -->
 <strong>Messages:</strong>
 <p id="messages"></p>
 
@@ -27,6 +27,10 @@
 <%= link_to 'Back', admin_job_requests_path, class: 'btn btn-secondary' %>
 
 <script>
+  function firebaseConfig() {
+    var config = $('#message-form').data('firebase');
+    return config
+  }
   firebase.initializeApp(firebaseConfig());
 
   var database = firebase.database();

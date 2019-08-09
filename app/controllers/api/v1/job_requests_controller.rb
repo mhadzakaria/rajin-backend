@@ -8,18 +8,18 @@ module Api::V1
 
     def index
       @job_requests = current_user.job_requests
-      respond_with @job_requests, each_serializer: JobRequestSerializer, status: 200
+      respond_with @job_requests, each_serializer: JobRequestSerializer, base_url: request.base_url, status: 200
     end
 
     def show
-      respond_with @job_request, serializer: JobRequestSerializer, status: 200
+      respond_with @job_request, serializer: JobRequestSerializer, base_url: request.base_url, status: 200
     end
 
     def create
       @job_request      = JobRequest.new(job_request_params)
       @job_request.user = current_user
       if @job_request.save
-        render json: @job_request, serialize: JobRequestSerializer, status: 200
+        render json: @job_request, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @job_request.errors.full_messages }, status: 422
       end
@@ -27,7 +27,7 @@ module Api::V1
 
     def update
       if @job_request.update(job_request_params)
-        render json: @job_request, serialize: JobRequestSerializer, status: 200
+        render json: @job_request, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
       else
         render json: { error: @job_request.errors.full_messages }, status: 422
       end
@@ -35,7 +35,7 @@ module Api::V1
 
     def destroy
       @job_request.destroy
-      render json: @job_request, serialize: JobRequestSerializer, status: 204
+      render json: @job_request, serialize: JobRequestSerializer, base_url: request.base_url, status: 204
     end
 
     def accept
@@ -46,7 +46,7 @@ module Api::V1
         @job_request.accept!
         @job_request.reload
         @job_request.reject_another_job_requests(accepted_message, rejected_message)
-        render json: @job_request, serialize: JobRequestSerializer, status: 200
+        render json: @job_request, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
       else
         render json: {message: "You already #{@job_request.status} this job request"}, status: 422
       end
@@ -61,10 +61,25 @@ module Api::V1
         @job_request.reject!
         @job_request.reload
         @job_request.rejected_message(rejected_message)
-        render json: @job_request, serialize: JobRequestSerializer, status: 200
+        render json: @job_request, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
       else
         render json: {message: "You already #{@job_request.status} this job request"}, status: 422
       end
+    end
+
+    def pending
+      @job_requests = current_person.job_requests.pending
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
+    end
+
+    def rejected
+      @job_requests = current_person.job_requests.rejected
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
+    end
+
+    def accepted
+      @job_requests = current_person.job_requests.accepted
+      render json: @job_requests, serialize: JobRequestSerializer, base_url: request.base_url, status: 200
     end
 
     private

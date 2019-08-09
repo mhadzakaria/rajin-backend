@@ -23,25 +23,11 @@ class ChatSessionSerializer < ApplicationSerializer
     data[:latitude]        = job.latitude
     data[:longitude]       = job.longitude
     data[:status]          = job.status
-    data[:job_category]    = job_category.name
-    data[:required_skills] = []
-    data[:pictures]        = []
-
-    skills.each do |skill|
-      datum = {}
-      datum[:name]    = skill.name
-      datum[:picture] = skill.picture.try(:file_url).try(:url)
-
-      data[:required_skills] << datum
-    end
-
-    pictures.each do |picture|
-      datum = {}
-      datum[:file_url]  = picture.file_url.url
-      datum[:file_type] = picture.file_type
-
-      data[:pictures] << datum
-    end
+    data[:duration]        = job.duration
+    data[:is_promoted]     = job.is_promoted
+    data[:job_category]    = category_detail(job_category)
+    data[:required_skills] = skill_with_picture(skills)
+    data[:pictures]        = picture_details_list(pictures)
 
     return data
   end

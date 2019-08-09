@@ -22,11 +22,11 @@ module Api::V1::Mentors
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           # sign_up(resource_name, resource)
-          render json: resource, serializer: MentorSerializer, status: 200 and return
+          render json: resource, serializer: MentorSerializer, base_url: request.base_url, status: 200 and return
         else
           set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
           expire_data_after_sign_in!
-          render json: resource, serializer: MentorSerializer, status: 200 and return
+          render json: resource, serializer: MentorSerializer, base_url: request.base_url, status: 200 and return
         end
       else
         clean_up_passwords resource
@@ -43,7 +43,7 @@ module Api::V1::Mentors
           picture.save
         end
 
-        render json: current_mentor, serializer: MentorSerializer, status: 200 and return
+        render json: current_mentor, serializer: MentorSerializer, base_url: request.base_url, status: 200 and return
       else
         clean_up_passwords current_mentor
         set_minimum_password_length

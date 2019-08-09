@@ -25,20 +25,42 @@ Rails.application.routes.draw do
         get "mentors/profile", to: "mentors/sessions#show", as: :mentor_profile
       end
 
+      resources :pictures, only: [] do
+        collection do
+          post 'upload'
+        end
+      end
+
       resources :jobs do
         collection do
           post "filter"
+          get "verified_jobs" => 'jobs#verified_jobs'
+          get "normal_jobs" => 'jobs#normal_jobs'
+          get "filter_user_or_company" => 'jobs#filter_user_or_company'
+          get "completed" => 'jobs#completed'
+          get "accepted" => 'jobs#accepted'
+          get 'my_job_pending' => 'jobs#my_job_pending'
+          get 'my_job_on_progress' => 'jobs#my_job_on_progress'
+          get 'my_job_completed' => 'jobs#my_job_completed'
         end
 
         member do
           get "on_progress" => "jobs#on_progress"
           get "complete" => "jobs#complete"
           get "incomplete" => "jobs#incomplete"
+          get "applicant"  => 'jobs#applicant'
+          get "set_to_promoted" => 'jobs#set_to_promoted'
         end
       end
 
       resources :skills
-      resources :job_categories
+      resources :job_categories do
+        collection do
+          get 'top_ten' => 'job_categories#top_ten'
+        end
+      end
+
+      resources :users, only: [:show]
       resources :school_partners
       resources :roles, only: [:index, :show]
       resources :coin_packages, only: [:index, :show]
@@ -52,9 +74,20 @@ Rails.application.routes.draw do
         resources :reviews, on: :member
         put "reject" => "job_requests#reject", on: :member
         put "accept" => "job_requests#accept", on: :member
+
+        collection do
+          get "pending"  => 'job_requests#pending'
+          get "rejected" => 'job_requests#rejected'
+          get "accepted" => 'job_requests#accepted'
+        end
       end
 
-      resources :chat_sessions, only: [:index]
+      resources :chat_sessions, only: [:index, :create] do
+        collection do
+          get 'pending' => 'chat_sessions#pending'
+          get 'confirmed' => 'chat_sessions#confirmed'
+        end
+      end
 
       resources :orders, only: [:index, :show, :create] do
         collection do
