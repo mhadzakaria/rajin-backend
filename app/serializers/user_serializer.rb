@@ -166,10 +166,14 @@ class UserSerializer < ApplicationSerializer
   end
 
   def average_rating
-    sum  = object.reviews.map(&:rate).sum
-    size = object.reviews.count
+    if object.reviews.present?
+      sum  = object.reviews.map(&:rate).sum
+      size = object.reviews.count
 
-    return (sum / size)
+      return (sum / size) rescue 0
+    else
+      return 0
+    end
   end
 
 end
