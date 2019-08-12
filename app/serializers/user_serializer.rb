@@ -1,5 +1,5 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :average_rating, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :average_rating, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin, :instagram
 
   attribute :notifications,     if: :is_not_current_user
   attribute :role,              if: :is_not_current_user

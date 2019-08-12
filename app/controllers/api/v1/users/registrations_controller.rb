@@ -49,6 +49,7 @@ module Api::V1::Users
           skill.level = skill_param['level']
 
           new_skills << skill
+          skill.save if !skill.new_record?
         end
         current_user.level_skills = new_skills
       end
@@ -107,7 +108,7 @@ module Api::V1::Users
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
                 :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, :description, :twitter,
-                :facebook, :linkedin, skill_ids: []
+                :facebook, :linkedin, :instagram, skill_ids: []
                ]
       end
   end

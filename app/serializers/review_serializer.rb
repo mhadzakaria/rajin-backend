@@ -1,5 +1,5 @@
 class ReviewSerializer < ApplicationSerializer
-  attributes :id, :user_id, :sender_id, :job_id, :comment, :rate, :job_detail, :job_owner_detail
+  attributes :id, :user_id, :sender_detail, :job_id, :comment, :rate, :job_detail
 
   def job_detail(data = {})
   	job          = object.job
@@ -32,10 +32,8 @@ class ReviewSerializer < ApplicationSerializer
     return data
   end
 
-  def job_owner_detail(data = {})
-    job   = object.job
-    owner = job.ownerable
-
-    return user_details(owner)
+  def sender_detail
+    user   = object.sender
+    return user_more_details(user)
   end
 end

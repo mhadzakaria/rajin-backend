@@ -50,6 +50,7 @@
                 <th>Twitter</th>
                 <th>Facebook</th>
                 <th>LinkedIn</th>
+                <th>Instagram</th>
                 <th></th>
               </tr>
             </thead>
@@ -121,6 +122,9 @@
                   </td>
                   <td>
                     <%= user.linkedin %>
+                  </td>
+                  <td>
+                    <%= user.instagram %>
                   </td>
                   <td nowrap>
                     <%= link_to 'Show', admin_user_path(user), class: 'btn btn-primary', data: { disable_with: 'Please wait...' } %>
