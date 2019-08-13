@@ -83,7 +83,7 @@ Rails.application.routes.draw do
       end
       get 'reviews/user_reviews/:user_id', to: 'reviews#user_reviews', as: :user_reviews
 
-      resources :chat_sessions, only: [:index, :create] do
+      resources :chat_sessions, only: [:index, :create, :show] do
         collection do
           get 'pending' => 'chat_sessions#pending'
           get 'confirmed' => 'chat_sessions#confirmed'

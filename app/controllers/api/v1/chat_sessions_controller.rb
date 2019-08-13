@@ -23,6 +23,11 @@ module Api::V1
       end
     end
 
+    def show
+      @chat_session = ChatSession.find(params[:id])
+      render json: @chat_session, serialize: ChatSessionSerializer, base_url: request.base_url, status: 200
+    end
+
     def pending
       my_chat = ChatSession.my_chat(current_user).open_chat
       @chat_sessions = my_chat.select { |ch| ch.job_request.try(:status).eql?('pending') }

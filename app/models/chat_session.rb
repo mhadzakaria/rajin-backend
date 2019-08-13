@@ -5,6 +5,8 @@ class ChatSession < ApplicationRecord
 
   enum status: { opened: 0, closed: 1 }
 
+  default_scope { order(created_at: :desc) }
+
   scope :owner_job,   ->(user_id) {where(user_job_id: user_id)}
   scope :normal_user, ->(user_id) {where(user_id: user_id)}
   scope :my_chat,     ->(user_id) {where("user_id = ? or user_job_id = ?", user_id, user_id)}

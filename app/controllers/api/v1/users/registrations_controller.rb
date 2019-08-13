@@ -54,6 +54,14 @@ module Api::V1::Users
         current_user.level_skills = new_skills
       end
 
+      if account_update_params[:password].present?
+        if current_user.valid_password?(account_update_params[:current_password])
+          params[:user].delete(:current_password)
+        else
+          render json: {errors: 'Wrong current password'}, status: 401 and return
+        end
+      end
+
       if current_user.update(account_update_params)
         if params[:picture].present?
           picture            = current_user.picture || current_user.build_picture
