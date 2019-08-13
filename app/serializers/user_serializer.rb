@@ -15,8 +15,9 @@ class UserSerializer < ApplicationSerializer
         next if picture.file_url.blank?
 
         data = {
-          :file_type        => picture.file_type,
-          :file_url         => picture_details(picture.file_url)
+          :id        => picture.id,
+          :file_type => picture.file_type,
+          :file_url  => picture_details(picture.file_url)
         }
 
         pictures << data
