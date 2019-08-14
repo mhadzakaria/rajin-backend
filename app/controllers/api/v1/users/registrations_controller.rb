@@ -11,8 +11,10 @@ module Api::V1::Users
     def create
       build_resource(sign_up_params)
 
-      JSON.parse(params[:user][:skills].to_json).each do |skill_param|
-        skill = resource.level_skills.new(skill_param)
+      if params[:user][:skills].present?
+          JSON.parse(params[:user][:skills].to_json).each do |skill_param|
+          skill = resource.level_skills.new(skill_param)
+        end
       end
 
       resource.save

@@ -5,9 +5,11 @@ class CompaniesSerializer < ApplicationSerializer
     object.jobs.pending.size
   end
 
-  def image(data = {})
+  def image(data = nil)
     picture = object.picture
     if picture.try(:file_url).present?
+      data = Hash.new
+
       data[:file_type] = picture.file_type
       data[:file_url]  = picture.file_url
     end

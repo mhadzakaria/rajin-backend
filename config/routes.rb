@@ -116,6 +116,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get "users/profile", to: "users/sessions#show", as: :user_profile
+    get 'after_reset_password_user', :to => 'users/passwords#after_reset_password_user'
   end
 
 
