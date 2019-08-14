@@ -19,5 +19,12 @@ module Api::V1
         render json: errors, status: 400
       end
     end
+
+    def destroy
+      @picture = Picture.find(params[:id])
+      @picture.destroy
+
+      render json: {message: "Picture deleted!"}
+    end
   end
 end
