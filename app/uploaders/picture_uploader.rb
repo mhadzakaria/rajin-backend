@@ -42,7 +42,11 @@ class PictureUploader < CarrierWave::Uploader::Base
   end
 
   def public_id
-    return "rajin_uploader/#{Rails.env}/#{model.pictureable_type.underscore.pluralize}/#{model.pictureable_id}-#{object_id}"
+    if model.pictureable_type.blank?
+      return "rajin_uploader/#{Rails.env}/global/#{model.user_id}-#{object_id}"
+    else
+      return "rajin_uploader/#{Rails.env}/#{model.pictureable_type.underscore.pluralize}/#{model.pictureable_id}-#{object_id}"
+    end
   end
 
   # Override the filename of the uploaded files:
