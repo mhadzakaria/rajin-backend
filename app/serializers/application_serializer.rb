@@ -1,8 +1,7 @@
 class ApplicationSerializer < ActiveModel::Serializer
   include ApplicationHelper
 
-  def user_details(user)
-    data    = {}
+  def user_details(user, data = {})
     avatar  = user.picture
     balance = user.coin_balance
 
@@ -28,6 +27,36 @@ class ApplicationSerializer < ActiveModel::Serializer
       end
       data[:coin_balance] = "#{balance.try(:amount).to_i} Coins"
     end
+
+    return data
+  end
+
+  def job_details(job, data = {})
+    skills       = job.skills
+    job_category = job.job_category
+    pictures     = job.pictures
+
+    data[:id]              = job.id
+    data[:title]           = job.title
+    data[:description]     = job.description
+    data[:payment_term]    = job.payment_term
+    data[:amount]          = job.amount
+    data[:payment_type]    = job.payment_type
+    data[:full_address]    = job.full_address
+    data[:city]            = job.city
+    data[:postcode]        = job.postcode
+    data[:state]           = job.state
+    data[:country]         = job.country
+    data[:start_date]      = job.start_date
+    data[:end_date]        = job.end_date
+    data[:latitude]        = job.latitude
+    data[:longitude]       = job.longitude
+    data[:status]          = job.status
+    data[:duration]        = job.duration
+    data[:is_promoted]     = job.is_promoted
+    data[:job_category]    = category_detail(job_category)
+    data[:required_skills] = skill_with_picture(skills)
+    data[:pictures]        = picture_details_list(pictures)
 
     return data
   end
@@ -98,30 +127,14 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  def user_more_details(user, data = {})
+  def user_more_details(user)
+    data     = user_details(user)
     file_url = user.picture.try(:file_url)
 
-    data[:id]                     = user.id
-    data[:nickname]               = user.nickname
-    data[:first_name]             = user.first_name
-    data[:last_name]              = user.last_name
-    data[:email]                  = user.email
-    data[:phone_number]           = user.phone_number
-    data[:date_of_birth]          = user.date_of_birth
-    data[:gender]                 = user.gender
-    data[:full_address]           = user.full_address
-    data[:city]                   = user.city
-    data[:postcode]               = user.postcode
-    data[:state]                  = user.state
-    data[:country]                = user.country
-    data[:latitude]               = user.latitude
-    data[:longitude]              = user.longitude
     data[:user_type]              = user.user_type
     data[:verified]               = verified(user)
     data[:skills]                 = skills(user)
-    data[:avatar]                 = file_url.present? ? base_url + file_url.url : ''
     data[:company_detail]         = company_detail(user)
-    data[:coin_balance]           = coin_balance(user)
     data[:average_rating]         = average_rating(user)
     data[:count_of_completed_job] = count_of_completed_job(user)
     data[:count_of_offer_job]     = count_of_offer_job(user)
