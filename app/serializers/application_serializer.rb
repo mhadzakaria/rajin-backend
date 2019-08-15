@@ -1,7 +1,7 @@
 class ApplicationSerializer < ActiveModel::Serializer
   include ApplicationHelper
 
-  def def user_details(user)
+  def user_details(user)
     data    = {}
     avatar  = user.picture
     balance = user.coin_balance
