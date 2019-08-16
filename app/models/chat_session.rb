@@ -23,4 +23,62 @@ class ChatSession < ApplicationRecord
 
     self.provider_url = firebase_key
   end
+
+  def store_chat(params, current_user)
+    # https://firebase.google.com/docs/database/rest/start
+    base_uri = "https://rajin-production.firebaseio.com/"
+    firebase = Firebase::Client.new(base_uri)
+    data = {
+      id: current_user.id,
+      name: current_user.full_name,
+      text: params[:text],
+      time: DateTime.now.strftime('%D %T %Z'),
+      read: true
+    }
+
+    response = firebase.push(provider_url, data)
+    if response.success? # => true
+
+      push_notif_chat(params, current_user)
+      # response.code # => 200
+      # response.body # => { 'name' => "-INOQPH-aV_psbk3ZXEX" }
+      # response.raw_body # => '{"name":"-INOQPH-aV_psbk3ZXEX"}'
+      result = {
+        status: response.code,
+        data:   data
+      }
+    else
+    end
+
+    return result
+  end
+
+  def push_notif_chat(params, current_user)
+    # https://devcenter.heroku.com/articles/procfile#procfile-naming-and-location
+    # https://devcenter.heroku.com/articles/delayed-job#setting-up-delayed-job
+    url  = "https://fcm.googleapis.com/fcm/send"
+    uri  = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    receiver = if current_user.id.eql?(user_id)
+      current_user.uuid
+    else
+      user_job.uuid
+    end
+
+    data = {
+      notification: {
+        title: current_user.full_name,
+        body: params[:text]
+      },
+      to: receiver
+    }
+
+    request = Net::HTTP::Post.new(uri.path, {'Content-Type' => 'application/json', 'Authorization' => "key=AIzaSyAvpGMIeNOekmmHxCx5WkdTm9w2zoQvLeI"})
+    request.body = data.to_json
+
+    response = http.request(request)
+  end
+
 end

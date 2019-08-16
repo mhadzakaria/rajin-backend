@@ -1,6 +1,7 @@
 module Api::V1
   class ChatSessionsController < Api::BaseApiController
     before_action :set_job_request, only: [:create]
+    before_action :set_chat_session, only: [:send_chat]
 
     def index
       @chat_sessions = ChatSession.normal_user(current_user.id).or(ChatSession.owner_job(current_user.id)).open_chat
@@ -40,7 +41,17 @@ module Api::V1
       respond_with @chat_sessions, each_serializer: ChatSessionSerializer, base_url: request.base_url, status: 200
     end
 
+    def send_chat
+      chat = @chat_session.store_chat(params, current_user)
+
+      render json: chat[:data], status: chat[:status]
+    end
+
     private
+
+    def set_chat_session
+      @chat_session = ChatSession.find(params[:id])
+    end
 
     def set_job_request
       @job_request = JobRequest.find(chat_session_params[:job_request_id])

@@ -87,6 +87,8 @@ Rails.application.routes.draw do
         collection do
           get 'pending' => 'chat_sessions#pending'
           get 'confirmed' => 'chat_sessions#confirmed'
+
+          post 'send_chat/:id' => 'chat_sessions#send_chat'
         end
       end
 
