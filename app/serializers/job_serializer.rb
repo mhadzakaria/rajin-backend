@@ -4,13 +4,10 @@ class JobSerializer < ApplicationSerializer
   def skills(data = [])
     skills = object.skills
     skills.each do |skill|
-      datum        = {}
-      # datum[:id]   = skill.id
-      datum[:name] = skill.name
-
-      if skill.picture.present? && skill.picture.file_url.present?
-        datum[:picture]         = picture_details(skill.picture.file_url)
-      end
+      datum           = {}
+      datum[:id]      = skill.id
+      datum[:name]    = skill.name
+      datum[:picture] = picture_details(skill.picture.try(:file_url))
 
       data << datum
     end

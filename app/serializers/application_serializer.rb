@@ -33,8 +33,8 @@ class ApplicationSerializer < ActiveModel::Serializer
   end
 
   def base_url
-    ""
-    # "#{@instance_options[:base_url]}"
+    # ""
+    "#{@instance_options[:base_url]}"
   end
 
   def category_detail(category)
@@ -60,12 +60,9 @@ class ApplicationSerializer < ActiveModel::Serializer
       datum = {}
       file_url = skill.picture.try(:file_url)
 
+      datum[:id]      = skill.id
       datum[:name]    = skill.name
-      datum[:picture] = if file_url.present?
-        base_url + file_url.url
-      else
-        ''
-      end
+      datum[:picture] = picture_details(file_url)
 
       result << datum
     end
@@ -78,11 +75,7 @@ class ApplicationSerializer < ActiveModel::Serializer
       datum = {}
       file_url = picture.file_url
 
-      datum[:file_url] = if file_url.present?
-        base_url + file_url.url
-      else
-        ''
-      end
+      datum[:file_url]  = picture_details(file_url)
       datum[:file_type] = picture.file_type
 
       result << datum
@@ -95,7 +88,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     if file_url.present?
       base_url + file_url.url
     else
-      ''
+      nil
     end
   end
 

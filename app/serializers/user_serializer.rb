@@ -64,11 +64,7 @@ class UserSerializer < ApplicationSerializer
       datum[:name]      = skill.name
       datum[:level]     = level.level
       datum[:file_type] = picture.try(:file_type)
-      datum[:file_url]  = if picture.try(:file_url)
-        base_url + picture.file_url.url
-      else
-        ''
-      end
+      datum[:file_url]  = picture_details(picture.try(:file_url))
       data << datum
     end
 
@@ -99,7 +95,7 @@ class UserSerializer < ApplicationSerializer
       data[:logo_url]     = if picture.try(:file_url)
         base_url + picture.file_url.url
       else
-        ''
+        nil
       end
     end
 
