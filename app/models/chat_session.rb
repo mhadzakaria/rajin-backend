@@ -64,7 +64,7 @@ class ChatSession < ApplicationRecord
     receiver = if current_user.id.eql?(user_id)
       user_job.uuid
     else
-      current_user.uuid
+      user.uuid
     end
 
     data = {
