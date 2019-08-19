@@ -30,14 +30,14 @@ class ChatSession < ApplicationRecord
     firebase = Firebase::Client.new(base_uri)
     data = {
       id: current_user.id,
-      name: current_user.full_name,
+      name: current_user.email,
       text: params[:text],
       time: DateTime.now.strftime('%D %T %Z'),
       read: true
     }
 
     response = firebase.push(provider_url, data)
-    if response.success? # => true
+    if response.success?
 
       push_notif_chat(params, current_user)
       # response.code # => 200
