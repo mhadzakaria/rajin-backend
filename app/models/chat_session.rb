@@ -39,7 +39,7 @@ class ChatSession < ApplicationRecord
     response = firebase.push(provider_url, data)
     if response.success?
 
-      push_notif_chat(params, current_user)
+      self.delay.push_notif_chat(params, current_user)
       # response.code # => 200
       # response.body # => { 'name' => "-INOQPH-aV_psbk3ZXEX" }
       # response.raw_body # => '{"name":"-INOQPH-aV_psbk3ZXEX"}'
@@ -62,9 +62,9 @@ class ChatSession < ApplicationRecord
     http.use_ssl = true
 
     receiver = if current_user.id.eql?(user_id)
-      current_user.uuid
-    else
       user_job.uuid
+    else
+      current_user.uuid
     end
 
     data = {
