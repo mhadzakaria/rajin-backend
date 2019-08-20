@@ -8,6 +8,16 @@ class UserSerializer < ApplicationSerializer
   attribute :password,          if: :is_not_current_user
   attribute :config,            if: :is_not_current_user
   attribute :uploaded_pictures, if: :is_not_current_user
+  attribute :password_firebase, if: :is_not_current_user
+
+  def password_firebase
+    firebasePassword = object.password_firebase
+    if firebasePassword.blank?
+      firebasePassword = generate_password_firebase(true)
+    end
+
+    firebasePassword
+  end
 
   def uploaded_pictures(pictures = [])
     if object.uploaded_pictures.present?
