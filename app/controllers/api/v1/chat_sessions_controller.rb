@@ -44,7 +44,11 @@ module Api::V1
     def send_chat
       chat = @chat_session.store_chat(params, current_user)
 
-      render json: chat[:data], status: chat[:status]
+      if chat[:status].eql?("200")
+        render json: chat[:data], status: chat[:status]
+      else
+        render json: { error: chat[:data] }, status: chat[:status]
+      end
     end
 
     private
