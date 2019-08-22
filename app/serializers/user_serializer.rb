@@ -13,7 +13,7 @@ class UserSerializer < ApplicationSerializer
   def password_firebase
     firebasePassword = object.password_firebase
     if firebasePassword.blank?
-      firebasePassword = generate_password_firebase(true)
+      firebasePassword = object.generate_password_firebase(true)
     end
 
     firebasePassword
