@@ -32,7 +32,7 @@ class ChatSession < ApplicationRecord
       id: current_user.id,
       name: current_user.email,
       text: params[:text],
-      read: true,
+      read: false,
       time: DateTime.now.strftime('%D %T %Z')
     }
     base_uri   = Rails.application.secrets.firebase_url
