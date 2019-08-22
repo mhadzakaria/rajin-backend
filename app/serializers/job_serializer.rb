@@ -35,8 +35,12 @@ class JobSerializer < ApplicationSerializer
     return user_details(owner)
   end
 
-  def chat_sessions
-    object.chat_sessions.open_chat
+  def chat_sessions(chat = nil)
+    if !current_user.eql?(object.ownerable)
+      chat = object.chat_sessions.open_chat.find_by(user: current_user)
+    end
+
+    chat
   end
 
 end
