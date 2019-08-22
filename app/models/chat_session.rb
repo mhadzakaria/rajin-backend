@@ -50,7 +50,7 @@ class ChatSession < ApplicationRecord
     response     = http.request(request)
 
     if response.code.eql?("200")
-      self.delay.push_notif_chat(params, current_user)
+      self.delay.push_notif_chat(params, current_user, data)
 
       result = {
         status: response.code,
@@ -73,8 +73,8 @@ class ChatSession < ApplicationRecord
     details_1 = user_details(user_1["refreshToken"])
     details_2 = user_details(user_2["refreshToken"])
     data      = {
-      "#{provider_url}" => {
-        participants: {
+      # "#{provider_url}" => {
+      #   participants: {
           details_1["user_id"] => {
             name: user.full_name,
             email: user.email
@@ -83,11 +83,12 @@ class ChatSession < ApplicationRecord
             name: user_job.full_name,
             email: user_job.email
           }
-        }
-      }
+      #   }
+      # }
     }
     base_uri = Rails.application.secrets.firebase_url
-    url      = "#{base_uri}chats.json"
+    # url      = "#{base_uri}chats.json"
+    url      = "#{base_uri}chats/#{provider_url}/participants.json"
     uri      = URI(url)
 
 
@@ -108,6 +109,9 @@ class ChatSession < ApplicationRecord
         status: response.code,
         data:   response.message
       }
+
+      self.errors.add(:firebase_error, ": #{response.message}")
+      raise ActiveRecord::Rollback
     end
 
     puts result
@@ -178,7 +182,7 @@ class ChatSession < ApplicationRecord
     JSON.parse(response.body)
   end
 
-  def push_notif_chat(params, current_user)
+  def push_notif_chat(params, current_user, message)
     # https://devcenter.heroku.com/articles/procfile#procfile-naming-and-location
     # https://devcenter.heroku.com/articles/delayed-job#setting-up-delayed-job
     receiver = if current_user.id.eql?(user_id)
@@ -188,6 +192,10 @@ class ChatSession < ApplicationRecord
     end
 
     data = {
+      data: {
+        id: id,
+        message: message
+      },
       notification: {
         title: current_user.full_name,
         body: params[:text]
