@@ -39,7 +39,7 @@ class User < ApplicationRecord
 
   before_create :generate_access_token
   before_save   :check_limit_skill
-  after_create  :generate_default_config
+  after_create  :generate_default_config, :generate_password_firebase
   before_validation :generate_nickname
 
   ransacker :full_name do |parent|
@@ -62,6 +62,12 @@ class User < ApplicationRecord
 
   def generate_access_token
     self.access_token = SecureRandom.hex(16)
+  end
+
+  def generate_password_firebase(blank_password = false)
+    self.password_firebase = SecureRandom.hex(16)
+
+    save if blank_password
   end
 
   def full_name

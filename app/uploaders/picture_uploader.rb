@@ -2,6 +2,8 @@ class PictureUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+  # include Cloudinary::CarrierWave
+
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -38,6 +40,14 @@ class PictureUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     %w(jpg jpeg gif png)
   end
+
+  # def public_id
+  #   if model.pictureable_type.blank?
+  #     return "rajin_uploader/#{Rails.env}/global/#{model.user_id}-#{object_id}"
+  #   else
+  #     return "rajin_uploader/#{Rails.env}/#{model.pictureable_type.underscore.pluralize}/#{model.pictureable_id}-#{object_id}"
+  #   end
+  # end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

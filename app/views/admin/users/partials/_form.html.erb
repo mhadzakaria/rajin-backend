@@ -221,6 +221,17 @@
         </fieldset>
 
         <fieldset>
+          <div class="form-group row">
+            <div class="col-md-2">
+              <%= form.label 'instagram_url', class: 'form-label' %>
+            </div>
+            <div class="col-md-10">
+              <%= form.text_field :instagram, class: 'form-control', type: 'text' %>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
           <div class="card card-default">
             <div class="card-header">Select Location</div>
             <div class="card-body">

@@ -15,8 +15,18 @@ class NotificationSerializer < ApplicationSerializer
         :job_detail         => job_detail,
         :job_request_status => job_request_status,
         :job_applier_detail => job_applier_detail,
-        :job_owner_detail   => job_owner_detail
+        :job_owner_detail   => job_owner_detail,
+        :chat_sessions      => chat_sessions(object.notifable)
       }
+    end
+
+    data
+  end
+
+  def chat_sessions(job_request, data = nil)
+    chat_sessions = job_request.chat_session
+    if !chat_sessions.blank?
+      data = chat_sessions
     end
 
     data
@@ -49,6 +59,7 @@ class NotificationSerializer < ApplicationSerializer
     data[:job_category]    = category_detail(job_category)
     data[:required_skills] = skill_with_picture(skills)
     data[:pictures]        = picture_details_list(pictures)
+
 
     return data
   end
