@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: drso37ued
+  api_key: '445312665614413'
+  api_secret: 8Mf1A9z60Kt8fmcpyAwSttpQgS4
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: drso37ued
+  api_key: '445312665614413'
+  api_secret: 8Mf1A9z60Kt8fmcpyAwSttpQgS4
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: drso37ued
+  api_key: '445312665614413'
+  api_secret: 8Mf1A9z60Kt8fmcpyAwSttpQgS4
+  enhance_image_tag: true
+  static_file_support: false

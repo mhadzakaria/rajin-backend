@@ -23,7 +23,7 @@
               </tr>
               <tr>
                 <th>Description:</th>
-                <td><%= @user.description unless @user.company.nil? %></td>
+                <td><%= @user.description %></td>
               </tr>
               <tr>
                 <th>User type:</th>
@@ -65,15 +65,19 @@
               </tr>
               <tr>
                 <th>Twitter:</th>
-                <td><%= @user.twitter unless @user.company.nil? %></td>
+                <td><%= @user.twitter %></td>
               </tr>
               <tr>
                 <th>Facebook:</th>
-                <td><%= @user.facebook unless @user.company.nil? %></td>
+                <td><%= @user.facebook %></td>
               </tr>
               <tr>
                 <th>LinkedIn:</th>
-                <td><%= @user.linkedin unless @user.company.nil? %></td>
+                <td><%= @user.linkedin %></td>
+              </tr>
+              <tr>
+                <th>Instagram:</th>
+                <td><%= @user.instagram %></td>
               </tr>
             </tbody>
           </table>

@@ -1,5 +1,5 @@
 class UserSerializer < ApplicationSerializer
-  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin
+  attributes :id, :nickname, :first_name, :last_name, :email, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, :longitude, :user_type, :access_token, :uuid, :password, :config, :verified, :skills, :avatar, :company_detail, :coin_balance, :average_rating, :notifications, :role, :count_of_completed_job, :count_of_offer_job, :description, :twitter, :facebook, :linkedin, :instagram
 
   attribute :notifications,     if: :is_not_current_user
   attribute :role,              if: :is_not_current_user
@@ -8,6 +8,16 @@ class UserSerializer < ApplicationSerializer
   attribute :password,          if: :is_not_current_user
   attribute :config,            if: :is_not_current_user
   attribute :uploaded_pictures, if: :is_not_current_user
+  attribute :password_firebase, if: :is_not_current_user
+
+  def password_firebase
+    firebasePassword = object.password_firebase
+    if firebasePassword.blank?
+      firebasePassword = object.generate_password_firebase(true)
+    end
+
+    firebasePassword
+  end
 
   def uploaded_pictures(pictures = [])
     if object.uploaded_pictures.present?
@@ -15,8 +25,9 @@ class UserSerializer < ApplicationSerializer
         next if picture.file_url.blank?
 
         data = {
-          :file_type        => picture.file_type,
-          :file_url         => picture_details(picture.file_url)
+          :id        => picture.id,
+          :file_type => picture.file_type,
+          :file_url  => picture_details(picture.file_url)
         }
 
         pictures << data
@@ -63,11 +74,7 @@ class UserSerializer < ApplicationSerializer
       datum[:name]      = skill.name
       datum[:level]     = level.level
       datum[:file_type] = picture.try(:file_type)
-      datum[:file_url]  = if picture.try(:file_url)
-        base_url + picture.file_url.url
-      else
-        ''
-      end
+      datum[:file_url]  = picture_details(picture.try(:file_url))
       data << datum
     end
 
@@ -98,7 +105,7 @@ class UserSerializer < ApplicationSerializer
       data[:logo_url]     = if picture.try(:file_url)
         base_url + picture.file_url.url
       else
-        ''
+        nil
       end
     end
 
@@ -162,6 +169,17 @@ class UserSerializer < ApplicationSerializer
       company.status.eql?('Verified') || company.status.eql?('v')
     else
       false
+    end
+  end
+
+  def average_rating
+    if object.reviews.present?
+      sum  = object.reviews.map(&:rate).sum
+      size = object.reviews.count
+
+      return (sum / size) rescue 0
+    else
+      return 0
     end
   end
 

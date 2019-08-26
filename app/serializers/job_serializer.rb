@@ -4,13 +4,10 @@ class JobSerializer < ApplicationSerializer
   def skills(data = [])
     skills = object.skills
     skills.each do |skill|
-      datum        = {}
-      # datum[:id]   = skill.id
-      datum[:name] = skill.name
-
-      if skill.picture.present? && skill.picture.file_url.present?
-        datum[:picture]         = picture_details(skill.picture.file_url)
-      end
+      datum           = {}
+      datum[:id]      = skill.id
+      datum[:name]    = skill.name
+      datum[:picture] = picture_details(skill.picture.try(:file_url))
 
       data << datum
     end
@@ -38,8 +35,12 @@ class JobSerializer < ApplicationSerializer
     return user_details(owner)
   end
 
-  def chat_sessions
-    object.chat_sessions.open_chat
+  def chat_sessions(chat = nil)
+    if !current_user.eql?(object.ownerable)
+      chat = object.chat_sessions.open_chat.find_by(user: current_user)
+    end
+
+    chat
   end
 
 end

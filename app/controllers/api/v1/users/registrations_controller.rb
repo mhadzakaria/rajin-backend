@@ -11,8 +11,10 @@ module Api::V1::Users
     def create
       build_resource(sign_up_params)
 
-      JSON.parse(params[:user][:skills].to_json).each do |skill_param|
-        skill = resource.level_skills.new(skill_param)
+      if params[:user][:skills].present?
+          JSON.parse(params[:user][:skills].to_json).each do |skill_param|
+          skill = resource.level_skills.new(skill_param)
+        end
       end
 
       resource.save
@@ -49,8 +51,17 @@ module Api::V1::Users
           skill.level = skill_param['level']
 
           new_skills << skill
+          skill.save if !skill.new_record?
         end
         current_user.level_skills = new_skills
+      end
+
+      if account_update_params[:password].present?
+        if current_user.valid_password?(account_update_params[:current_password])
+          params[:user].delete(:current_password)
+        else
+          render json: {errors: 'Wrong current password'}, status: 401 and return
+        end
       end
 
       if current_user.update(account_update_params)
@@ -107,7 +118,7 @@ module Api::V1::Users
 
         return [:nickname, :first_name, :last_name, :phone_number, :date_of_birth, :gender, :full_address, :city, :postcode, :state, :country, :latitude, 
                 :longitude, :user_type, :access_token, :email, :password, :password_confirmation, :current_password, :uuid, :description, :twitter,
-                :facebook, :linkedin, skill_ids: []
+                :facebook, :linkedin, :instagram, skill_ids: []
                ]
       end
   end

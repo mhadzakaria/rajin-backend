@@ -25,7 +25,7 @@ Rails.application.routes.draw do
         get "mentors/profile", to: "mentors/sessions#show", as: :mentor_profile
       end
 
-      resources :pictures, only: [] do
+      resources :pictures, only: [:destroy] do
         collection do
           post 'upload'
         end
@@ -81,11 +81,14 @@ Rails.application.routes.draw do
           get "accepted" => 'job_requests#accepted'
         end
       end
+      get 'reviews/user_reviews/:user_id', to: 'reviews#user_reviews', as: :user_reviews
 
-      resources :chat_sessions, only: [:index, :create] do
+      resources :chat_sessions, only: [:index, :create, :show] do
         collection do
           get 'pending' => 'chat_sessions#pending'
           get 'confirmed' => 'chat_sessions#confirmed'
+
+          post 'send_chat/:id' => 'chat_sessions#send_chat'
         end
       end
 
@@ -115,6 +118,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get "users/profile", to: "users/sessions#show", as: :user_profile
+    get 'after_reset_password_user', :to => 'users/passwords#after_reset_password_user'
   end
 
 

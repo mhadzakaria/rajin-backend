@@ -36,6 +36,11 @@ module Api::V1
       render json: @review, serialize: ReviewSerializer, base_url: request.base_url, status: 204
     end
 
+    def user_reviews
+      @reviews = Review.where(user_id: params[:user_id])
+      respond_with @reviews, each_serializer: ReviewSerializer, base_url: request.base_url, status: 200
+    end
+
     private
 
     def set_review

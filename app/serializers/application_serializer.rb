@@ -33,6 +33,7 @@ class ApplicationSerializer < ActiveModel::Serializer
   end
 
   def base_url
+    # ""
     "#{@instance_options[:base_url]}"
   end
 
@@ -59,12 +60,9 @@ class ApplicationSerializer < ActiveModel::Serializer
       datum = {}
       file_url = skill.picture.try(:file_url)
 
+      datum[:id]      = skill.id
       datum[:name]    = skill.name
-      datum[:picture] = if file_url.present?
-        base_url + file_url.url
-      else
-        ''
-      end
+      datum[:picture] = picture_details(file_url)
 
       result << datum
     end
@@ -77,11 +75,7 @@ class ApplicationSerializer < ActiveModel::Serializer
       datum = {}
       file_url = picture.file_url
 
-      datum[:file_url] = if file_url.present?
-        base_url + file_url.url
-      else
-        ''
-      end
+      datum[:file_url]  = picture_details(file_url)
       datum[:file_type] = picture.file_type
 
       result << datum
@@ -94,7 +88,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     if file_url.present?
       base_url + file_url.url
     else
-      ''
+      nil
     end
   end
 
@@ -118,18 +112,73 @@ class ApplicationSerializer < ActiveModel::Serializer
     data[:longitude]              = user.longitude
     data[:user_type]              = user.user_type
     data[:verified]               = verified(user)
-    data[:skills]                 = user.skills
+    data[:skills]                 = skills(user)
     data[:avatar]                 = file_url.present? ? base_url + file_url.url : ''
     data[:company_detail]         = company_detail(user)
     data[:coin_balance]           = coin_balance(user)
+    data[:average_rating]         = average_rating(user)
     data[:count_of_completed_job] = count_of_completed_job(user)
     data[:count_of_offer_job]     = count_of_offer_job(user)
     data[:description]            = user.description
     data[:twitter]                = user.twitter
     data[:facebook]               = user.facebook
     data[:linkedin]               = user.linkedin
+    data[:instagram]              = user.instagram
+    data[:uploaded_pictures]      = uploaded_pictures(user)
 
     return data
+  end
+
+  def average_rating(user)
+    if user.reviews.present?
+      sum  = user.reviews.map(&:rate).sum
+      size = user.reviews.count
+
+      return (sum / size) rescue 0
+    else
+      return 0
+    end
+  end
+
+  def skills(user, data = [])
+    level_skills = user.level_skills
+
+    level_skills.each do |level|
+      skill                  = level.skill
+      picture                = skill.picture
+      datum                  = {}
+
+      datum[:id]        = skill.id
+      datum[:name]      = skill.name
+      datum[:level]     = level.level
+      datum[:file_type] = picture.try(:file_type)
+      datum[:file_url]  = if picture.try(:file_url)
+        base_url + picture.file_url.url
+      else
+        ''
+      end
+      data << datum
+    end
+
+    return data
+  end
+
+  def uploaded_pictures(user, pictures = [])
+    if user.uploaded_pictures.present?
+      user.uploaded_pictures.each do |picture|
+        next if picture.file_url.blank?
+
+        data = {
+          :id        => picture.id,
+          :file_type => picture.file_type,
+          :file_url  => picture_details(picture.file_url)
+        }
+
+        pictures << data
+      end
+    end
+
+    return pictures
   end
 
   def company_detail(user, data = {})

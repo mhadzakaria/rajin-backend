@@ -59,7 +59,13 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 # For user role authorities
 gem "pundit"
 
+# pagination
 gem 'kaminari'
+
+# for background process
+gem 'delayed_job_active_record'
+
+gem 'firebase'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -28,7 +28,7 @@ class JobRequestSerializer < ApplicationSerializer
     data[:job_category]    = category_detail(job_category)
     data[:required_skills] = skill_with_picture(skills)
     data[:pictures]        = picture_details_list(pictures)
-
+    
     return data
   end
 
