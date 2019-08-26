@@ -78,6 +78,15 @@ class ApplicationPolicy
   end
 
   def role_attributes
-    return user_role.try(:authorities) || {}
+    new_authorities = {}
+    user_role.try(:authorities).each do |key, val|
+      new_authorities[key.to_s] = {}
+
+      val.each do |key1, val1|
+        new_authorities[key.to_s][key1.to_s] = val1
+      end
+    end if !user_role.try(:authorities).keys.blank?
+
+    return new_authorities || {}
   end
 end
