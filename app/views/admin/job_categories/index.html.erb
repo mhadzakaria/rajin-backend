@@ -36,9 +36,8 @@
                <% @job_categories.each do |job_category| %>
                 <tr>
                   <td><%= job_category.name %></td>
-                  <td><%= job_category.parent_id %></td>
+                  <td><%= job_category.parent.try(:name) %></td>
                   <td>
-                    <%#= link_to 'Show', admin_job_category_path(job_category), class: 'btn btn-primary' %>
                     <%= link_to 'Edit', edit_admin_job_category_path(job_category), class: 'btn btn-info'%>
                     <%= link_to 'Destroy', admin_job_category_path(job_category), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                   </td>

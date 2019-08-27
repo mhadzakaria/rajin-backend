@@ -1,7 +1,7 @@
 class JobCategory < ApplicationRecord
   has_many :jobs
   has_many :childs, foreign_key: :parent_id, class_name: 'JobCategory'
-  belongs_to :parent, class_name: 'JobCategory'
+  belongs_to :parent, class_name: 'JobCategory', optional: true
 
   paginates_per 10
 
