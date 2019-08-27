@@ -73,21 +73,16 @@ class ChatSession < ApplicationRecord
     details_1 = user_details(user_1["refreshToken"])
     details_2 = user_details(user_2["refreshToken"])
     data      = {
-      # "#{provider_url}" => {
-      #   participants: {
-          details_1["user_id"] => {
-            name: user.full_name,
-            email: user.email
-          },
-          details_2["user_id"] => {
-            name: user_job.full_name,
-            email: user_job.email
-          }
-      #   }
-      # }
+      details_1["user_id"] => {
+        name: user.full_name,
+        email: user.email
+      },
+      details_2["user_id"] => {
+        name: user_job.full_name,
+        email: user_job.email
+      }
     }
     base_uri = Rails.application.secrets.firebase_url
-    # url      = "#{base_uri}chats.json"
     url      = "#{base_uri}chats/#{provider_url}/participants.json"
     uri      = URI(url)
 
