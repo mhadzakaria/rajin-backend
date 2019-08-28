@@ -124,3 +124,4 @@ function setStepSize(array) {
     stepSizeValue = 100
   };
 }
+;
