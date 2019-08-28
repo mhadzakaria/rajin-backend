@@ -1,8 +1,10 @@
 function initChart1() {
   // chart 1 dashboard page
   var chart1 = document.getElementById('chartjs-barchart');
-
+  var jobRequestsMax = Math.max.apply(null, $(chart1).data("job-requests"));
+  var jobsMax = Math.max.apply(null, $(chart1).data("jobs"));
   var barctx = chart1.getContext('2d');
+
   var barData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', "August", "September", "October", "November", "December"],
     datasets: [{
@@ -21,6 +23,14 @@ function initChart1() {
   var barOptions = {
     legend: {
       display: true
+    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                min: 0,
+                stepSize: setStepSize([jobsMax, jobRequestsMax])
+            }
+        }]
     }
   };
 
@@ -34,6 +44,9 @@ function initChart1() {
 function initChart2() {
   // chart 2 dashboard page
   var chart2 = $('#chart-splinev2');
+  var jobRequestsMax = Math.max.apply(null, $(chart2).data("job-requests"));
+  var jobsMax = Math.max.apply(null, $(chart2).data("jobs"));
+  var usersMax = Math.max.apply(null, $(chart2).data("users"));
   var datav2 = [
     {
       "label": "Users",
@@ -75,7 +88,7 @@ function initChart2() {
     },
     tooltip: true,
     tooltipOpts: {
-      content: function(label, x, y) { return x + ' : ' + y; }
+      content: function(label, x, y) { return label + ' : ' + y; }
     },
     xaxis: {
       tickColor: '#fcfcfc',
@@ -86,6 +99,7 @@ function initChart2() {
       // max: 100, // optional: use it for a clear represetation
       tickColor: '#eee',
       //position: 'right' or 'left',
+      tickSize: setStepSize([jobsMax, jobRequestsMax, usersMax]),
       tickFormatter: function(v) {
         return v /* + ' visitors'*/ ;
       }
@@ -94,6 +108,21 @@ function initChart2() {
   };
 
   $.plot($('#chart-splinev2'), datav2, chart2Options);
+}
+
+function setStepSize(array) {
+  var stepSizeValue;
+  if (Math.max.apply(null, array) < 10) {
+    stepSizeValue = 1
+  } else if (Math.max.apply(null, array) < 50) {
+    stepSizeValue = 5
+  } else if (Math.max.apply(null, array) < 100) {
+    stepSizeValue = 10
+  } else if (Math.max.apply(null, array) < 500) {
+    stepSizeValue = 50
+  } else {
+    stepSizeValue = 100
+  };
 }
 
 $(document).ready(function() {

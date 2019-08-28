@@ -4,11 +4,11 @@ module Admin
     def home
       time_range        = Time.now.beginning_of_month..Time.now.end_of_month
 
-      @users            = User.all
+      @users            = User.all.where(role_id: nil)
       @jobs             = Job.all
       @job_requests     = JobRequest.all
       @orders           = Order.all
-      @new_users        = @users.where(created_at: time_range)
+      @new_users        = @users.where(created_at: time_range, role_id: nil)
       @new_jobs         = @jobs.where(created_at: time_range)
       @new_job_requests = @job_requests.where(created_at: time_range)
 
