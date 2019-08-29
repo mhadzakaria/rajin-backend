@@ -23,6 +23,7 @@
 //= require angle/app.init
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
+//= require plugins/chartist/dist/chartist
 
 //--- Datatables
 //= require_tree ./datatables

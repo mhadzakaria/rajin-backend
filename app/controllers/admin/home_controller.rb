@@ -3,14 +3,26 @@ module Admin
 
     def home
       time_range        = Time.now.beginning_of_month..Time.now.end_of_month
+      begin_month       = time_range.first
+      end_month         = time_range.last
+      @range_per_week    = Array.new
+
+      while begin_month < end_month
+        @range_per_week << [begin_month..begin_month.end_of_week]
+        begin_month = (begin_month + 1.weeks).beginning_of_week
+      end
 
       @users            = User.all.where(role_id: nil)
       @jobs             = Job.all
       @job_requests     = JobRequest.all
       @orders           = Order.all
-      @new_users        = @users.where(created_at: time_range, role_id: nil)
+      @new_users        = @users.where(created_at: time_range)
       @new_jobs         = @jobs.where(created_at: time_range)
       @new_job_requests = @job_requests.where(created_at: time_range)
+      @ten_new_users    = @new_users.sample(8)
+      @job_per_week     = @range_per_week.map{ |range| @new_jobs.where(created_at: range) }.map(&:size).reverse.join(',')
+      @job_req_per_week = @range_per_week.map{ |range| @new_job_requests.where(created_at: range) }.map(&:size).reverse.join(',')
+
 
       # dataset 1 for chart job & job_request
       # dataset 2 for chart overall progress
