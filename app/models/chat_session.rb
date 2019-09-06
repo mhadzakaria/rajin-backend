@@ -57,10 +57,52 @@ class ChatSession < ApplicationRecord
         data:   data
       }
     else
-      result = {
-        status: response.code,
-        data:   response.message
-      }
+      if response.code.eql?("401")
+        user_details = user_details(user_token["refreshToken"])
+
+        url_part     = url.gsub("messages", "participants")
+        uri_part     = URI(url_part)
+
+        http         = Net::HTTP.new(uri_part.host, uri_part.port)
+        http.use_ssl = true
+
+        request_part = Net::HTTP::Get.new("#{uri_part.path}?auth=#{token}")
+        respon_part  = http.request(request_part)
+        json         = JSON.parse(respon_part.response.body)
+
+        json.each do |uid, val|
+          if uid.eql?(current_user.email.gsub('.', '-'))
+            data_new_part = {
+              uid => {
+                name: current_user.full_name,
+                uid: "#{user_details['user_id']}"
+              }
+            }
+
+            req_new_part      = Net::HTTP::Patch.new("#{uri_part.path}?auth=#{token}")
+            req_new_part.body = data_new_part.to_json
+            res_new_part      = http.request(req_new_part)
+
+            response     = http.request(request)
+            if response.code.eql?("200")
+              result = {
+                status: response.code,
+                data:   data
+              }
+            else
+              result = {
+                status: response.code,
+                data:   response.message
+              }
+            end
+          end
+        end
+      else
+        result = {
+          status: response.code,
+          data:   response.message
+        }
+      end
     end
 
     return result
@@ -73,13 +115,13 @@ class ChatSession < ApplicationRecord
     details_1 = user_details(user_1["refreshToken"])
     details_2 = user_details(user_2["refreshToken"])
     data      = {
-      details_1["user_id"] => {
+      user.email.gsub('.', '-') => {
         name: user.full_name,
-        email: user.email
+        uid: details_1["user_id"]
       },
-      details_2["user_id"] => {
+      user_job.email.gsub('.', '-') => {
         name: user_job.full_name,
-        email: user_job.email
+        uid: details_2["user_id"]
       }
     }
     base_uri = Rails.application.secrets.firebase_url
