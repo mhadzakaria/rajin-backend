@@ -23,6 +23,7 @@
 //= require angle/app.init
 //= require_tree ./angle/modules
 //= require_tree ./angle/custom
+//= require plugins/chartist/dist/chartist
 
 //--- Datatables
 //= require_tree ./datatables
@@ -32,6 +33,6 @@
 //= require jquery-ui
 //= require jquery-ui/widgets/datepicker
 
-// require plugins/chart.js/dist/Chart
-// require custom.js
+//= require plugins/chart.js/dist/Chart
+//= require custom.js
 //= require firebase

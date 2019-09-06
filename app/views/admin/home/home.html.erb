@@ -2,67 +2,63 @@
 <div class="row">
    <div class="col-xl-4">
       <!-- START List group-->
-      <div class="list-group mb-3">
+      <div class="card card-default card-demo standard" id="cardChart3">
+        <div class="card-header">
+          <div class="card-title">This Month</div>
+        </div>
+        <div class="card-body p-0">
+      <div class="list-group">
          <div class="list-group-item">
             <div class="d-flex align-items-center py-3">
                <div class="w-50 px-3">
-                  <p class="m-0 lead"><%= @new_users.count %></p>
-                  <p class="m-0 text-sm">Users registered this month</p>
+                  <div class="h1"><%= @new_users.count %></div>
+                  <p class="m-0 text-sm">New Users</p>
                </div>
-               <div class="w-50 px-3 text-center">
-                  <!-- <div data-sparkline="" data-bar-color="#23b7e5" data-height="60" data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0" data-values="{jan: 1, feb: 6,7,8,4,5}"></div> -->
-               </div>
-            </div>
-         </div>
-         <div class="list-group-item">
-            <div class="d-flex align-items-center py-3">
-               <div class="w-50 px-3">
-                  <p class="m-0 lead"><%= @new_job_requests.count %></p>
-                  <p class="m-0 text-sm">New job request</p>
-               </div>
-               <div class="w-50 px-3 text-center">
-                  <!-- <div data-sparkline="" data-type="line" data-height="60" data-width="80%" data-line-width="2" data-line-color="#7266ba" data-chart-range-min="0" data-spot-color="#888" data-min-spot-color="#7266ba" data-max-spot-color="#7266ba" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="3" data-values="7,3,4,7,5,9,4,4,7,5,9,6,4" data-recount="true"></div> -->
-               </div>
-            </div>
-         </div>
-         <div class="list-group-item">
-            <div class="d-flex align-items-center py-3">
-               <div class="w-50 px-3">
-                  <p class="m-0 lead"><%= @new_jobs.count %></p>
-                  <p class="m-0 text-sm">New jobs</p>
-               </div>
-               <!-- 
                <div class="w-50 px-3 text-center">
                   <div class="d-flex align-items-center flex-wrap justify-content-center">
-                     <a href="#" data-toggle="tooltip" title="Katie">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/02.jpg') %>" alt="Follower" />
-                     </a>
-                     <a href="#" data-toggle="tooltip" title="Cody">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/01.jpg') %>" alt="Follower" />
-                     </a>
-                     <a href="#" data-toggle="tooltip" title="Tamara">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/03.jpg') %>" alt="Follower" />
-                     </a>
-                     <a href="#" data-toggle="tooltip" title="Gene">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/04.jpg') %>" alt="Follower" />
-                     </a>
-                     <a href="#" data-toggle="tooltip" title="Marsha">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/04.jpg') %>" alt="Follower" />
-                     </a>
-                     <a href="#" data-toggle="tooltip" title="Robin">
-                        <img class="circle thumb24 mx-1" src="<%#= image_path('angle/user/09.jpg') %>" alt="Follower" />
-                     </a>
+                    <% @ten_new_users.each do |user| %>
+                      <a href="#" data-toggle="tooltip" title="<%= user.full_name %>">
+                        <% if user.picture.try(&:file_url).blank? %>
+                          <em class="thumb24 mx-1 far fa-user" style="padding-top: 5%; color: black;"></em>
+                        <% else %>
+                          <img class="circle thumb24 mx-1" src="<%= user.picture.file_url %>" alt="<%= user.full_name %>"/>
+                        <% end %>
+                      </a>
+                    <% end %>
                   </div>
                </div>
-                -->
+            </div>
+         </div>
+         <div class="list-group-item">
+            <div class="d-flex align-items-center">
+               <div class="w-50 px-3">
+                  <div class="h1"><%= @new_job_requests.count %></div>
+                  <p class="m-0 text-sm">New Job Request(per week)</p>
+               </div>
+               <div class="w-50 text-center job_req">
+                  <div id="ct-bar1" data-values="<%= @job_req_per_week.split(',') %>" data-label="<%= @range_per_week.each_with_index.map{|w, i| "W-#{i + 1}"}.to_json %>"></div>
+               </div>
+            </div>
+         </div>
+         <div class="list-group-item">
+            <div class="d-flex align-items-center">
+               <div class="w-50 px-3">
+                  <div class="h1"><%= @new_jobs.count %></div>
+                  <p class="m-0 text-sm">New Jobs(per week)</p>
+               </div>
+               <div class="w-50 text-center jobs">
+                  <div id="ct-bar2" data-values="<%= @job_per_week.split(',') %>" data-label="<%= @range_per_week.each_with_index.map{|w, i| "W-#{i + 1}"}.to_json %>"></div>
+               </div>
             </div>
          </div>
       </div>
+      </div>
+    </div>
       <!-- END List group-->
    </div>
    <div class="col-xl-8">
       <!-- START bar chart-->
-      <div class="card" id="cardChart3">
+      <div class="card card-default card-demo standard" id="cardChart3">
          <div class="card-header">
             <!-- START button group-->
             <!-- 
@@ -91,9 +87,9 @@
       <!-- END bar chart-->
    </div>
 </div>
-<div class="unwrap my-3">
+<div class="my-3">
    <!-- START chart-->
-   <div class="card" id="cardChart9">
+   <div class="card card-default card-demo standard" id="cardChart9">
       <div class="card-header">
          <!-- START button group-->
          <!-- 
@@ -136,3 +132,16 @@
    </div>
    <!-- END chart-->
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    initDashboardChart()
+  });
+</script>
+<style type="text/css">
+  .job_req .ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+    stroke: #5d9cec;
+  }
+  .jobs .ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut {
+    stroke: #23b7e5;
+  }
+</style>

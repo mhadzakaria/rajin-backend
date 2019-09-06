@@ -10,10 +10,12 @@ function initChart1() {
     datasets: [{
       label: "Job",
       backgroundColor: '#23b7e5',
+      borderColor: '#23b7e5',
       data: $(chart1).data("jobs")
     }, {
       label: "Job Request",
       backgroundColor: '#5d9cec',
+      borderColor: '#5d9cec',
       data: $(chart1).data("job-requests")
     }]
   };
@@ -59,7 +61,7 @@ function initChart2() {
     {
       "label": "Job Requests",
       "color": "#7266ba",
-      "data": chart2.data("job-requests")
+      "data": chart2.data("job_requests")
     }];
 
   var chart2Options = {
@@ -75,7 +77,7 @@ function initChart2() {
         show: true,
         tension: 0.4,
         lineWidth: 1,
-        fill: 0.1
+        fill: 0.5
       }
     },
     grid: {
@@ -86,62 +88,27 @@ function initChart2() {
     },
     tooltip: true,
     tooltipOpts: {
-      content: function(label, x, y) { return x + ' : ' + y; }
+      content: function(label, x, y) { return label + ' : ' + y; }
     },
     xaxis: {
       tickColor: '#fcfcfc',
       mode: 'categories'
     },
     yaxis: {
+      // min: 0,
+      // max: 100, // optional: use it for a clear represetation
       tickColor: '#eee',
-      tickSize: setStepSize([jobsMax, jobRequestsMax, usersMax])
+      //position: 'right' or 'left',
+      tickSize: setStepSize([jobsMax, jobRequestsMax, usersMax]),
+      tickFormatter: function(v) {
+        return v /* + ' visitors'*/ ;
+      }
     },
     shadowSize: 0
   };
 
   $.plot($('#chart-splinev2'), datav2, chart2Options);
 }
-
-function initChart3(){
-  var element = $('#ct-bar2'),
-        datas = element.data('values'),
-        label = element.data('label');
-  new Chartist.Bar('#ct-bar2', {
-            labels: label,
-            series: [datas]
-        }, {
-            seriesBarDistance: 1,
-            reverseData: true,
-            horizontalBars: true,
-            showGrid: false,
-            height: 140,
-            width: 190,
-            axisY: {
-                offset: 30
-            }
-        })
-}
-
-function initChart4(){
-  var element = $('#ct-bar1'),
-        datas = element.data('values'),
-        label = element.data('label');
-  new Chartist.Bar('#ct-bar1', {
-            labels: label,
-            series: [datas]
-        }, {
-            seriesBarDistance: 1,
-            reverseData: true,
-            horizontalBars: true,
-            showGrid: false,
-            height: 140,
-            width: 190,
-            axisY: {
-                offset: 30
-            }
-        })
-}
-
 
 function setStepSize(array) {
   var stepSizeValue;
@@ -158,9 +125,7 @@ function setStepSize(array) {
   };
 }
 
-function initDashboardChart() {
+$(document).ready(function() {
   initChart1();
   initChart2();
-  initChart3();
-  initChart4();
-};
+});
