@@ -42,6 +42,7 @@ gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'carrierwave-base64'
+gem "fog-aws"
 
 # For implementing state machines
 gem 'aasm'

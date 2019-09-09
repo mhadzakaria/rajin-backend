@@ -5,6 +5,7 @@ require 'rails/all'
 
 require 'carrierwave'
 require 'carrierwave/orm/activerecord'
+require 'fog/aws'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
