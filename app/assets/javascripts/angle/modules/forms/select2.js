@@ -12,20 +12,22 @@
 
         // Select 2
 
-        $('#select2-1').select2({
+        $('#user_company_id').select2({
             theme: 'bootstrap4'
         });
-        $('#select2-2').select2({
+
+        $('#q_job_category_id_eq').select2({
             theme: 'bootstrap4'
         });
-        $('#select2-3').select2({
+
+        $('#q_user_id_eq').select2({
             theme: 'bootstrap4'
         });
-        $('#select2-4').select2({
-            placeholder: 'Select a state',
-            allowClear: true,
+
+        $('#q_job_id_eq').select2({
             theme: 'bootstrap4'
         });
+
 
     }
 

@@ -32,3 +32,4 @@
 //= require plugins/cropper/dist/cropper.js
 // --- Select2
 //= require plugins/select2/dist/js/select2.full
+//= require plugins/select2/dist/js/select2
