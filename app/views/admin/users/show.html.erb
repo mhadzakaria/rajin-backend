@@ -25,6 +25,12 @@
                 <th>Description:</th>
                 <td><%= @user.description %></td>
               </tr>
+              <% if @user.company.present? %>
+                <tr>
+                  <th>Company</th>
+                  <td><%= @user.company.name %></td>
+                </tr>
+              <% end %>
               <tr>
                 <th>User type:</th>
                 <td><%= @user.user_type %></td>
@@ -36,7 +42,8 @@
               <tr>
                 <th>Role:</th>
                 <td><%= @user.role.try(:role_name) %></td>
-              </tr>            </tbody>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
