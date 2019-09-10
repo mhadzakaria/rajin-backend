@@ -36,6 +36,3 @@
 //= require plugins/chart.js/dist/Chart
 //= require custom.js
 //= require firebase
-
-//= require plugins/select2/dist/js/select2.full
-//= require plugins/select2/dist/js/select2
