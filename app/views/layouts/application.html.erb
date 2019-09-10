@@ -22,11 +22,10 @@
 	 	<%= stylesheet_link_tag 'datatables/keyTable.bootstrap.css' %>
 	 	<%= stylesheet_link_tag 'datatables/responsive.bootstrap.css' %>
     <%= javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "/assets/plugins/chart.js/dist/Chart.js", 'data-turbolinks-track': 'reload'  %>
+
+    <%= javascript_include_tag "plugins/chart.js/dist/Chart.js", 'data-turbolinks-track': 'reload'  %>
+
     <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.js", 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "/assets/custom.js", 'data-turbolinks-track': 'reload' %>
-    <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
-    <!-- GOOGLE MAPS-->
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyC5q3SCYpG9uLQxyka0hHv5e4r9lPAseYg&libraries=places" %>
   </head>
 
@@ -61,6 +60,7 @@
     <%= javascript_include_tag 'base' %>
     <!-- =============== VIEW VENDOR SCRIPTS ===============-->
     <%= javascript_include_tag 'dashboard' %>
+    <%= javascript_include_tag 'forms' %>
     <%= yield :vendor_js_area %>
     <!-- =============== APP SCRIPTS ===============-->
 

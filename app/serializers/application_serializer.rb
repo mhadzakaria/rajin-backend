@@ -62,8 +62,8 @@ class ApplicationSerializer < ActiveModel::Serializer
   end
 
   def base_url
-    # ""
-    "#{@instance_options[:base_url]}"
+    ""
+    # "#{@instance_options[:base_url]}"
   end
 
   def category_detail(category)

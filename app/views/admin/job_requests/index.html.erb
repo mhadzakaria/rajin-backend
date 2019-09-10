@@ -16,17 +16,17 @@
             <table class="table table-borderless">
               <tr>
                 <td>
-                  <%= f.label "User" %>
+                  <%= f.label "User" %><br>
                   <%= f.select :user_id_eq, options_for_select(@users, @q.user_id_eq),
                         {include_blank: 'Select user'}, class: 'form-control' %>
                 </td>
                 <td>
-                  <%= f.label "Job" %>
+                  <%= f.label "Job" %><br>
                   <%= f.select :job_id_eq, options_for_select(@jobs, @q.job_id_eq),
                         {include_blank: 'Select job'}, class: 'form-control' %>
                 </td>
                 <td>
-                  <%= f.label "Status" %>
+                  <%= f.label "Status" %><br>
                   <%= f.select :status_cont, options_for_select(@statues, @q.status_cont), {include_blank: "Select status"}, class: 'form-control' %>
                 </td>
               </tr>

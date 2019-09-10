@@ -10,8 +10,7 @@
 //--- i18next
 // require plugins/i18next/i18next.js
 // require plugins/i18next-xhr-backend/i18nextXHRBackend.js
-//--- jQuery
-//= require plugins/jquery/dist/jquery.min
+
 //--- Bootstrap
 //= require plugins/popper.js/dist/umd/popper.js
 //= require plugins/bootstrap/dist/js/bootstrap.min
