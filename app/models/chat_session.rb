@@ -240,10 +240,16 @@ class ChatSession < ApplicationRecord
       to: receiver
     }
 
+    cloud_message_key = if Rails.env.eql?('production')
+      'AIzaSyAvpGMIeNOekmmHxCx5WkdTm9w2zoQvLeI'
+    else
+      'AIzaSyCkkwoQWA6XsT3_aSmTa8URPrVUJy1aYHs'
+    end
+
     params = {
       url: "https://fcm.googleapis.com/fcm/send",
       data: data,
-      headers: {'Content-Type' => 'application/json', 'Authorization' => "key=AIzaSyAvpGMIeNOekmmHxCx5WkdTm9w2zoQvLeI"},
+      headers: {'Content-Type' => 'application/json', 'Authorization' => "key=#{cloud_message_key}"},
       body_needed: true
     }
 
