@@ -21,8 +21,6 @@ module RajinBelajar
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.serve_static_assets = true
-
     # setup npm folder for lookup
     config.assets.paths << Rails.root.join('vendor', 'assets', 'node_modules')
     # fonts

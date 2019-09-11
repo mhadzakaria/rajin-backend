@@ -7,6 +7,15 @@ development:
   username: postgres
   password: postgres
 
+staging:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: rajin_belajar_staging
+  pool: 5 
+  username: postgres
+  password: postgres
+
 production:
   adapter: postgresql
   encoding: unicode

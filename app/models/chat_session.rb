@@ -35,7 +35,7 @@ class ChatSession < ApplicationRecord
       read: false,
       time: DateTime.now.strftime('%D %T %Z')
     }
-    base_uri   = Rails.application.secrets.firebase_url
+    base_uri   = ENV['FIREBASE_URL']
     user_token = sign_in(current_user)
     token      = user_token["idToken"]
 
@@ -124,7 +124,7 @@ class ChatSession < ApplicationRecord
         uid: details_2["user_id"]
       }
     }
-    base_uri = Rails.application.secrets.firebase_url
+    base_uri = ENV['FIREBASE_URL']
     url      = "#{base_uri}chats/#{provider_url}/participants.json"
     uri      = URI(url)
 
@@ -158,7 +158,7 @@ class ChatSession < ApplicationRecord
     data = {
       grant_type: "refresh_token",
       refresh_token: refresh_token,
-      key: Rails.application.secrets.firebase_apiKey
+      key: ENV['FIREBASE_APIKEY']
     }
 
     params = {
@@ -181,7 +181,7 @@ class ChatSession < ApplicationRecord
       email: current_user.email,
       password: current_user.password_firebase,
       returnSecureToken: true,
-      key: Rails.application.secrets.firebase_apiKey
+      key: ENV['FIREBASE_APIKEY']
     }
 
     params = {
@@ -206,7 +206,7 @@ class ChatSession < ApplicationRecord
       email: current_user.email,
       password: current_user.password_firebase,
       returnSecureToken: true,
-      key: Rails.application.secrets.firebase_apiKey
+      key: ENV['FIREBASE_APIKEY']
     }
 
     params = {
