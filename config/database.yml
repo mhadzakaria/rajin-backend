@@ -11,10 +11,10 @@ staging:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: rajin_belajar_staging
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>
   pool: 5 
-  username: postgres
-  password: postgres
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
 
 production:
   adapter: postgresql
