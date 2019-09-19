@@ -26,9 +26,20 @@ class ApplicationSerializer < ActiveModel::Serializer
         nil
       end
       data[:coin_balance] = "#{balance.try(:amount).to_i} Coins"
+      data[:verified]     = user_verified(user)
     end
 
     return data
+  end
+
+  def user_verified(user)
+    company = user.company
+
+    if company.present?
+      company.status.eql?('Verified') || company.status.eql?('v')
+    else
+      false
+    end
   end
 
   def job_details(job, data = {})
