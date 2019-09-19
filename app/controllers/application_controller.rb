@@ -19,6 +19,29 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new(params[:path])
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: 200 }
+      format.js   { render js: "window.location = #{root_path}", alert: "Page not found", status: 404 }
+      format.json { render json: { message: exception.message }, status: 404 }
+      format.all  { render json: { message: "Page not found"}, status: 400 }
+    end
+  end
+
+  rescue_from ActionController::UnknownFormat do |exception|
+    respond_to do |format|
+      format.all  { render json: { message: "Bad request"}, status: 400 }
+    end
+  end
+
+  rescue_from ActionView::MissingTemplate do |exception|
+    respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: 200 }
+      format.json { render json: { message: "Not found" }, status: 404 }
+      format.all  { render json: { message: "Bad request"}, status: 400 }
+    end
+  end
+
   private
 
     def set_layout

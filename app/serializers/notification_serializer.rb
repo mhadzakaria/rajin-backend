@@ -7,17 +7,24 @@ class NotificationSerializer < ApplicationSerializer
   end
 
   def notifable
-    data = object.notifable
-    case object.notifable_type
-    when 'JobRequest'
-      data = {
-        :id                 => object.notifable.id,
-        :job_detail         => job_detail,
-        :job_request_status => job_request_status,
-        :job_applier_detail => job_applier_detail,
-        :job_owner_detail   => job_owner_detail,
-        :chat_sessions      => chat_sessions(object.notifable)
-      }
+    obj_notifable = object.notifable
+
+    if obj_notifable.blank?
+      data = nil
+    else
+      case object.notifable_type
+      when 'JobRequest'
+        data = {
+          :id                 => obj_notifable.id,
+          :job_detail         => job_detail,
+          :job_request_status => job_request_status,
+          :job_applier_detail => job_applier_detail,
+          :job_owner_detail   => job_owner_detail,
+          :chat_sessions      => chat_sessions(obj_notifable)
+        }
+      else
+        data = obj_notifable
+      end
     end
 
     data
@@ -25,6 +32,7 @@ class NotificationSerializer < ApplicationSerializer
 
   def chat_sessions(job_request, data = nil)
     chat_sessions = job_request.chat_session
+
     if !chat_sessions.blank?
       data = chat_sessions
     end
