@@ -42,6 +42,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from ActiveRecord::RecordNotUnique do |exception|
+    respond_to do |format|
+      format.all  { render json: { message: "Record not uniq"}, status: 422 }
+    end
+  end
+
   rescue_from JSON::ParserError do |exception|
     respond_to do |format|
       format.html { render file: "#{Rails.root}/public/404", layout: false, status: 200 }
