@@ -56,6 +56,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # ALL METHOD WILL GO TO THIS METHOD, YOU CAN DEFINE GLOBAL HANDLER ERRORS HERE
+  def process_action(*args)
+    super
+  rescue ActionDispatch::Http::Parameters::ParseError => exception
+    respond_to do |format|
+      format.all  { render json: { message: "Invalid parameter."}, status: 422 }
+    end
+  end
+
   private
 
     def set_layout
