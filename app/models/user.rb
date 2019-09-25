@@ -32,7 +32,7 @@ class User < ApplicationRecord
   has_many  :uploaded_pictures, class_name: "Picture", foreign_key: :user_id, dependent: :destroy
 
   validates_presence_of :first_name, :last_name, :nickname
-  validates_uniqueness_of :nickname
+  validates_uniqueness_of :nickname, :email
   validates_format_of :nickname, { :with => /\A[A-Za-z0-9._-]*\z/, :message => 'no special characters, except number, "-", "_", ".", and "@" on first text.' }
 
   paginates_per 10

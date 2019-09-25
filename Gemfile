@@ -42,6 +42,7 @@ gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'carrierwave-base64'
+gem "fog-aws"
 
 # For implementing state machines
 gem 'aasm'
@@ -66,6 +67,7 @@ gem 'kaminari'
 gem 'delayed_job_active_record'
 
 gem 'firebase'
+gem 'rollbar'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

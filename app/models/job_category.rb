@@ -1,7 +1,9 @@
 class JobCategory < ApplicationRecord
+  validates :name, uniqueness: { case_sensitive: false }
+
   has_many :jobs
   has_many :childs, foreign_key: :parent_id, class_name: 'JobCategory'
-  belongs_to :parent, class_name: 'JobCategory'
+  belongs_to :parent, class_name: 'JobCategory', optional: true
 
   paginates_per 10
 

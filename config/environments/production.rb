@@ -84,8 +84,8 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.secrets.sendgrid_user_name,
-    password: Rails.application.secrets.sendgrid_password,
+    user_name: ENV['SENDGRID_USER_NAME'],
+    password: ENV['SENDGRID_PASSWORD'],
     domain: '',
     address: 'smtp.sendgrid.net',
     port: '587',
@@ -96,8 +96,8 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: "rajin-belajar.herokuapp.com" }
-  config.action_mailer.asset_host = 'https://rajin-belajar.herokuapp.com/'
+  config.action_mailer.default_url_options = { host: "therajincompany.com" }
+  config.action_mailer.asset_host = 'https://therajincompany.com'
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)

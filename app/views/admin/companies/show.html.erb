@@ -7,7 +7,7 @@
 <%= render "layouts/partials/flash_message" %>
 <div class="row pt-1 mt-0">
   <div class="col-md-6">
-    <div class="card mb-1 border-white">
+    <div class="card mb-3 border-white">
       <div class="card-header"><h4>Details</h4></div>
       <div class="card-body pt-0">
         <div class="table-responsive">
@@ -22,6 +22,31 @@
                 <th>Phone number:</th>
                 <td><%= @company.phone_number %></td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-1 border-white">
+      <div class="card-header"><h4>Members</h4></div>
+      <div class="card-body pt-0">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @members.each_with_index do |user, index| %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= user.full_name %></td>
+                  <td><%= user.email %></td>
+                </tr>
+              <% end %>
             </tbody>
           </table>
         </div>

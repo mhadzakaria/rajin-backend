@@ -10,8 +10,8 @@ class JobRequest < ApplicationRecord
   paginates_per 10
 
   validate :ensure_user_not_same, on: :create
-  validates :job_id, uniqueness: { scope: :user_id, message: "Request already applied to this job before." }
-  validates :job_id, uniqueness: { message: "Job already have worker." }, if: :accepted_job_request
+  validates :job_id, uniqueness: { scope: :user_id, message: "You applied to this job before." }
+  validates :job_id, uniqueness: { message: "Job has been occupied." }, if: :accepted_job_request
 
   scope :pending,      -> { where(status: "pending") }
   scope :rejected,     -> { where(status: "rejected") }
@@ -108,7 +108,7 @@ class JobRequest < ApplicationRecord
 
   def send_notification
     job_owner = job.ownerable
-    message   = "#{user.full_name} has been applied to your job offer '#{job.title}'."
+    message   = "#{user.full_name} applied to your job offer '#{job.title}'."
     self.create_notification(job_owner, message)
   end
 

@@ -15,6 +15,7 @@ module Admin
     end
 
     def show
+      @members = @company.users
     end
 
     def new
