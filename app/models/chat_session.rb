@@ -216,7 +216,13 @@ class ChatSession < ApplicationRecord
     }
 
     response = net_http_post(params)
-    JSON.parse(response.body)
+    body = JSON.parse(response.body)
+
+    if response.code.to_i == 200
+      current_user.update!(firebase_user_uid: body['localId'])
+    end
+    
+    body
   end
 
   def push_notif_chat(params, current_user, message)

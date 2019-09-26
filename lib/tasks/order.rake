@@ -1,4 +1,4 @@
-namespace :orders do
+namespace :user do
   desc "Requery iPay88 for pending payments"
   task(:requery_pending_payments => :environment) do
     orders = Order.pending.coin_packages
