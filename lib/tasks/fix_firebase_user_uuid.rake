@@ -1,6 +1,6 @@
 namespace :xxx do
   task(:fix_firebase_user_uuid => :environment) do
-    
+
     users = User.where(firebase_user_uid: nil)
     users.each do |user|
       data = {
@@ -29,8 +29,13 @@ namespace :xxx do
       body = JSON.parse(response.body)
 
       if response.code.to_i == 200
-        user.update!(firebase_user_uid: body['localId'])
-        puts "Fixed for user #{user.email} -> #{user.firebase_user_uid}"
+        if user.update(firebase_user_uid: body['localId'])
+          puts "Fixed for user #{user.email} -> #{user.firebase_user_uid}"
+        else
+          puts "Failed to save for user #{user.email} -> #{user.errors.full_messages.join('. ')}"
+        end
+      else 
+        puts "User #{user.email} already has firebase uuid"
       end
     end
   end
