@@ -4,8 +4,6 @@ development:
   host: localhost
   database: rajin_belajar_development
   pool: 5
-  username: postgres
-  password: postgres
 
 staging:
   adapter: postgresql

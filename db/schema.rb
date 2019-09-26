@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_28_093841) do
+ActiveRecord::Schema.define(version: 2019_09_26_111358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
 
   create_table "coin_balances", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "amount"
+    t.decimal "amount"
     t.string "coinable_type"
     t.bigint "coinable_id"
     t.datetime "created_at", null: false
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.string "message"
     t.index ["coinable_type", "coinable_id"], name: "index_coin_balances_on_coinable_type_and_coinable_id"
     t.index ["user_id"], name: "index_coin_balances_on_user_id"
+  end
+
+  create_table "coin_packages", force: :cascade do |t|
+    t.decimal "coin"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -61,6 +68,21 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.index ["user_id"], name: "index_configs_on_user_id"
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
   create_table "job_categories", force: :cascade do |t|
     t.string "name"
     t.integer "parent_id"
@@ -75,7 +97,6 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_id", "user_id"], name: "index_job_requests_on_job_id_and_user_id", unique: true
     t.index ["job_id"], name: "index_job_requests_on_job_id"
     t.index ["user_id"], name: "index_job_requests_on_user_id"
   end
@@ -102,8 +123,19 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration"
+    t.boolean "is_promoted", default: false
+    t.string "duration_type"
     t.index ["job_category_id"], name: "index_jobs_on_job_category_id"
     t.index ["ownerable_type", "ownerable_id"], name: "index_jobs_on_ownerable_type_and_ownerable_id"
+  end
+
+  create_table "level_skills", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "skill_id"
+    t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mentors", force: :cascade do |t|
@@ -153,20 +185,25 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.boolean "reduce_coin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_show", default: true
     t.index ["notifable_type", "notifable_id"], name: "index_notifications_on_notifable_type_and_notifable_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.integer "user_id"
-    t.string "merchant_id"
+    t.string "payment_id"
     t.string "orderable_type"
     t.bigint "orderable_id"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
+    t.string "payment_gateway"
+    t.string "payment_method"
+    t.decimal "amount"
+    t.decimal "net_amount"
     t.index ["orderable_type", "orderable_id"], name: "index_orders_on_orderable_type_and_orderable_id"
+    t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -273,6 +310,16 @@ ActiveRecord::Schema.define(version: 2019_03_28_093841) do
     t.text "skill_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
+    t.text "description"
+    t.string "twitter"
+    t.string "facebook"
+    t.string "linkedin"
+    t.string "instagram"
+    t.string "fcm_registration_ids", array: true
+    t.string "password_firebase"
+    t.string "firebase_user_uid"
     t.index ["access_token"], name: "index_users_on_access_token"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
