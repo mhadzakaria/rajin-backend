@@ -38,7 +38,6 @@ class User < ApplicationRecord
   paginates_per 10
 
   before_create :generate_access_token
-  before_save   :check_limit_skill
   after_create  :generate_default_config, :generate_password_firebase
   before_validation :generate_nickname
 
@@ -53,21 +52,14 @@ class User < ApplicationRecord
     )
   end
 
-  def check_limit_skill
-    if skill_ids.size > 10
-      errors.add(:skill, "maximum is 10 skills.")
-      throw(:abort)
-    end
-  end
-
   def generate_access_token
     self.access_token = SecureRandom.hex(16)
   end
 
   def generate_password_firebase(blank_password = false)
     self.password_firebase = SecureRandom.hex(16)
-
     save if blank_password
+    # Shoud create user at firebase here, upon successful registration
   end
 
   def full_name
