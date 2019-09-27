@@ -3,6 +3,11 @@ namespace :xxx do
 
     users = User.where(firebase_user_uid: nil)
     users.each do |user|
+      if user.password_firebase.blank?
+        user.generate_password_firebase(true)
+        user.reload
+      end
+
       data = {
         email: user.email,
         password: user.password_firebase,
@@ -34,7 +39,9 @@ namespace :xxx do
         else
           puts "Failed to save for user #{user.email} -> #{user.errors.full_messages.join('. ')}"
         end
-      else 
+      else
+        puts "response body:"
+        puts body
         puts "User #{user.email} already has firebase uuid"
       end
     end
