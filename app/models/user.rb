@@ -139,7 +139,7 @@ class User < ApplicationRecord
   end
 
   def generate_nickname
-    nkname = nickname
+    nkname = nickname.to_s rescue ''
     if !nkname.include?('@') || nkname.last.eql?('@')
       nickname = nkname
       return

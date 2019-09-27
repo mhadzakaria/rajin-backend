@@ -57,7 +57,7 @@ class NotificationSerializer < ApplicationSerializer
 
   def job_owner_detail
     job   = object.notifable.job
-    owner = job.ownerable
+    owner = job.try(:ownerable)
 
     return user_details(owner)
   end
