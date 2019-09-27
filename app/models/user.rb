@@ -58,7 +58,12 @@ class User < ApplicationRecord
 
   def generate_password_firebase(blank_password = false)
     self.password_firebase = SecureRandom.hex(16)
-    save if blank_password
+
+    if blank_password
+      save
+    else
+      sign_up_firebase(self)
+    end
     # Shoud create user at firebase here, upon successful registration
   end
 
@@ -139,7 +144,7 @@ class User < ApplicationRecord
   end
 
   def generate_nickname
-    nkname = nickname
+    nkname = nickname.to_s rescue ''
     if !nkname.include?('@') || nkname.last.eql?('@')
       nickname = nkname
       return

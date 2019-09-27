@@ -14,7 +14,7 @@ class Job < ApplicationRecord
   has_many :pictures, as: :pictureable, dependent: :destroy
   accepts_nested_attributes_for :pictures
 
-  has_many :job_requests
+  has_many :job_requests, dependent: :destroy
   has_many :reviews
   has_many :chat_sessions, through: :job_requests
 
