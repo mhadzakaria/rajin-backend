@@ -33,6 +33,7 @@ class User < ApplicationRecord
 
   validates_presence_of :first_name, :last_name, :nickname
   validates_uniqueness_of :nickname, :email
+  validates :email, format: { with: /(\A([a-z]*\s*)*\<*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\>*\Z)/i }
   validates_format_of :nickname, { :with => /\A[A-Za-z0-9._-]*\z/, :message => 'no special characters, except number, "-", "_", ".", and "@" on first text.' }
 
   paginates_per 10
