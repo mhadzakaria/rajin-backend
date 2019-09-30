@@ -11,13 +11,6 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  def json_delete_timestamp
-    attribute = self.attributes
-    attribute.delete('created_at')
-    attribute.delete('updated_at')
-    attribute
-  end
-
   def sign_up_firebase(current_user)
     data = {
       email: current_user.email,

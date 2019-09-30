@@ -8,16 +8,17 @@ class JobCategory < ApplicationRecord
   paginates_per 10
 
   def self.top_ten
+    used       = Hash.new(0)
+    categories = Array.new(0)
+
     job_categories = Job.all.map(&:job_category_id)
-    used = Hash.new(0)
     job_categories.each do |v|
       used[v] += 1
     end
 
-    categories = Array.new(0)
-
-    used.keys.each do |id|
-      categories << JobCategory.where(id: id)
+    top_ten_categories = Hash[used.sort_by{|k, v| v}.reverse]
+    top_ten_categories.keys.first(10).each do |id|
+      categories << JobCategory.find_by(id: id)
     end
 
     if used.size < 10
