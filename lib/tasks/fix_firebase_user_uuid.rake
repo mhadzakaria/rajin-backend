@@ -1,5 +1,5 @@
-namespace :xxx do
-  desc "Update user skill_ids to has_many skills"
+namespace :firebase do
+  desc "Register user to firebase"
   task(:fix_firebase_user_uuid => :environment) do
 
     users = User.where(firebase_user_uid: nil)
